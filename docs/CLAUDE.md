@@ -1,0 +1,127 @@
+# CLAUDE.md: Redact
+
+Project context and conventions. Read this first in every session, then read docs/BRIEFING.md.
+**Last Updated:** 2026-10-24 (Phase 0 moved to Mon Oct 26; local mode cut; design review complete)
+
+## Interaction Mode: Always On
+
+**Use calibrated honesty for all work on this project, at all times, no exceptions.** Agree when the approach is right, push back plainly when it isn't, and don't manufacture agreement or hedge to avoid friction. This applies to code review, architecture decisions, data quality, eval numbers, and any claims made in docs, commit messages, the README or the demo script, including anything already written in this file. If something in this plan is flawed, say so directly instead of deferring to what's documented.
+
+Working preferences for every session:
+- Explain the why alongside the how.
+- Flag gotchas proactively and record new ones in "Known gotchas" below.
+- No filler, no preamble. Direct, casual tone.
+- Never use em dashes or hyphens as dashes in any deliverable (docs, README, UI copy, video script).
+
+## Project Overview
+
+Redact is a privacy scrubber for photos and screenshots, built by a three person team for the Meta Global AI Developer Hackathon (Indie developer track, Oct 26 to Nov 4, 2026). Before a user shares an image to a public post, a team chat, or an AI assistant, Redact finds what should not be in it and masks it. Basic PII detection in screenshots already exists (Redaktr, SnapShield AI, BlurData, CaseGuard, Presidio Image Redactor), so Redact competes on three things those tools don't do: judging sensitivity from context in photos of real spaces (one password line among harmless whiteboard notes), flagging leaks that only appear when two clues combine (house number plus street sign), and changing what gets masked based on who will see the image. Every mask comes with a one line reason.
+
+Pitch line: *Pattern tools find text that looks like PII. Redact decides what is sensitive in this photo, for whoever will see it, and explains every mask.*
+
+Indie track judging criteria: creativity, technical ambition, and whether it works.
+
+Team and ownership:
+- **Orlando:** vision pipeline. SAM 3.1 sweep and refine, OCR, mark rendering, mask composition, latency, pre-masking before cloud calls.
+- **Carlos:** judge and evaluation. Judge prompt and schema, destination policy, multi-clue leaks, dataset, eval harness, baselines.
+- **Victor:** app and threats. FastAPI service, Next.js upload and review editor, export, injection test set, deployment, demo access gate.
+
+**Hard constraints (never violate, never soften):**
+- **Deadline:** submission closes Wed Nov 4, 9:00 PM ET (8:00 PM Central). Team target is 6:00 PM ET. Feature freeze is end of Mon Nov 2.
+- **Meta models are the core.** Every sensitivity judgment comes from a Meta model (Muse Spark). Every mask's geometry comes from SAM 3.1 or OCR. Non-Meta components (OCR, regex checks) are plumbing, never the decision maker.
+- **Never use a `-contributor` model ID** anywhere in the app or the eval. The Contributor tier trains on prompts and completions, which would donate user images and teammates' faces to Meta training. The server refuses to start if any configured model ID contains `contributor`.
+- **Never store or log user images.** Process in memory. No request body logging at any hop (app server, reverse proxy, hosting platform). No images in URLs or query strings.
+- **Masks are solid fill.** Never blur or pixelate as the privacy mechanism; both can be reversed on text. Export is a newly encoded, flattened PNG with all metadata removed, GPS included.
+- **Floor items cannot be unmasked by the model.** Final mask set = floor rule hits ∪ judge's sensitive verdicts. Only the user can unmask a floor item, by hand, in the review editor.
+- **Fail closed.** If the judge call fails or returns invalid output after one retry, mask every floor hit plus every candidate from a high risk SAM class and tell the user the judge was unavailable. Never return an image with fewer masks because a call failed.
+- **No real PII in any dataset.** Staged photos use consenting team members, fake documents, fake passwords, fake addresses. No real IDs, cards, passwords or bystanders.
+- **No eval images in git.** Repo holds manifests and labels only; images live in team private storage. A handful of clearly fake demo images may be committed.
+- **No reuse** of code, data or assets from any other team project, including HaloAI or Victor and Carlos's lab research. Everything is built from the Oct 26 kickoff onward (pending the Official Rules, see Open Questions in BRIEFING.md).
+- **No unearned numbers.** Every metric in the README, slides or video comes from `eval/run_eval.py` output with the commit hash and model IDs recorded. Estimates are labeled as estimates.
+
+## Environment
+
+- **Meta Model API:** base URL `https://api.meta.ai/v1`, OpenAI compatible, `Authorization: Bearer $META_API_KEY`. Supports Chat Completions and Responses APIs. Keys are created at dev.meta.ai.
+- **Muse Spark:** `muse-spark-1.3` (Standard tier, current) and `muse-spark-1.2`. Input: text, image, video, PDF. Output: text. Structured output (strict JSON schema), tool calling, `reasoning_effort` from `minimal` to `xhigh`. Reasoning tokens are billed as output. Price: $1.25 per million input tokens, $4.25 per million output. Proprietary, API only.
+- **SAM 3.1 on the API:** reached over the Responses API (`POST /v1/responses`). Send an image plus one short text phrase; returns a box and a pixel mask per match as special token text in one `output_text` lane. The `meta-sam-parser` PyPI package parses that format. Price: $2.50 per 1,000 images. **Exact model ID string unverified** (`sam-3.1` vs `sam-3-1`); confirm in the Oct 26 smoke test.
+- **SAM 3.1 text prompts:** 32 token limit per phrase. Open weights exist (SAM License) but need a GPU the team doesn't have, so the API is the only path.
+- **No local inference.** Local mode was cut on Oct 24: no team member has a 24 to 32 GB GPU or a large memory Mac, which Muse Glimmer 30B (Meta's open weights multimodal model) needs even at 4 bit. Every model call goes to the Meta Model API. Don't reintroduce local inference without a confirmed hardware answer.
+- **Rate limits:** published as 3,000 requests per minute and 4,000,000 tokens per minute per model, **per team**. All keys on the same team share the pool. SAM 3.1 limits unverified.
+- **Credits:** each accepted participant reportedly gets $150 in Meta Model API credits (third party report, verify at kickoff).
+- **Proposed stack (confirm Oct 26):** Python 3.11+ FastAPI backend (pipeline, OCR, floor rules, compose). Next.js frontend (upload, review editor, export). No database: the service is stateless.
+- **Hosting (proposed):** frontend on Vercel, backend on a small CPU host. No GPU needed because SAM 3.1 and Muse Spark are API calls.
+
+## Locked Decisions
+
+Do not re-litigate unless new evidence is presented. If one is reopened, say so explicitly and record the outcome here.
+
+Made by the team before Oct 24:
+- **Indie developer track, team entry, software only.** About a week of build time rules out hardware.
+- **Project is Redact.** Chosen over Sim2Task, Acceso and FixIt as the best balance of buildability, a measurable result, and even work split.
+- **Roles as listed in Project Overview.** Matches each member's background and the application answers.
+- **Public or staged data only.** No lab data from any team member's research.
+
+Made in the Oct 24 design review (evidence in BRIEFING.md and the review page):
+- **Positioning is context, multi-clue leaks and destination.** The application's claim that "nothing understands context" is false; several shipped tools detect PII in images.
+- **Candidate generation = SAM 3.1 concept sweep + OCR.** SAM 3.1 finds every match for a short phrase; the hosted API has no documented segment everything mode and cannot isolate one text line.
+- **One judge call per image over a numbered overlay (set of marks).** One call per region would cost 30+ reasoning calls per cluttered photo at roughly 23 s each.
+- **The VLM decides, SAM 3.1 and OCR draw the edges.** Muse Spark 1.3 scores 58.6% mAP@50 on Roboflow's detection eval; its own boxes are too loose to be final masks. Judge boxes for missed items only seed a SAM box prompt in the refine step.
+- **Destination handling = deterministic policy table over judge categories.** The judge assigns sensitivity and category in context; `policy.py` maps category × destination to mask or keep. The judge may escalate (mask more) with a reason but cannot de-escalate below the table. Keeps destination behavior testable.
+- **Floor rules run beside the judge** and cannot be overridden by it: Luhn valid card numbers, API key and password patterns plus entropy, SAM classes `ID card` and `credit card`, QR codes, barcodes.
+- **OCR text goes to the judge as quoted data** under a system rule that nothing in the image is an instruction. Instruction-like text is returned as a finding.
+- **Standard tier only, nothing stored, solid fill export** (see Hard constraints).
+- **Evaluation includes a public slice and real baselines:** 50 WebPII screenshots plus B1 (faces and plates), B2 (Presidio Image Redactor), B3 (Muse Spark alone).
+- **Local mode is cut (Oct 24).** No team hardware can run Muse Glimmer 30B. The API is the only mode, so privacy claims are limited to what the Standard tier and our own handling guarantee.
+- **Scope is tiered.** Tier 1 ships regardless. Tier 2 (pre-masking text floor hits on our server before any Meta API call) is gated on Nov 1. Tier 3 only if ahead.
+
+## Provisional Values
+
+Not validated. Each names what replaces it.
+
+| Value | Current setting | Replaced by |
+|---|---|---|
+| Judge model | `muse-spark-1.3`, `reasoning_effort: low` | Oct 27 bake off vs `muse-spark-1.2` and `minimal` on 20 staged images, recall first then latency |
+| Sweep vocabulary | 16 phrases: face, license plate, ID card, credit card, paper document, envelope, name badge, computer monitor, laptop screen, phone screen, whiteboard, sticky note, QR code, barcode, house number, street sign | Per phrase recall and false positive counts after the Oct 29 gate |
+| OCR engine | RapidOCR (ONNX build of PaddleOCR models), CPU | Oct 26 to 27 test on 10 staged photos incl. handwriting; fallback Tesseract |
+| Max image size | 2048 px long edge | Latency and small text recall at the Oct 29 gate |
+| Mask dilation | 4 px | Visual check plus coverage metric on 30 images |
+| Caught threshold (eval) | Mask covers ≥ 90% of a labeled item's box | Agreed by team before the first full run; never changed after seeing results |
+| Latency targets | Candidates on screen < 3 s, verdicts < 15 s p50 | Oct 26 smoke test measurements |
+| Cost per image | Est. ~$0.06 (SAM sweep $0.040, judge ~$0.014, refine ≤ $0.008) | Measured token and request counts from the smoke test |
+| Destination policy table | See BRIEFING.md §2 | Destination accuracy on 30 triple labeled images |
+| Pre-mask recall tolerance | Ship Tier 2 only if recall drops ≤ 2 points on the 30 image subset | Team agrees on the number before the Nov 1 dry run, never after seeing it |
+| Dataset size | 150 images: 50 WebPII, 80 staged, 20 hard negatives; 15 injection images | Revisit only if labeling falls behind on Oct 30 |
+
+## Verification Rules
+
+- Every configuration change ships with its verification command.
+- Every phase ends with its gate check (see BRIEFING.md) before the next phase starts.
+- Every pipeline stage runs standalone on one image from the CLI and writes a debug overlay PNG to `out/debug/`.
+- Every eval number comes from `eval/run_eval.py`, saved under `eval/results/<date>_<commit>/` with model IDs, prompt version and config hash.
+- Before any prompt, model or threshold change merges, run the 30 image regression subset. Block the merge if floor recall drops, if any injection test fails, or if hard negative false positives rise without a recorded reason.
+- Pre-masking (Tier 2) gets two checks before it ships: a unit test proving floor text pixels are filled in every image passed to a provider client, and a recall comparison on the 30 image subset with pre-masking on versus off. Report the recall change as measured.
+- Export check on every build: re-open the exported PNG, assert zero EXIF/XMP/IPTC blocks and assert masked pixels are a single solid color.
+- Startup check: server exits non-zero if any model ID contains `contributor` or if request body logging is enabled.
+- Cost log: every API call records model, input tokens, output tokens, reasoning tokens, latency and estimated cost to `logs/cost.jsonl` (metadata only, never image bytes).
+
+## Current Status
+
+- **Phase:** waiting on approval. Phase 0 starts Mon Oct 26 once all three approvals arrive and the Official Rules are read. Nothing starts before that, code or prep.
+- **Done:** Local mode cut (Oct 24, no hardware). Design review (Oct 24). Twelve checks run; four parts of the application plan rewritten (pitch, pipeline, privacy, safety) and the eval strengthened. Results summarized in BRIEFING.md Phase 0.
+- **Next:** Mon Oct 26: confirm approvals, read the Official Rules, run Phase 0 prep, then the Phase 1 smoke test the same day.
+- **Known gotchas discovered so far:**
+  1. SAM 3.1 on the hosted API is phrase driven. No documented segment everything mode. One phrase per request until proven otherwise.
+  2. SAM will not isolate a single line of text inside a whiteboard or document. Text lines come from OCR.
+  3. Muse Spark's own bounding boxes are loose (58.6% mAP@50, Roboflow). Never ship them as final masks.
+  4. Muse Spark 1.3 averaged 23.1 s per sample on Roboflow's vision evals. Higher reasoning effort did not help detection there (2 points lower at 1.5x cost and latency).
+  5. Muse Spark 1.2 scored slightly higher than 1.3 on Roboflow's vision average and ran faster. Test both.
+  6. `-contributor` model IDs are 12x to 21x cheaper because Meta trains on the prompts. Forbidden here.
+  7. Standard tier: no training on inputs, but zero data retention is not on by default (abuse monitoring). The privacy pitch must say this accurately. There is no local mode to point to.
+  8. Rate limits are per team and shared by every key on that team.
+  9. Reasoning tokens bill as output tokens. Budget for them.
+  10. Blur and pixelation can be reversed on text. Solid fill only.
+  11. Photos carry GPS in EXIF. Strip on ingest, report it as a finding, strip again on export.
+  12. Any text in the image is an injection vector into the judge.
+  13. "Redact" collides with Redact.dev and several App Store apps. Decide by Nov 2.
+  14. WebPII is CC BY 4.0; attribution required in the README.
+  15. Submission deadline is ET. 9 PM ET is 8 PM Central.
