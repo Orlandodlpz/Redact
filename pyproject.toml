@@ -1,0 +1,31 @@
+[project]
+name = "redact"
+version = "0.1.0"
+description = "Privacy scrubber for photos and screenshots. Meta Global AI Developer Hackathon 2026."
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn>=0.32",
+    "pydantic>=2.9",
+    "pydantic-settings>=2.6",
+    "pillow>=11.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+    "httpx>=0.27",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+# The importable package is backend/app, so `import app` works from the repo root,
+# from scripts/, and from tests after `uv sync`.
+[tool.hatch.build.targets.wheel]
+packages = ["backend/app"]
+
+[tool.pytest.ini_options]
+testpaths = ["backend/tests"]
