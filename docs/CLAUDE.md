@@ -152,6 +152,8 @@ Not validated. Each names what replaces it.
   31. RapidOCR's misses on handwriting are detection misses, not reading misses: it reads a line well or never boxes it. Loose detection thresholds find those lines, often with garbled text but a correct box. For masking the box matters more than the text, so score OCR by box coverage, not text match. (Orlando, Oct 26)
   32. OCR can't read digits stacked vertically (a house number on a pillar); the SAM "house number" phrase has to cover it. Handwritten secrets OCR misses fall back on the sticky note or whiteboard mask plus the judge's extra_findings. (Orlando, Oct 26)
   33. OCR is local and free per image, so it can run on the full resolution photo (up to 4096 px) while the API gets 2048 px. Small on screen text needs it. (Orlando, Oct 26)
+  34. iPhone JPEGs open in Pillow as format `MPO`, not `JPEG`: they carry extra embedded frames (depth or gain maps). A JPEG only format check rejects every iPhone photo. ingest.py accepts MPO and uses frame 0. (Orlando, Oct 26)
+  35. Every iPhone photo in the staged set carried GPS in EXIF. ingest.py strips it, reports it, and rebuilds images from raw pixels; any code that opens an upload some other way must not send it anywhere. (Orlando, Oct 26)
   17. "Simple Image Analyzers" is on the guide's anti project list, and Stage One is pass/fail. The pitch, README and video must lead with context, multi clue leaks and destination, not "detects PII in images". (Orlando, Oct 26)
   18. API calls fail until a credit card is on the account, even with credits granted. Each person claims their own credits. (Orlando, Oct 26)
   19. Baseten's docs use `meta-models/muse-spark-open`; the hackathon model ID is `meta-models/muse-spark-open-1026`. (Orlando, Oct 26)

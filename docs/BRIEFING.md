@@ -13,7 +13,7 @@ It works in two layers. SAM 3.1 and OCR find every candidate region that could m
 
 The deliverable for judges is a working hosted demo, a demo video, a public repo, and one results table comparing Redact against three baselines on 150 images.
 
-**Inputs:** one image (JPEG, PNG, HEIC converted on upload, max 20 MB), one destination (`public`, `team`, `ai_assistant`).
+**Inputs:** one image (JPEG, PNG, HEIC or WebP, decoded on the server by `ingest.py`, max 20 MB), one destination (`public`, `team`, `ai_assistant`).
 **Outputs:** a list of findings (mask, category, reason, source, locked or not), then on export a flattened PNG with solid fill masks and zero metadata.
 **Constraint driving every decision:** ten days, three people, and a demo that must work live. Every design choice trades sophistication for reliability and a measurable result.
 
@@ -224,6 +224,7 @@ Each phase ends with a gate. The gate must pass before the next phase begins. Co
       | RapidOCR loose detection, 4096 px | 8 of 12 | 23 of 29 | 0.65 |
 
       RapidOCR kept, Tesseract dropped. Misses: two handwritten lines, a small screen label, a vertically stacked house number. Loose detection boxes lines the defaults skip but reads them badly, which text matching undercounts; the Oct 29 gate scores box coverage instead. Small sample; one person transcribed the key strings.
+    - **ingest.py DONE (Oct 26).** Decodes JPEG (including iPhone MPO), PNG, HEIC and WebP; rejects other formats, animations and files over 20 MB. Applies EXIF rotation, flattens transparency onto white, detects GPS in EXIF or XMP, and rebuilds the image from raw pixels so no metadata survives. `IngestResult` gained two fields beyond the agreed interface: `ocr_image` (up to 4096 px, local OCR only, never sent to an API) and `ocr_scale` (multiply OCR boxes by it to get working image coordinates). 17 unit tests. On the 10 staged photos: GPS found on all 8 iPhone shots and neither web image, 1 to 447 ms per image (the 48 MP photos are the slow ones).
   - Carlos: `judge_v1.md`, schema, validation and fail closed path; Oct 27 judge bake off (1.3 vs 1.2, minimal vs low) on 20 staged images; start the shoot and labeling.
   - Victor: FastAPI routes wired to the pipeline, Next.js upload and findings view, floor rules with unit tests.
 - **Gate (Thu Oct 29):** pipeline runs on 30 labeled images with no crashes; first recall and false positive numbers from `run_eval.py`; p50 latency under 30 s (provisional, tightened after this gate); floor rule unit tests pass.

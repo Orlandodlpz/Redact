@@ -61,6 +61,8 @@ class Settings(BaseSettings):
 
     # Provisional, see docs/CLAUDE.md Provisional Values.
     max_image_edge_px: int = 2048
+    # OCR is local, so it reads a larger copy than the API ever sees (gotcha 33).
+    ocr_max_edge_px: int = 4096
     mask_dilation_px: int = 4
     max_upload_bytes: int = 20 * 1024 * 1024
 
