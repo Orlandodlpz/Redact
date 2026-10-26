@@ -1,6 +1,6 @@
 # BRIEFING.md: Redact Execution Plan
 
-**Last Updated:** 2026-10-26 (Phase 1 DONE with smoke test results; boxes defined as half-open)
+**Last Updated:** 2026-10-26 (name kept as Redact; fail closed classes confirmed; open questions closed)
 **Purpose:** The operational plan. What we're building, how the pieces fit, and the phased sequence to get there with minimal rework.
 
 > Relationship to other docs: CLAUDE.md tracks decisions, constraints and state. This document is the **execution plan**. If the two disagree, stop and fix the docs before writing code.
@@ -112,7 +112,7 @@ OCR candidates have `source: "ocr"`, `sam_label: null`, and `text` set. Boxes ar
 ```
 Validation in `judge.py`: unknown marks are dropped and logged; marks missing from `verdicts` are treated as unjudged; boxes are clamped to the image; invalid JSON gets one retry, then the fail closed path. `schemas.JudgeOutput` forbids extra keys and requires every field, so its JSON schema is strict as is.
 
-**Fail closed classes** (`config.HIGH_RISK_SAM_CLASSES`, proposed Oct 26, team to confirm): every sweep phrase except `street sign`. Screens, documents, whiteboards and sticky notes stay in because that is where text secrets live.
+**Fail closed classes** (`config.HIGH_RISK_SAM_CLASSES`, confirmed by the team Oct 26): every sweep phrase except `street sign`. Screens, documents, whiteboards and sticky notes stay in because that is where text secrets live.
 
 **Categories:** `credential`, `payment`, `government_id`, `personal_account`, `contact_info`, `home_location`, `face`, `license_plate`, `internal_data`, `other_sensitive`, `benign`.
 
@@ -270,7 +270,7 @@ Each phase ends with a gate. The gate must pass before the next phase begins. Co
 | ~~Problem statement~~ Decided Oct 26: Build for Your World. | Everyone | Oct 26 |
 | ~~Go for the Best Build on Meta Open Weight Models bonus ($10K)?~~ Decided Oct 26: Tier 3, only if everything else is done (Muse Spark Open on partner inference as a judge option). | Everyone | Oct 26 |
 | Judge model and effort after the bake off | Carlos | Oct 27 |
-| Final project name (candidates below) | Everyone | Nov 2 |
+| ~~Final project name~~ Decided Oct 26: keep **Redact**. Candidates kept below for the record. | Everyone | Oct 26 |
 
 **Name candidates** (Oct 26, one web search each; no trademark or domain check yet):
 
@@ -280,4 +280,4 @@ Each phase ends with a gate. The gate must pass before the next phase begins. Co
 | 2 | Shareproof | Names the moment: proof the image before you share it | No app found; nearest is ProofMode's unrelated "Share Proof" action |
 | 3 | Redact (current) | Already in the repo and docs | Collides with Redact.dev and App Store "Redact" apps (gotcha 13) |
 
-Ruled out: Blackbar (taken by a screenshot redaction Chrome extension and a report tool), Scrub names (crowded with metadata strippers), Mask names (Maskr exists and also strips GPS), Eyes Only (confused with Snapchat's "My Eyes Only"). Recommendation: decide by Oct 29 instead of Nov 2, because the name goes into the UI Victor builds this week.
+Ruled out: Blackbar (taken by a screenshot redaction Chrome extension and a report tool), Scrub names (crowded with metadata strippers), Mask names (Maskr exists and also strips GPS), Eyes Only (confused with Snapchat's "My Eyes Only"). Outcome: the team kept Redact (Oct 26).

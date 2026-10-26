@@ -36,7 +36,7 @@ SWEEP_PHRASES: tuple[str, ...] = (
 
 # SAM classes masked on the fail closed path when the judge is unavailable.
 # Every sweep class except street sign: screens, documents, whiteboards and
-# sticky notes are where text secrets live. Proposed Oct 26, team to confirm.
+# sticky notes are where text secrets live. Confirmed by the team Oct 26.
 HIGH_RISK_SAM_CLASSES: frozenset[str] = frozenset(SWEEP_PHRASES) - {"street sign"}
 
 # Loggers that write request bodies (base64 images included) at DEBUG.

@@ -132,7 +132,7 @@ Not validated. Each names what replaces it.
   10. Blur and pixelation can be reversed on text. Solid fill only.
   11. Photos carry GPS in EXIF. Strip on ingest, report it as a finding, strip again on export.
   12. Any text in the image is an injection vector into the judge.
-  13. "Redact" collides with Redact.dev and several App Store apps. Decide by Nov 2.
+  13. "Redact" collides with Redact.dev and several App Store apps. Team kept the name anyway (Oct 26); the pitch and README must make the context and destination angle obvious so judges don't mistake us for those.
   14. WebPII is CC BY 4.0; attribution required in the README.
   15. Submission deadline is ET. 9 PM ET is 8 PM Central.
   16. The guide lists the building period as Oct 27 to Nov 4, but the event starts with the Oct 26 kickoff. Git timestamps are public evidence of when code was written. Team confirmed Oct 26 that code may start after kickoff. (Orlando, Oct 26)
