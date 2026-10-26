@@ -1,6 +1,6 @@
 # BRIEFING.md: Redact Execution Plan
 
-**Last Updated:** 2026-10-26 (name kept as Redact; fail closed classes confirmed; open questions closed)
+**Last Updated:** 2026-10-26 (OCR engine test results in Phase 2)
 **Purpose:** The operational plan. What we're building, how the pieces fit, and the phased sequence to get there with minimal rework.
 
 > Relationship to other docs: CLAUDE.md tracks decisions, constraints and state. This document is the **execution plan**. If the two disagree, stop and fix the docs before writing code.
@@ -213,7 +213,17 @@ Each phase ends with a gate. The gate must pass before the next phase begins. Co
 ### Phase 2: Pipeline v0, end to end (Tue Oct 27 to Thu Oct 29)
 - **Goal:** `python cli.py analyze img.jpg --dest public` produces findings JSON and a debug overlay.
 - **Steps:**
-  - Orlando: ingest, sweep, OCR (engine test on 10 staged photos incl. handwriting), candidates with IoU dedupe, marks overlay, compose. Structure the pipeline so OCR and text floor rules can run before the sweep; Tier 2 pre-masking depends on that order.
+  - Orlando: ingest, sweep, OCR, candidates with IoU dedupe, marks overlay, compose. Structure the pipeline so OCR and text floor rules can run before the sweep; Tier 2 pre-masking depends on that order.
+    - **OCR engine test DONE (Oct 26).** `scripts/ocr_engine_test.py` on 10 staged photos (3 handwritten notes, 2 whiteboards, printed page, screens, ID badge, house number, menu). 12 sensitive strings matched by text at 0.8 similarity:
+
+      | Engine, setting | Sensitive found | Other found | Mean s per image |
+      |---|---|---|---|
+      | Tesseract, 2048 px | 0 of 12 | 6 of 29 | 0.32 |
+      | RapidOCR default, 2048 px | 7 of 12 | 22 of 29 | 0.64 |
+      | RapidOCR default, 4096 px | 8 of 12 | 22 of 29 | 0.65 |
+      | RapidOCR loose detection, 4096 px | 8 of 12 | 23 of 29 | 0.65 |
+
+      RapidOCR kept, Tesseract dropped. Misses: two handwritten lines, a small screen label, a vertically stacked house number. Loose detection boxes lines the defaults skip but reads them badly, which text matching undercounts; the Oct 29 gate scores box coverage instead. Small sample; one person transcribed the key strings.
   - Carlos: `judge_v1.md`, schema, validation and fail closed path; Oct 27 judge bake off (1.3 vs 1.2, minimal vs low) on 20 staged images; start the shoot and labeling.
   - Victor: FastAPI routes wired to the pipeline, Next.js upload and findings view, floor rules with unit tests.
 - **Gate (Thu Oct 29):** pipeline runs on 30 labeled images with no crashes; first recall and false positive numbers from `run_eval.py`; p50 latency under 30 s (provisional, tightened after this gate); floor rule unit tests pass.

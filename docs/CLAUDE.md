@@ -1,7 +1,7 @@
 # CLAUDE.md: Redact
 
 Project context and conventions. Read this first in every session, then read docs/BRIEFING.md.
-**Last Updated:** 2026-10-26 (Phase 1 smoke test done; measured latency and cost recorded)
+**Last Updated:** 2026-10-26 (OCR engine test done: RapidOCR kept, Tesseract dropped)
 
 ## Interaction Mode: Always On
 
@@ -92,8 +92,10 @@ Not validated. Each names what replaces it.
 |---|---|---|
 | Judge model | `muse-spark-1.3`, `reasoning_effort: low` | Oct 27 bake off vs `muse-spark-1.2` and `minimal` on 20 staged images, recall first then latency |
 | Sweep vocabulary | 16 phrases: face, license plate, ID card, credit card, paper document, envelope, name badge, computer monitor, laptop screen, phone screen, whiteboard, sticky note, QR code, barcode, house number, street sign | Per phrase recall and false positive counts after the Oct 29 gate |
-| OCR engine | RapidOCR (ONNX build of PaddleOCR models), CPU | Oct 26 to 27 test on 10 staged photos incl. handwriting; fallback Tesseract |
-| Max image size | 2048 px long edge | Latency and small text recall at the Oct 29 gate |
+| OCR engine | RapidOCR (PP-OCRv6 small models, ONNX), CPU. Engine test Oct 26 on 10 photos: 8 of 12 sensitive strings found vs Tesseract 0 of 12, mean 0.65 s per image. Tesseract dropped as fallback | Box coverage per labeled text item at the Oct 29 gate |
+| Max image size | 2048 px long edge for everything sent to the API | Latency and small text recall at the Oct 29 gate |
+| OCR input size | Up to 4096 px long edge, run locally on the pre-resize image; boxes scaled down to the 2048 px working image. Engine test: 8 of 12 at 4096 vs 7 of 12 at 2048, same speed | Oct 29 gate |
+| OCR detection thresholds | Loose: `Det.thresh` 0.2, `Det.box_thresh` 0.4, `Det.unclip_ratio` 2.0, `Global.text_score` 0.4. Finds handwritten lines the defaults skip, at 5 to 30% more lines per image | Box coverage and candidate count at the Oct 29 gate |
 | Mask dilation | 4 px | Visual check plus coverage metric on 30 images |
 | Caught threshold (eval) | Mask covers ≥ 90% of a labeled item's box | Agreed by team before the first full run; never changed after seeing results |
 | Latency targets | Candidates on screen < 3 s, verdicts < 15 s p50. Smoke test (Oct 26, 3 images): the 16 phrase sweep alone took 2.7 to 4.1 s wall, so < 3 s is at risk; judge p50 was 3.1 to 9.9 s depending on config, so < 15 s looks reachable | Oct 29 gate measurements on 30 images, with OCR and refine in the path |
@@ -118,7 +120,7 @@ Not validated. Each names what replaces it.
 
 - **Phase:** Phase 1 DONE (Oct 26). Official Rules read, code started Oct 26, credits claimed, smoke test measured both models (BRIEFING.md Phase 1 results).
 - **Done:** Local mode cut (Oct 24, no hardware). Design review (Oct 24). Twelve checks run; four parts of the application plan rewritten (pitch, pipeline, privacy, safety) and the eval strengthened. Results summarized in BRIEFING.md Phase 0. Official Rules read and recorded (Oct 26).
-- **Next:** Phase 2. Oct 27 judge bake off (Carlos) now has measured latency to compare against; Orlando starts ingest, OCR engine test, sweep and candidates.
+- **Next:** Phase 2. Oct 27 judge bake off (Carlos) now has measured latency to compare against; OCR engine test done (RapidOCR); Orlando starts ingest, sweep, ocr.py and candidates.
 - **Known gotchas discovered so far:**
   1. SAM 3.1 on the hosted API is phrase driven. No documented segment everything mode. One phrase per request until proven otherwise.
   2. SAM will not isolate a single line of text inside a whiteboard or document. Text lines come from OCR.
@@ -146,6 +148,10 @@ Not validated. Each names what replaces it.
   27. iPhone ProRAW photos are DNG, 10 to 43 MB: over the 20 MB upload limit and unreadable by Pillow. Shoot staged photos as HEIC or JPEG. (Orlando, Oct 26)
   28. SAM Responses usage reports no input tokens; it bills per request, so cost is counted per request. (Orlando, Oct 26)
   29. SAM allows 3,000 requests per minute per team and each image costs 16, so the whole team gets about 187 images per minute. A 150 image eval sent at once uses 2,400 of them in a minute and starves the hosted demo. Pace eval runs to about 100 images per minute. (Orlando, Oct 26)
+  30. Tesseract found 0 of 12 sensitive strings in phone photos (handwriting, whiteboards, an ID badge, a screen). It is built for scans. Don't fall back to it for photos. (Orlando, Oct 26)
+  31. RapidOCR's misses on handwriting are detection misses, not reading misses: it reads a line well or never boxes it. Loose detection thresholds find those lines, often with garbled text but a correct box. For masking the box matters more than the text, so score OCR by box coverage, not text match. (Orlando, Oct 26)
+  32. OCR can't read digits stacked vertically (a house number on a pillar); the SAM "house number" phrase has to cover it. Handwritten secrets OCR misses fall back on the sticky note or whiteboard mask plus the judge's extra_findings. (Orlando, Oct 26)
+  33. OCR is local and free per image, so it can run on the full resolution photo (up to 4096 px) while the API gets 2048 px. Small on screen text needs it. (Orlando, Oct 26)
   17. "Simple Image Analyzers" is on the guide's anti project list, and Stage One is pass/fail. The pitch, README and video must lead with context, multi clue leaks and destination, not "detects PII in images". (Orlando, Oct 26)
   18. API calls fail until a credit card is on the account, even with credits granted. Each person claims their own credits. (Orlando, Oct 26)
   19. Baseten's docs use `meta-models/muse-spark-open`; the hackathon model ID is `meta-models/muse-spark-open-1026`. (Orlando, Oct 26)
