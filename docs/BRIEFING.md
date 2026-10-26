@@ -1,6 +1,6 @@
 # BRIEFING.md: Redact Execution Plan
 
-**Last Updated:** 2026-10-26 (Phase 1 DONE with smoke test results; boxes defined as half-open)
+**Last Updated:** 2026-10-26 (OCR engine test results in Phase 2)
 **Purpose:** The operational plan. What we're building, how the pieces fit, and the phased sequence to get there with minimal rework.
 
 > Relationship to other docs: CLAUDE.md tracks decisions, constraints and state. This document is the **execution plan**. If the two disagree, stop and fix the docs before writing code.
@@ -112,7 +112,7 @@ OCR candidates have `source: "ocr"`, `sam_label: null`, and `text` set. Boxes ar
 ```
 Validation in `judge.py`: unknown marks are dropped and logged; marks missing from `verdicts` are treated as unjudged; boxes are clamped to the image; invalid JSON gets one retry, then the fail closed path. `schemas.JudgeOutput` forbids extra keys and requires every field, so its JSON schema is strict as is.
 
-**Fail closed classes** (`config.HIGH_RISK_SAM_CLASSES`, proposed Oct 26, team to confirm): every sweep phrase except `street sign`. Screens, documents, whiteboards and sticky notes stay in because that is where text secrets live.
+**Fail closed classes** (`config.HIGH_RISK_SAM_CLASSES`, confirmed by the team Oct 26): every sweep phrase except `street sign`. Screens, documents, whiteboards and sticky notes stay in because that is where text secrets live.
 
 **Categories:** `credential`, `payment`, `government_id`, `personal_account`, `contact_info`, `home_location`, `face`, `license_plate`, `internal_data`, `other_sensitive`, `benign`.
 
@@ -213,7 +213,17 @@ Each phase ends with a gate. The gate must pass before the next phase begins. Co
 ### Phase 2: Pipeline v0, end to end (Tue Oct 27 to Thu Oct 29)
 - **Goal:** `python cli.py analyze img.jpg --dest public` produces findings JSON and a debug overlay.
 - **Steps:**
-  - Orlando: ingest, sweep, OCR (engine test on 10 staged photos incl. handwriting), candidates with IoU dedupe, marks overlay, compose. Structure the pipeline so OCR and text floor rules can run before the sweep; Tier 2 pre-masking depends on that order.
+  - Orlando: ingest, sweep, OCR, candidates with IoU dedupe, marks overlay, compose. Structure the pipeline so OCR and text floor rules can run before the sweep; Tier 2 pre-masking depends on that order.
+    - **OCR engine test DONE (Oct 26).** `scripts/ocr_engine_test.py` on 10 staged photos (3 handwritten notes, 2 whiteboards, printed page, screens, ID badge, house number, menu). 12 sensitive strings matched by text at 0.8 similarity:
+
+      | Engine, setting | Sensitive found | Other found | Mean s per image |
+      |---|---|---|---|
+      | Tesseract, 2048 px | 0 of 12 | 6 of 29 | 0.32 |
+      | RapidOCR default, 2048 px | 7 of 12 | 22 of 29 | 0.64 |
+      | RapidOCR default, 4096 px | 8 of 12 | 22 of 29 | 0.65 |
+      | RapidOCR loose detection, 4096 px | 8 of 12 | 23 of 29 | 0.65 |
+
+      RapidOCR kept, Tesseract dropped. Misses: two handwritten lines, a small screen label, a vertically stacked house number. Loose detection boxes lines the defaults skip but reads them badly, which text matching undercounts; the Oct 29 gate scores box coverage instead. Small sample; one person transcribed the key strings.
   - Carlos: `judge_v1.md`, schema, validation and fail closed path; Oct 27 judge bake off (1.3 vs 1.2, minimal vs low) on 20 staged images; start the shoot and labeling.
   - Victor: FastAPI routes wired to the pipeline, Next.js upload and findings view, floor rules with unit tests.
 - **Gate (Thu Oct 29):** pipeline runs on 30 labeled images with no crashes; first recall and false positive numbers from `run_eval.py`; p50 latency under 30 s (provisional, tightened after this gate); floor rule unit tests pass.
@@ -270,7 +280,7 @@ Each phase ends with a gate. The gate must pass before the next phase begins. Co
 | ~~Problem statement~~ Decided Oct 26: Build for Your World. | Everyone | Oct 26 |
 | ~~Go for the Best Build on Meta Open Weight Models bonus ($10K)?~~ Decided Oct 26: Tier 3, only if everything else is done (Muse Spark Open on partner inference as a judge option). | Everyone | Oct 26 |
 | Judge model and effort after the bake off | Carlos | Oct 27 |
-| Final project name (candidates below) | Everyone | Nov 2 |
+| ~~Final project name~~ Decided Oct 26: keep **Redact**. Candidates kept below for the record. | Everyone | Oct 26 |
 
 **Name candidates** (Oct 26, one web search each; no trademark or domain check yet):
 
@@ -280,4 +290,4 @@ Each phase ends with a gate. The gate must pass before the next phase begins. Co
 | 2 | Shareproof | Names the moment: proof the image before you share it | No app found; nearest is ProofMode's unrelated "Share Proof" action |
 | 3 | Redact (current) | Already in the repo and docs | Collides with Redact.dev and App Store "Redact" apps (gotcha 13) |
 
-Ruled out: Blackbar (taken by a screenshot redaction Chrome extension and a report tool), Scrub names (crowded with metadata strippers), Mask names (Maskr exists and also strips GPS), Eyes Only (confused with Snapchat's "My Eyes Only"). Recommendation: decide by Oct 29 instead of Nov 2, because the name goes into the UI Victor builds this week.
+Ruled out: Blackbar (taken by a screenshot redaction Chrome extension and a report tool), Scrub names (crowded with metadata strippers), Mask names (Maskr exists and also strips GPS), Eyes Only (confused with Snapchat's "My Eyes Only"). Outcome: the team kept Redact (Oct 26).
