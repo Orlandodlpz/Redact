@@ -1,7 +1,7 @@
 # CLAUDE.md: Redact
 
 Project context and conventions. Read this first in every session, then read docs/BRIEFING.md.
-**Last Updated:** 2026-10-26 (Official Rules read; rubric, submission rules and credits recorded)
+**Last Updated:** 2026-10-26 (Phase 1 smoke test done; measured latency and cost recorded)
 
 ## Interaction Mode: Always On
 
@@ -19,7 +19,7 @@ Redact is a privacy scrubber for photos and screenshots, built by a three person
 
 Pitch line: *Pattern tools find text that looks like PII. Redact decides what is sensitive in this photo, for whoever will see it, and explains every mask.*
 
-Problem statement: **Build for Your World** (proposed, confirm with the team). The other option, Push the Frontier, targets science and physical systems and fits worse.
+Problem statement: **Build for Your World** (decided Oct 26). The other option, Push the Frontier, targets science and physical systems and fits worse.
 
 Judging (Official Rules, read Oct 26):
 - **Stage One, pass/fail:** the project reasonably fits the theme and reasonably uses the Meta Model API or Meta open weights models.
@@ -34,7 +34,7 @@ Team and ownership:
 
 **Hard constraints (never violate, never soften):**
 - **Deadline:** submission closes Wed Nov 4, 9:00 PM ET (8:00 PM Central) on the CV platform. Late submissions are not considered. Team target is 6:00 PM ET. Feature freeze is end of Mon Nov 2.
-- **Submission rules (Official Rules, read Oct 26):** one submission per team, entered by one appointed Representative. Repo must be public. Every team member is listed on the submission page. A three minute demo video is required and must show only features, code and functionality built during the event. Judges must be able to tell what was built during the event; failing that is grounds for disqualification.
+- **Submission rules (Official Rules, read Oct 26):** one submission per team, entered by one appointed Representative (Orlando, decided Oct 26). Repo must be public. Every team member is listed on the submission page. A three minute demo video is required and must show only features, code and functionality built during the event. Judges must be able to tell what was built during the event; failing that is grounds for disqualification.
 - **Meta models are the core.** Every sensitivity judgment comes from a Meta model (Muse Spark). Every mask's geometry comes from SAM 3.1 or OCR. Non-Meta components (OCR, regex checks) are plumbing, never the decision maker.
 - **Never use a `-contributor` model ID** anywhere in the app or the eval. The Contributor tier trains on prompts and completions, which would donate user images and teammates' faces to Meta training. The server refuses to start if any configured model ID contains `contributor`.
 - **Never store or log user images.** Process in memory. No request body logging at any hop (app server, reverse proxy, hosting platform). No images in URLs or query strings.
@@ -51,10 +51,11 @@ Team and ownership:
 
 - **Meta Model API:** base URL `https://api.meta.ai/v1`, OpenAI compatible, `Authorization: Bearer $META_API_KEY`. Supports Chat Completions and Responses APIs. Keys are created at dev.meta.ai.
 - **Muse Spark:** `muse-spark-1.3` (Standard tier, current) and `muse-spark-1.2`. Input: text, image, video, PDF. Output: text. Structured output (strict JSON schema), tool calling, `reasoning_effort` from `minimal` to `xhigh`. Reasoning tokens are billed as output. Price: $1.25 per million input tokens, $4.25 per million output. Proprietary, API only.
-- **SAM 3.1 on the API:** reached over the Responses API (`POST /v1/responses`). Send an image plus one short text phrase; returns a box and a pixel mask per match as special token text in one `output_text` lane. The `meta-sam-parser` PyPI package parses that format. Price: $2.50 per 1,000 images. **Exact model ID string unverified** (`sam-3.1` vs `sam-3-1`); confirm in the Oct 26 smoke test.
+- **SAM 3.1 on the API:** reached over the Responses API (`POST /v1/responses`). Send an image plus one short text phrase; returns a box and a pixel mask per match as special token text in one `output_text` lane. The `meta-sam-parser` PyPI package parses that format. Price: $2.50 per 1,000 images. Model ID **`sam-3.1`** (confirmed with `GET /v1/models`, Oct 26). Request shape that works: `responses.create(stream=True)` with an `input_image` data URL plus one `input_text` holding a noun phrase or `build_object_prompt()` box prompts; `metadata={"include_confidence": "true"}` adds a confidence per match. See `providers/meta_api.py`.
 - **SAM 3.1 text prompts:** 32 token limit per phrase. Open weights exist (SAM License) but need a GPU the team doesn't have, so the API is the only path.
 - **No local inference.** Local mode was cut on Oct 24: no team member has a 24 to 32 GB GPU or a large memory Mac, which Muse Glimmer 30B (Meta's open weights multimodal model) needs even at 4 bit. Every model call goes to the Meta Model API. Don't reintroduce local inference without a confirmed hardware answer.
-- **Rate limits:** published as 3,000 requests per minute and 4,000,000 tokens per minute per model, **per team**. All keys on the same team share the pool. SAM 3.1 limits unverified.
+- **Rate limits:** published as 3,000 requests per minute and 4,000,000 tokens per minute per model, **per team**. All keys on the same team share the pool. SAM 3.1: 3,000 requests per minute (`x-ratelimit-limit-requests` header, Oct 26), no token limit header.
+- **Keys (decided Oct 26):** Carlos's key runs every eval, so eval cost sits in one log. Victor's key runs the hosted demo, so abuse can only burn that budget. Orlando's key is for development and smoke tests. Separate budgets, shared rate limits.
 - **Credits (Official Rules):** each participant claims $150 in Meta Model API credits individually through the credits form by Nov 4, 9:00 PM ET. Credits are per account and cannot be claimed for someone else. A credit card must be on the account before any API call works, and adding it triggers a temporary preauthorization charge. Credits arrive in batches; check the Billing page. Set a Spend Limit notification there.
 - **Partner inference for open weights:** Baseten ($100 per individual plus a 2M TPM limit, reviewed), Modal ($100, first 1,000 participants) and Fireworks ($25 per team, shortlist) can host Muse Glimmer and Muse Spark Open. This is hosted inference on a third party, not local inference, so it does not restore the on device privacy story. It matters only for the Best Build on Meta Open Weight Models bonus prize, which is a Tier 3 item: attempt it only if everything else is done.
 - **Proposed stack (confirm Oct 26):** Python 3.11+ FastAPI backend (pipeline, OCR, floor rules, compose). Next.js frontend (upload, review editor, export). No database: the service is stateless.
@@ -95,8 +96,8 @@ Not validated. Each names what replaces it.
 | Max image size | 2048 px long edge | Latency and small text recall at the Oct 29 gate |
 | Mask dilation | 4 px | Visual check plus coverage metric on 30 images |
 | Caught threshold (eval) | Mask covers ≥ 90% of a labeled item's box | Agreed by team before the first full run; never changed after seeing results |
-| Latency targets | Candidates on screen < 3 s, verdicts < 15 s p50 | Oct 26 smoke test measurements |
-| Cost per image | Est. ~$0.06 (SAM sweep $0.040, judge ~$0.014, refine ≤ $0.008) | Measured token and request counts from the smoke test |
+| Latency targets | Candidates on screen < 3 s, verdicts < 15 s p50. Smoke test (Oct 26, 3 images): the 16 phrase sweep alone took 2.7 to 4.1 s wall, so < 3 s is at risk; judge p50 was 3.1 to 9.9 s depending on config, so < 15 s looks reachable | Oct 29 gate measurements on 30 images, with OCR and refine in the path |
+| Cost per image | Est. ~$0.06 from measured requests and tokens at list prices: sweep 16 × $0.0025 = $0.040, judge $0.013 to $0.017 (8.3k to 8.8k input tokens for two 2048 px images), refine ≤ 3 × $0.0025 | Billing page check after the first full eval run |
 | Destination policy table | See BRIEFING.md §2 | Destination accuracy on 30 triple labeled images |
 | Pre-mask recall tolerance | Ship Tier 2 only if recall drops ≤ 2 points on the 30 image subset | Team agrees on the number before the Nov 1 dry run, never after seeing it |
 | Dataset size | 150 images: 50 WebPII, 80 staged, 20 hard negatives; 15 injection images | Revisit only if labeling falls behind on Oct 30 |
@@ -115,15 +116,15 @@ Not validated. Each names what replaces it.
 
 ## Current Status
 
-- **Phase:** Phase 1. Official Rules read Oct 26, no blocker to the plan. Team confirmed code may start Oct 26. Credits claimed.
+- **Phase:** Phase 1 DONE (Oct 26). Official Rules read, code started Oct 26, credits claimed, smoke test measured both models (BRIEFING.md Phase 1 results).
 - **Done:** Local mode cut (Oct 24, no hardware). Design review (Oct 24). Twelve checks run; four parts of the application plan rewritten (pitch, pipeline, privacy, safety) and the eval strengthened. Results summarized in BRIEFING.md Phase 0. Official Rules read and recorded (Oct 26).
-- **Next:** Phase 1 skeleton and smoke test.
+- **Next:** Phase 2. Oct 27 judge bake off (Carlos) now has measured latency to compare against; Orlando starts ingest, OCR engine test, sweep and candidates.
 - **Known gotchas discovered so far:**
   1. SAM 3.1 on the hosted API is phrase driven. No documented segment everything mode. One phrase per request until proven otherwise.
   2. SAM will not isolate a single line of text inside a whiteboard or document. Text lines come from OCR.
   3. Muse Spark's own bounding boxes are loose (58.6% mAP@50, Roboflow). Never ship them as final masks.
-  4. Muse Spark 1.3 averaged 23.1 s per sample on Roboflow's vision evals. Higher reasoning effort did not help detection there (2 points lower at 1.5x cost and latency).
-  5. Muse Spark 1.2 scored slightly higher than 1.3 on Roboflow's vision average and ran faster. Test both.
+  4. Muse Spark 1.3 averaged 23.1 s per sample on Roboflow's vision evals. Higher reasoning effort did not help detection there (2 points lower at 1.5x cost and latency). Our smoke test (Oct 26, our judge request shape, 10 calls per config) measured p50 3.1 s at `minimal` and 5.8 s at `low`.
+  5. Muse Spark 1.2 scored slightly higher than 1.3 on Roboflow's vision average and ran faster. Test both. In our smoke test 1.2 was slower than 1.3 at both efforts (p50 4.5 vs 3.1 s minimal, 9.9 vs 5.8 s low) and spent more reasoning tokens. Accuracy is the Oct 27 bake off's job.
   6. `-contributor` model IDs are 12x to 21x cheaper because Meta trains on the prompts. Forbidden here.
   7. Standard tier: no training on inputs, but zero data retention is not on by default (abuse monitoring). The privacy pitch must say this accurately. There is no local mode to point to.
   8. Rate limits are per team and shared by every key on that team.
@@ -137,6 +138,14 @@ Not validated. Each names what replaces it.
   16. The guide lists the building period as Oct 27 to Nov 4, but the event starts with the Oct 26 kickoff. Git timestamps are public evidence of when code was written. Team confirmed Oct 26 that code may start after kickoff. (Orlando, Oct 26)
   20. The openai Python SDK logs full request bodies, base64 images included, when `OPENAI_LOG=debug` or its logger is at DEBUG. The startup check refuses both, plus `httpx` and `httpcore` at DEBUG. It cannot see proxy or hosting platform logs; those are checked by hand at deploy. (Orlando, Oct 26)
   21. When the startup check fails, uvicorn exits with code 3 ("Application startup failed"), not 1. Any non-zero code means refused. (Orlando, Oct 26)
+  22. SAM masks come back cropped to their box and at lower resolution (a 1466 × 1018 box came with a 1024 × 711 raster). Scale each mask to its box and paste it at the box corner before compose, IoU or RLE for the full image. Boxes are half-open. (Orlando, Oct 26)
+  23. One SAM request accepts several phrases ("face, computer monitor" returned 1 + 8 = 9 matches; "face. computer monitor" lost the face), but matches carry no phrase label. Floor rules and fail closed need the label, so the sweep stays one phrase per request. One image tested. (Orlando, Oct 26)
+  24. SAM false positives seen in the smoke test: "whiteboard" matched a white desk, "face" matched the engraved portrait on a card, "computer monitor" matched a glasses lens reflection and monitor backs. Fail closed will over-mask these; the judge must clear them. (Orlando, Oct 26)
+  25. Muse Spark strict structured output accepts Pydantic's `$ref`/`$defs` schema as is: 40 of 40 smoke test outputs validated against `JudgeOutput`. Valid is not correct. (Orlando, Oct 26)
+  26. Don't keep the repo in an iCloud synced folder (macOS "Desktop & Documents"). iCloud set the hidden flag on `.venv` files and Python 3.12 skips hidden `.pth` files, so `import app` broke. Orlando's repo moved to `~/dev/Redact`. (Orlando, Oct 26)
+  27. iPhone ProRAW photos are DNG, 10 to 43 MB: over the 20 MB upload limit and unreadable by Pillow. Shoot staged photos as HEIC or JPEG. (Orlando, Oct 26)
+  28. SAM Responses usage reports no input tokens; it bills per request, so cost is counted per request. (Orlando, Oct 26)
+  29. SAM allows 3,000 requests per minute per team and each image costs 16, so the whole team gets about 187 images per minute. A 150 image eval sent at once uses 2,400 of them in a minute and starves the hosted demo. Pace eval runs to about 100 images per minute. (Orlando, Oct 26)
   17. "Simple Image Analyzers" is on the guide's anti project list, and Stage One is pass/fail. The pitch, README and video must lead with context, multi clue leaks and destination, not "detects PII in images". (Orlando, Oct 26)
   18. API calls fail until a credit card is on the account, even with credits granted. Each person claims their own credits. (Orlando, Oct 26)
   19. Baseten's docs use `meta-models/muse-spark-open`; the hackathon model ID is `meta-models/muse-spark-open-1026`. (Orlando, Oct 26)

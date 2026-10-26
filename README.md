@@ -24,3 +24,15 @@ curl localhost:8000/health
 ```
 
 The server refuses to start if any model ID contains `contributor` or if request body logging is on.
+
+Keep the repo outside iCloud synced folders (macOS Desktop and Documents); iCloud breaks the `.venv`.
+
+## Smoke test
+
+Calls the real API (about $0.72 per run at list prices). Use clearly fake images or consenting teammates only, kept outside the repo, as JPEG or PNG.
+
+```bash
+uv run python scripts/smoke_test.py --images /path/to/fake/images
+```
+
+Prints the latency, token and cost table, writes debug overlays to `out/debug/` and logs every call to `logs/cost.jsonl` (both gitignored).
