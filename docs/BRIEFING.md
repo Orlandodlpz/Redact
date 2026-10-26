@@ -1,6 +1,6 @@
 # BRIEFING.md: Redact Execution Plan
 
-**Last Updated:** 2026-10-26 (Official Rules read; Phase 0 results, open questions and submission steps updated)
+**Last Updated:** 2026-10-26 (Phase 1 DONE with smoke test results; boxes defined as half-open)
 **Purpose:** The operational plan. What we're building, how the pieces fit, and the phased sequence to get there with minimal rework.
 
 > Relationship to other docs: CLAUDE.md tracks decisions, constraints and state. This document is the **execution plan**. If the two disagree, stop and fix the docs before writing code.
@@ -90,7 +90,7 @@ redact/
 { "mark": 7, "source": "sam", "sam_label": "sticky note", "text": null,
   "box": [492, 196, 626, 262], "mask_rle": "<coco rle>", "score": 0.91 }
 ```
-OCR candidates have `source: "ocr"`, `sam_label: null`, and `text` set. Boxes are integer pixels `[x1, y1, x2, y2]` in the ingested image's coordinates. `mask_rle` is a COCO compressed RLE string. `mark` is null until `candidates.build` numbers the merged list. The judge request's `kind` is `sam_label` for SAM candidates and `"text"` for OCR candidates.
+OCR candidates have `source: "ocr"`, `sam_label: null`, and `text` set. Boxes are integer pixels `[x1, y1, x2, y2]` in the ingested image's coordinates, half-open (x2 and y2 exclusive) like `meta-sam-parser` and Pillow's crop. `mask_rle` is a COCO compressed RLE string. `mark` is null until `candidates.build` numbers the merged list. The judge request's `kind` is `sam_label` for SAM candidates and `"text"` for OCR candidates.
 
 **Judge request.** Two images (original, marked overlay) plus a JSON list of candidates `{mark, kind, text, box}` plus `destination`. OCR text is wrapped as quoted data. System prompt from `prompts/judge_vN.md`.
 
@@ -150,11 +150,11 @@ The judge may escalate any `keep` to `mask` with a reason. It can never turn a `
 
 | Step | Model | Requests | Est. cost |
 |---|---|---|---|
-| Sweep | SAM 3.1 (API) | up to 16, or 1 if phrases batch | $0.040 |
-| Judge | Muse Spark 1.3 Standard | 1 (+1 retry on invalid JSON) | ~$0.014 |
-| Refine | SAM 3.1 box prompt | 0 to 3 | up to $0.008 |
+| Sweep | SAM 3.1 (API) | 16, one phrase each (batched phrases lose their labels) | $0.040 |
+| Judge | Muse Spark 1.3 Standard | 1 (+1 retry on invalid JSON) | $0.013 to $0.014 |
+| Refine | SAM 3.1 box prompt | 0 to 3 | up to $0.0075 |
 
-All estimates until Phase 1 measures them.
+Phase 1 measured request counts and tokens; dollar amounts are list prices applied to them, not invoices.
 
 ## 3. Phases
 
@@ -185,15 +185,30 @@ Each phase ends with a gate. The gate must pass before the next phase begins. Co
   - "Simple Image Analyzers" is on the anti project list; positioning must stay on context and destination.
   - Team confirmed code may start Oct 26 after kickoff. Credits claimed. The open weights bonus prize is Tier 3, only if everything else is done.
 
-### Phase 1: Access and smoke test (Mon Oct 26, after the Phase 0 gate)
+### Phase 1: Access and smoke test (Mon Oct 26), DONE
 - **Goal:** prove both models work for this task and replace every estimate with a measurement.
 - **Steps:**
-  1. Confirm the Phase 0 gate passed (approvals in, rules read, no blocker).
-  2. Create keys. One key runs all evals so cost tracking stays in one place.
-  3. `scripts/smoke_test.py`: SAM 3.1 with one phrase on 3 images, parse masks with `meta-sam-parser`. Test whether one request accepts several phrases and whether box prompts work. Confirm the exact model ID.
-  4. Muse Spark 1.3 and 1.2 with an image plus a strict JSON schema, 10 calls each at `minimal` and `low`. Record p50 and p90 latency, input tokens per image, reasoning tokens, cost.
+  1. **DONE.** Phase 0 gate passed (rules read, no blocker).
+  2. **DONE.** Keys created; Orlando's key ran the smoke test. Whose key runs evals is still open (§5).
+  3. **DONE.** `scripts/smoke_test.py`: full 16 phrase SAM 3.1 sweep on 3 images, masks parsed with `meta-sam-parser`, multi phrase and box prompt tests, model ID confirmed.
+  4. **DONE.** Muse Spark 1.3 and 1.2, 10 calls each at `minimal` and `low`, sending the original plus a numbered overlay (the real judge request shape) and a strict `JudgeOutput` schema.
   5. **DONE (Oct 26).** Repo skeleton per §2, `.env.example`, startup asserts (contributor ID, body logging). `GET /health` runs; a contributor model ID or `LOG_REQUEST_BODIES=on` makes uvicorn exit with code 3; `uv run pytest` passes 29 tests.
-- **Gate:** both models return parseable output through our client; measured latency, tokens and cost per image recorded in CLAUDE.md Provisional Values; repo skeleton runs `GET /health`.
+- **Gate:** both models return parseable output through our client; measured latency, tokens and cost per image recorded in CLAUDE.md Provisional Values; repo skeleton runs `GET /health`. **Passed Oct 26.**
+- **Results** (run `smoke_20261026_171843`: 3 fake images at 2048 px long edge, 93 calls, $0.72 at list prices):
+  - **SAM 3.1:** model ID `sam-3.1`. 48 of 48 sweep requests succeeded; per request p50 1.2 s, p90 4.0 s; the 16 phrase sweep in parallel took 2.7 to 4.1 s wall per image. Masks line up with objects in the debug overlays.
+  - **Several phrases in one request:** accepted, but matches carry no phrase label, so the sweep stays one phrase per request (gotcha 23).
+  - **Box prompts:** work in 1.4 s and echo back the object id we send, so refine can map results to findings.
+  - **Muse Spark** (original + numbered overlay + candidate list, strict schema, 4 calls in flight):
+
+    | Config | p50 | p90 | Input tokens | Output tokens | Reasoning tokens | Cost per call | Schema valid |
+    |---|---|---|---|---|---|---|---|
+    | 1.3 minimal | 3.1 s | 6.9 s | 8,753 | 455 | 248 | $0.0129 | 10/10 |
+    | 1.3 low | 5.8 s | 9.0 s | 8,753 | 827 | 614 | $0.0145 | 10/10 |
+    | 1.2 minimal | 4.5 s | 6.8 s | 8,287 | 674 | 396 | $0.0132 | 10/10 |
+    | 1.2 low | 9.9 s | 19.9 s | 8,287 | 1,661 | 1,360 | $0.0174 | 10/10 |
+
+  - No verdict referenced an unknown mark. These numbers say nothing about accuracy; the Oct 27 bake off measures recall.
+  - **Limits of this run:** 3 images, 10 calls per config, no OCR candidates yet. Treat latency as a first reading, not a distribution.
 
 ### Phase 2: Pipeline v0, end to end (Tue Oct 27 to Thu Oct 29)
 - **Goal:** `python cli.py analyze img.jpg --dest public` produces findings JSON and a debug overlay.
@@ -249,7 +264,7 @@ Each phase ends with a gate. The gate must pass before the next phase begins. Co
 |---|---|---|
 | ~~Official Rules: must all code be written during the event; are pre-event docs fine; any demo format rules?~~ Answered Oct 26: everything presented must be built during the event and be identifiable as such; video is three minutes max. See Phase 0 results. | Everyone | Oct 26 |
 | ~~May code start on Oct 26 after kickoff, or only in the Oct 27 to Nov 4 building period?~~ Answered Oct 26: team confirmed code may start today. | Orlando | Oct 26 |
-| SAM 3.1 API: exact model ID, phrases per request, box prompt support, rate limit | Orlando | Oct 26 |
+| ~~SAM 3.1 API: exact model ID, phrases per request, box prompt support~~ Answered Oct 26 (Phase 1 results). Still open: SAM rate limit, untested at 16 parallel requests × several users. | Orlando | Oct 29 |
 | Credits: claimed Oct 26. Still open: whose key runs evals? | Victor | Oct 26 |
 | Who is the team Representative for the submission? | Everyone | Oct 28 |
 | Problem statement: Build for Your World (proposed) | Everyone | Oct 27 |
