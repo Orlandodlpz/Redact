@@ -189,7 +189,7 @@ Each phase ends with a gate. The gate must pass before the next phase begins. Co
 - **Goal:** prove both models work for this task and replace every estimate with a measurement.
 - **Steps:**
   1. **DONE.** Phase 0 gate passed (rules read, no blocker).
-  2. **DONE.** Keys created; Orlando's key ran the smoke test. Whose key runs evals is still open (§5).
+  2. **DONE.** Keys created; Orlando's key ran the smoke test. Key split decided (CLAUDE.md Environment).
   3. **DONE.** `scripts/smoke_test.py`: full 16 phrase SAM 3.1 sweep on 3 images, masks parsed with `meta-sam-parser`, multi phrase and box prompt tests, model ID confirmed.
   4. **DONE.** Muse Spark 1.3 and 1.2, 10 calls each at `minimal` and `low`, sending the original plus a numbered overlay (the real judge request shape) and a strict `JudgeOutput` schema.
   5. **DONE (Oct 26).** Repo skeleton per §2, `.env.example`, startup asserts (contributor ID, body logging). `GET /health` runs; a contributor model ID or `LOG_REQUEST_BODIES=on` makes uvicorn exit with code 3; `uv run pytest` passes 29 tests.
@@ -264,10 +264,20 @@ Each phase ends with a gate. The gate must pass before the next phase begins. Co
 |---|---|---|
 | ~~Official Rules: must all code be written during the event; are pre-event docs fine; any demo format rules?~~ Answered Oct 26: everything presented must be built during the event and be identifiable as such; video is three minutes max. See Phase 0 results. | Everyone | Oct 26 |
 | ~~May code start on Oct 26 after kickoff, or only in the Oct 27 to Nov 4 building period?~~ Answered Oct 26: team confirmed code may start today. | Orlando | Oct 26 |
-| ~~SAM 3.1 API: exact model ID, phrases per request, box prompt support~~ Answered Oct 26 (Phase 1 results). Still open: SAM rate limit, untested at 16 parallel requests × several users. | Orlando | Oct 29 |
-| Credits: claimed Oct 26. Still open: whose key runs evals? | Victor | Oct 26 |
-| Who is the team Representative for the submission? | Everyone | Oct 28 |
-| Problem statement: Build for Your World (proposed) | Everyone | Oct 27 |
+| ~~SAM 3.1 API: exact model ID, phrases per request, box prompt support, rate limit~~ Answered Oct 26: Phase 1 results; 3,000 requests per minute per team (gotcha 29). | Orlando | Oct 26 |
+| ~~Credits: whose key runs evals?~~ Decided Oct 26: Carlos's key for evals, Victor's for the hosted demo, Orlando's for dev. | Victor | Oct 26 |
+| ~~Who is the team Representative for the submission?~~ Decided Oct 26: Orlando. | Everyone | Oct 26 |
+| ~~Problem statement~~ Decided Oct 26: Build for Your World. | Everyone | Oct 26 |
 | ~~Go for the Best Build on Meta Open Weight Models bonus ($10K)?~~ Decided Oct 26: Tier 3, only if everything else is done (Muse Spark Open on partner inference as a judge option). | Everyone | Oct 26 |
 | Judge model and effort after the bake off | Carlos | Oct 27 |
-| Final project name | Everyone | Nov 2 |
+| Final project name (candidates below) | Everyone | Nov 2 |
+
+**Name candidates** (Oct 26, one web search each; no trademark or domain check yet):
+
+| Rank | Name | Why | Collision check |
+|---|---|---|---|
+| 1 | Need to Know | Names the differentiator: what gets masked depends on who will see it. Pitch: "Need to Know masks what this audience doesn't need to know." | No app in this space found |
+| 2 | Shareproof | Names the moment: proof the image before you share it | No app found; nearest is ProofMode's unrelated "Share Proof" action |
+| 3 | Redact (current) | Already in the repo and docs | Collides with Redact.dev and App Store "Redact" apps (gotcha 13) |
+
+Ruled out: Blackbar (taken by a screenshot redaction Chrome extension and a report tool), Scrub names (crowded with metadata strippers), Mask names (Maskr exists and also strips GPS), Eyes Only (confused with Snapchat's "My Eyes Only"). Recommendation: decide by Oct 29 instead of Nov 2, because the name goes into the UI Victor builds this week.
