@@ -1,7 +1,7 @@
 # CLAUDE.md: Redact
 
 Project context and conventions. Read this first in every session, then read docs/BRIEFING.md.
-**Last Updated:** 2026-10-24 (Phase 0 moved to Mon Oct 26; local mode cut; design review complete)
+**Last Updated:** 2026-10-26 (Official Rules read; rubric, submission rules and credits recorded)
 
 ## Interaction Mode: Always On
 
@@ -19,7 +19,13 @@ Redact is a privacy scrubber for photos and screenshots, built by a three person
 
 Pitch line: *Pattern tools find text that looks like PII. Redact decides what is sensitive in this photo, for whoever will see it, and explains every mask.*
 
-Indie track judging criteria: creativity, technical ambition, and whether it works.
+Problem statement: **Build for Your World** (proposed, confirm with the team). The other option, Push the Frontier, targets science and physical systems and fits worse.
+
+Judging (Official Rules, read Oct 26):
+- **Stage One, pass/fail:** the project reasonably fits the theme and reasonably uses the Meta Model API or Meta open weights models.
+- **Stage Two, 0 to 10 per category:** Impact 30%, Use of Meta AI Tooling 25%, Technical Depth and Execution 20%, Demo 25%.
+- **Stage Three:** top 5 per track; final round judges watch the demo videos live and rank them with the same rubric.
+- The demo video, the code and the live product are the primary artifacts judges use.
 
 Team and ownership:
 - **Orlando:** vision pipeline. SAM 3.1 sweep and refine, OCR, mark rendering, mask composition, latency, pre-masking before cloud calls.
@@ -27,7 +33,8 @@ Team and ownership:
 - **Victor:** app and threats. FastAPI service, Next.js upload and review editor, export, injection test set, deployment, demo access gate.
 
 **Hard constraints (never violate, never soften):**
-- **Deadline:** submission closes Wed Nov 4, 9:00 PM ET (8:00 PM Central). Team target is 6:00 PM ET. Feature freeze is end of Mon Nov 2.
+- **Deadline:** submission closes Wed Nov 4, 9:00 PM ET (8:00 PM Central) on the CV platform. Late submissions are not considered. Team target is 6:00 PM ET. Feature freeze is end of Mon Nov 2.
+- **Submission rules (Official Rules, read Oct 26):** one submission per team, entered by one appointed Representative. Repo must be public. Every team member is listed on the submission page. A three minute demo video is required and must show only features, code and functionality built during the event. Judges must be able to tell what was built during the event; failing that is grounds for disqualification.
 - **Meta models are the core.** Every sensitivity judgment comes from a Meta model (Muse Spark). Every mask's geometry comes from SAM 3.1 or OCR. Non-Meta components (OCR, regex checks) are plumbing, never the decision maker.
 - **Never use a `-contributor` model ID** anywhere in the app or the eval. The Contributor tier trains on prompts and completions, which would donate user images and teammates' faces to Meta training. The server refuses to start if any configured model ID contains `contributor`.
 - **Never store or log user images.** Process in memory. No request body logging at any hop (app server, reverse proxy, hosting platform). No images in URLs or query strings.
@@ -36,7 +43,8 @@ Team and ownership:
 - **Fail closed.** If the judge call fails or returns invalid output after one retry, mask every floor hit plus every candidate from a high risk SAM class and tell the user the judge was unavailable. Never return an image with fewer masks because a call failed.
 - **No real PII in any dataset.** Staged photos use consenting team members, fake documents, fake passwords, fake addresses. No real IDs, cards, passwords or bystanders.
 - **No eval images in git.** Repo holds manifests and labels only; images live in team private storage. A handful of clearly fake demo images may be committed.
-- **No reuse** of code, data or assets from any other team project, including HaloAI or Victor and Carlos's lab research. Everything is built from the Oct 26 kickoff onward (pending the Official Rules, see Open Questions in BRIEFING.md).
+- **No reuse** of code, data or assets from any other team project, including HaloAI or Victor and Carlos's lab research. The rules require that what we present was built during the event and that the submission makes this clear. The guide lists the building period as Oct 27 to Nov 4; the team confirmed on Oct 26 that code may start after the Oct 26 kickoff. The README states that the planning docs predate the event and that all code was written during it.
+- **No code, data or assets we lack the rights to** (Official Rules, grounds for disqualification). Every third party library, model and dataset must be compatible with a public repo.
 - **No unearned numbers.** Every metric in the README, slides or video comes from `eval/run_eval.py` output with the commit hash and model IDs recorded. Estimates are labeled as estimates.
 
 ## Environment
@@ -47,7 +55,8 @@ Team and ownership:
 - **SAM 3.1 text prompts:** 32 token limit per phrase. Open weights exist (SAM License) but need a GPU the team doesn't have, so the API is the only path.
 - **No local inference.** Local mode was cut on Oct 24: no team member has a 24 to 32 GB GPU or a large memory Mac, which Muse Glimmer 30B (Meta's open weights multimodal model) needs even at 4 bit. Every model call goes to the Meta Model API. Don't reintroduce local inference without a confirmed hardware answer.
 - **Rate limits:** published as 3,000 requests per minute and 4,000,000 tokens per minute per model, **per team**. All keys on the same team share the pool. SAM 3.1 limits unverified.
-- **Credits:** each accepted participant reportedly gets $150 in Meta Model API credits (third party report, verify at kickoff).
+- **Credits (Official Rules):** each participant claims $150 in Meta Model API credits individually through the credits form by Nov 4, 9:00 PM ET. Credits are per account and cannot be claimed for someone else. A credit card must be on the account before any API call works, and adding it triggers a temporary preauthorization charge. Credits arrive in batches; check the Billing page. Set a Spend Limit notification there.
+- **Partner inference for open weights:** Baseten ($100 per individual plus a 2M TPM limit, reviewed), Modal ($100, first 1,000 participants) and Fireworks ($25 per team, shortlist) can host Muse Glimmer and Muse Spark Open. This is hosted inference on a third party, not local inference, so it does not restore the on device privacy story. It matters only for the Best Build on Meta Open Weight Models bonus prize, which is a Tier 3 item: attempt it only if everything else is done.
 - **Proposed stack (confirm Oct 26):** Python 3.11+ FastAPI backend (pipeline, OCR, floor rules, compose). Next.js frontend (upload, review editor, export). No database: the service is stateless.
 - **Hosting (proposed):** frontend on Vercel, backend on a small CPU host. No GPU needed because SAM 3.1 and Muse Spark are API calls.
 
@@ -106,9 +115,9 @@ Not validated. Each names what replaces it.
 
 ## Current Status
 
-- **Phase:** waiting on approval. Phase 0 starts Mon Oct 26 once all three approvals arrive and the Official Rules are read. Nothing starts before that, code or prep.
-- **Done:** Local mode cut (Oct 24, no hardware). Design review (Oct 24). Twelve checks run; four parts of the application plan rewritten (pitch, pipeline, privacy, safety) and the eval strengthened. Results summarized in BRIEFING.md Phase 0.
-- **Next:** Mon Oct 26: confirm approvals, read the Official Rules, run Phase 0 prep, then the Phase 1 smoke test the same day.
+- **Phase:** Phase 1. Official Rules read Oct 26, no blocker to the plan. Team confirmed code may start Oct 26. Credits claimed.
+- **Done:** Local mode cut (Oct 24, no hardware). Design review (Oct 24). Twelve checks run; four parts of the application plan rewritten (pitch, pipeline, privacy, safety) and the eval strengthened. Results summarized in BRIEFING.md Phase 0. Official Rules read and recorded (Oct 26).
+- **Next:** Phase 1 skeleton and smoke test.
 - **Known gotchas discovered so far:**
   1. SAM 3.1 on the hosted API is phrase driven. No documented segment everything mode. One phrase per request until proven otherwise.
   2. SAM will not isolate a single line of text inside a whiteboard or document. Text lines come from OCR.
@@ -125,3 +134,9 @@ Not validated. Each names what replaces it.
   13. "Redact" collides with Redact.dev and several App Store apps. Decide by Nov 2.
   14. WebPII is CC BY 4.0; attribution required in the README.
   15. Submission deadline is ET. 9 PM ET is 8 PM Central.
+  16. The guide lists the building period as Oct 27 to Nov 4, but the event starts with the Oct 26 kickoff. Git timestamps are public evidence of when code was written. Team confirmed Oct 26 that code may start after kickoff. (Orlando, Oct 26)
+  20. The openai Python SDK logs full request bodies, base64 images included, when `OPENAI_LOG=debug` or its logger is at DEBUG. The startup check refuses both, plus `httpx` and `httpcore` at DEBUG. It cannot see proxy or hosting platform logs; those are checked by hand at deploy. (Orlando, Oct 26)
+  21. When the startup check fails, uvicorn exits with code 3 ("Application startup failed"), not 1. Any non-zero code means refused. (Orlando, Oct 26)
+  17. "Simple Image Analyzers" is on the guide's anti project list, and Stage One is pass/fail. The pitch, README and video must lead with context, multi clue leaks and destination, not "detects PII in images". (Orlando, Oct 26)
+  18. API calls fail until a credit card is on the account, even with credits granted. Each person claims their own credits. (Orlando, Oct 26)
+  19. Baseten's docs use `meta-models/muse-spark-open`; the hackathon model ID is `meta-models/muse-spark-open-1026`. (Orlando, Oct 26)
