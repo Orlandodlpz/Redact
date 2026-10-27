@@ -39,6 +39,9 @@ SWEEP_PHRASES: tuple[str, ...] = (
 # sticky notes are where text secrets live. Confirmed by the team Oct 26.
 HIGH_RISK_SAM_CLASSES: frozenset[str] = frozenset(SWEEP_PHRASES) - {"street sign"}
 
+# Two SAM matches whose boxes overlap at least this much are one object (provisional).
+CANDIDATE_DEDUPE_IOU = 0.8
+
 # RapidOCR detection thresholds (provisional, loose). Looser than the library
 # defaults so handwritten lines get a box even when the text reads badly (gotcha 31).
 OCR_ENGINE_PARAMS: dict[str, float] = {
