@@ -15,6 +15,7 @@ dependencies = [
     "rapidocr>=3.10.0",
     "onnxruntime>=1.31.1",
     "pillow-heif>=1.8.1",
+    "pycocotools>=2.0.11",
 ]
 
 [dependency-groups]
