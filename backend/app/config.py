@@ -39,6 +39,15 @@ SWEEP_PHRASES: tuple[str, ...] = (
 # sticky notes are where text secrets live. Confirmed by the team Oct 26.
 HIGH_RISK_SAM_CLASSES: frozenset[str] = frozenset(SWEEP_PHRASES) - {"street sign"}
 
+# RapidOCR detection thresholds (provisional, loose). Looser than the library
+# defaults so handwritten lines get a box even when the text reads badly (gotcha 31).
+OCR_ENGINE_PARAMS: dict[str, float] = {
+    "Det.thresh": 0.2,
+    "Det.box_thresh": 0.4,
+    "Det.unclip_ratio": 2.0,
+    "Global.text_score": 0.4,
+}
+
 # Loggers that write request bodies (base64 images included) at DEBUG.
 # The openai SDK logs full request options at DEBUG.
 _BODY_LOGGING_LOGGERS = ("openai", "httpx", "httpcore")
