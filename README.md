@@ -27,6 +27,16 @@ The server refuses to start if any model ID contains `contributor` or if request
 
 Keep the repo outside iCloud synced folders (macOS Desktop and Documents); iCloud breaks the `.venv`.
 
+## Run one image from the CLI
+
+```bash
+uv run python backend/cli.py candidates path/to/img.jpg --no-sweep   # local only: OCR, marks
+uv run python backend/cli.py candidates path/to/img.jpg              # adds the SAM sweep (~$0.04)
+uv run python backend/cli.py analyze path/to/img.jpg --dest public   # whole pipeline, needs judge, merge and floor
+```
+
+Overlays (`_ocr.png`, `_sweep.png`, `_marks.png`), candidate JSON, findings JSON and the masked export (`_masked.png`) go to `out/debug/`, which is gitignored. They hold image content and OCR text, so never move them into the repo.
+
 ## Smoke test
 
 Calls the real API (about $0.72 per run at list prices). Use clearly fake images or consenting teammates only, kept outside the repo, as JPEG or PNG.
