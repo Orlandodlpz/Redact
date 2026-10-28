@@ -130,15 +130,19 @@ class MetaClient:
 
     async def sam(
         self,
-        image: Image.Image,
+        image: Image.Image | str,
         text: str,
         *,
         model: str | None = None,
         include_confidence: bool = True,
         **meta: Any,
     ) -> SamResult:
-        """One SAM 3.1 request. text is a noun phrase or build_object_prompt() output."""
+        """One SAM 3.1 request. text is a noun phrase or build_object_prompt() output.
+
+        image may be an image_data_url() string, so a sweep encodes once, not per phrase.
+        """
         model = model or self.settings.sam_model
+        url = image if isinstance(image, str) else image_data_url(image)
         usage_box: dict[str, Any] = {}
         start = time.perf_counter()
         try:
@@ -147,7 +151,7 @@ class MetaClient:
                 input=[{
                     "role": "user",
                     "content": [
-                        {"type": "input_image", "image_url": image_data_url(image)},
+                        {"type": "input_image", "image_url": url},
                         {"type": "input_text", "text": text},
                     ],
                 }],
