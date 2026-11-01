@@ -38,6 +38,7 @@ from check_shot_list import parse_rows
 from schemas import Label
 from app.config import Settings
 from app.pipeline import judge as J
+from app.pipeline.merge import merge
 from app.providers.meta_api import MetaClient
 from app.schemas import Candidate, Finding
 
@@ -50,27 +51,11 @@ LABELS = Path(__file__).parent / "labels"
 RESULTS = Path(__file__).parent / "results"
 
 
-def judge_findings(result: J.JudgeResult, candidates: list[Candidate]) -> list[Finding]:
-    """What the judge alone would mask, as Findings with the candidate's box.
-    Candidate boxes stand in for SAM masks; extra findings use the judge's own box."""
-    if result.output is None:
-        return []
-    by_mark = {c.mark: c for c in candidates}
-    out: list[Finding] = []
-
-    def add(source, marks, category, reason, box):
-        out.append(Finding(id=f"f_{len(out):02d}", marks=marks, category=category, reason=reason,
-                           source=source, masked=True, locked=False, box=box))
-
-    for v in result.output.verdicts:
-        if v.sensitive and v.category != "benign":
-            add("judge", [v.mark], v.category, v.reason, by_mark[v.mark].box)
-    for leak in result.output.combined_leaks:
-        for m in leak.marks:
-            add("combined", leak.marks, leak.category, leak.reason, by_mark[m].box)
-    for e in result.output.extra_findings:
-        add("extra", [], e.category, e.reason, e.box)
-    return out
+def judge_findings(result: J.JudgeResult, candidates: list[Candidate], destination: str) -> list[Finding]:
+    """What the system would produce from this judge result with no floor hits, through
+    the real merge: policy, unjudged marks and the fail closed path included. Floor rules
+    are identical for every config, so leaving them out cannot change the winner."""
+    return merge(candidates, [], result.output, destination)
 
 
 @dataclass
@@ -92,7 +77,7 @@ class Run:
 
 def score(image_id, destination, repeat, result, candidates, label) -> Run:
     truth = label.destinations[destination]
-    predicted = judge_findings(result, candidates)
+    predicted = judge_findings(result, candidates, destination)
     by_cat = metrics.recall_by_category(truth, predicted)
     return Run(
         image_id, destination, repeat, result.output is not None,

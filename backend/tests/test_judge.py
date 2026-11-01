@@ -129,3 +129,16 @@ def test_overrides_reach_the_client():
 
 def test_prompt_file_loads():
     assert "Redact judge" in J.load_system_prompt()
+
+
+def test_judge_matches_the_call_run_py_makes():
+    """run.py awaits judge(image, marked, candidates, destination, client=...)."""
+    client = FakeClient([out(verdicts=[verdict(1)]).model_dump_json()])
+    got = asyncio.run(J.judge(IMG, IMG, cands(), "public", client=client))
+    assert isinstance(got, JudgeOutput) and got.verdicts[0].mark == 1
+    assert asyncio.run(J.judge(IMG, IMG, cands(), "public", client=FakeClient([None, None]))) is None
+
+
+def test_prompt_version_is_exported_and_prompt_says_read_from_original():
+    assert J.PROMPT_VERSION == "judge_v1"
+    assert "Read all content from image 1" in J.load_system_prompt()

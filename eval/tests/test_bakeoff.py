@@ -28,23 +28,23 @@ def v(mark, sensitive, category="credential"):
     return dict(mark=mark, sensitive=sensitive, category=category, reason="r", confidence="high")
 
 
-def test_judge_findings_covers_verdicts_leaks_extras_and_skips_benign():
+def test_judge_findings_go_through_the_real_merge():
     r = result(
-        verdicts=[v(1, True), v(2, False), v(3, True, "benign")],
+        verdicts=[v(1, True), v(2, False, "benign"), v(3, True, "benign")],
         combined_leaks=[dict(marks=[2, 3], category="home_location", reason="r")],
         extra_findings=[dict(category="contact_info", reason="r", box=[60, 0, 70, 10])],
     )
-    fs = bakeoff.judge_findings(r, cands())
-    assert [(f.source, f.box) for f in fs] == [
-        ("judge", [0, 0, 10, 10]), ("combined", [20, 0, 30, 10]), ("combined", [40, 0, 50, 10]),
-        ("extra", [60, 0, 70, 10]),
-    ]
+    fs = bakeoff.judge_findings(r, cands(), "public")
+    masked = [(f.source, f.box) for f in fs if f.masked]
+    assert masked == [("judge", [0, 0, 10, 10]), ("judge", [40, 0, 50, 10]), ("combined", [20, 0, 30, 10]),
+                      ("extra", [60, 0, 70, 10])]
 
 
-def test_failed_judge_scores_zero_but_keeps_items_in_the_total():
+def test_failed_judge_scores_through_fail_closed():
+    cs = [Candidate(mark=1, source="sam", sam_label="sticky note", box=[0, 0, 10, 10])]
     label = Label(image_id="s01", width=100, height=100, destinations={"public": [truth([0, 0, 10, 10])]})
-    run = bakeoff.score("s01", "public", 0, JudgeResult(output=None), cands(), label)
-    assert (run.ok, run.caught, run.total) == (False, 0, 1)
+    run = bakeoff.score("s01", "public", 0, JudgeResult(output=None), cs, label)
+    assert (run.ok, run.caught, run.total) == (False, 1, 1)  # fail closed masks the sticky note
 
 
 def test_score_and_summary():

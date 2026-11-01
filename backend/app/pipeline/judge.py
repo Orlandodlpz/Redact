@@ -219,15 +219,16 @@ async def ajudge(
             await client.close()
 
 
-def judge(
+async def judge(
     image: Image.Image,
     marked_image: Image.Image,
     candidates: list[Candidate],
     destination: Destination,
+    client: MetaClient | None = None,
 ) -> JudgeOutput | None:
     """Returns None after one failed retry; merge.py takes the fail closed path.
 
-    Blocking wrapper over ajudge. It cannot be called from inside a running event loop;
-    async callers (FastAPI routes, the eval) call ajudge and share one MetaClient.
+    run.py calls this with a wrapper around the shared MetaClient that adds up cost.
+    Callers that need latency, retries or dropped counts (the eval) use ajudge.
     """
-    return asyncio.run(ajudge(image, marked_image, candidates, destination)).output
+    return (await ajudge(image, marked_image, candidates, destination, client=client)).output
