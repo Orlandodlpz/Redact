@@ -1,0 +1,41 @@
+{
+ "image_id": "s66",
+ "width": 1600,
+ "height": 1200,
+ "destinations": {
+  "public": [
+   {
+    "id": "l_01",
+    "marks": [],
+    "category": "license_plate",
+    "reason": "plate",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     378,
+     718,
+     735,
+     838
+    ],
+    "mask_rle": null
+   },
+   {
+    "id": "l_02",
+    "marks": [],
+    "category": "home_location",
+    "reason": "digits only",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     992,
+     226,
+     1228,
+     340
+    ],
+    "mask_rle": null
+   }
+  ]
+ }
+}

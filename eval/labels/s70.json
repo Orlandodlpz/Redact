@@ -1,0 +1,109 @@
+{
+ "image_id": "s70",
+ "width": 1600,
+ "height": 1200,
+ "destinations": {
+  "public": [
+   {
+    "id": "l_01",
+    "marks": [],
+    "category": "personal_account",
+    "reason": "payment handle note",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     330,
+     130,
+     690,
+     378
+    ],
+    "mask_rle": null
+   },
+   {
+    "id": "l_02",
+    "marks": [],
+    "category": "home_location",
+    "reason": "shipping label",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     790,
+     598,
+     1032,
+     742
+    ],
+    "mask_rle": null
+   }
+  ],
+  "team": [
+   {
+    "id": "l_01",
+    "marks": [],
+    "category": "personal_account",
+    "reason": "payment handle note",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     330,
+     130,
+     690,
+     378
+    ],
+    "mask_rle": null
+   },
+   {
+    "id": "l_02",
+    "marks": [],
+    "category": "home_location",
+    "reason": "shipping label",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     790,
+     598,
+     1032,
+     742
+    ],
+    "mask_rle": null
+   }
+  ],
+  "ai_assistant": [
+   {
+    "id": "l_01",
+    "marks": [],
+    "category": "personal_account",
+    "reason": "payment handle note",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     330,
+     130,
+     690,
+     378
+    ],
+    "mask_rle": null
+   },
+   {
+    "id": "l_02",
+    "marks": [],
+    "category": "home_location",
+    "reason": "shipping label",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     790,
+     598,
+     1032,
+     742
+    ],
+    "mask_rle": null
+   }
+  ]
+ }
+}

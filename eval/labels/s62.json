@@ -1,0 +1,57 @@
+{
+ "image_id": "s62",
+ "width": 1600,
+ "height": 1200,
+ "destinations": {
+  "public": [
+   {
+    "id": "l_01",
+    "marks": [],
+    "category": "other_sensitive",
+    "reason": "destination",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     24,
+     449,
+     218,
+     498
+    ],
+    "mask_rle": null
+   },
+   {
+    "id": "l_02",
+    "marks": [],
+    "category": "other_sensitive",
+    "reason": "dates",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     320,
+     452,
+     471,
+     495
+    ],
+    "mask_rle": null
+   },
+   {
+    "id": "l_03",
+    "marks": [],
+    "category": "personal_account",
+    "reason": "flight",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     1146,
+     830,
+     1358,
+     877
+    ],
+    "mask_rle": null
+   }
+  ]
+ }
+}

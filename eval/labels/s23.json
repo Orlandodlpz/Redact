@@ -1,0 +1,73 @@
+{
+ "image_id": "s23",
+ "width": 1600,
+ "height": 1200,
+ "destinations": {
+  "public": [
+   {
+    "id": "l_01",
+    "marks": [],
+    "category": "payment",
+    "reason": "subject line",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     282,
+     431,
+     703,
+     473
+    ],
+    "mask_rle": null
+   },
+   {
+    "id": "l_02",
+    "marks": [],
+    "category": "personal_account",
+    "reason": "subject line",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     282,
+     560,
+     774,
+     605
+    ],
+    "mask_rle": null
+   },
+   {
+    "id": "l_03",
+    "marks": [],
+    "category": "other_sensitive",
+    "reason": "subject line",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     283,
+     822,
+     704,
+     864
+    ],
+    "mask_rle": null
+   },
+   {
+    "id": "l_04",
+    "marks": [],
+    "category": "personal_account",
+    "reason": "subject line",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     281,
+     1081,
+     684,
+     1125
+    ],
+    "mask_rle": null
+   }
+  ]
+ }
+}

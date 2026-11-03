@@ -1,0 +1,59 @@
+{
+ "image_id": "s50",
+ "width": 2048,
+ "height": 1536,
+ "destinations": {
+  "public": [
+   {
+    "id": "l_01",
+    "marks": [],
+    "category": "license_plate",
+    "reason": "plate",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     258,
+     981,
+     449,
+     1165
+    ],
+    "mask_rle": null
+   },
+   {
+    "id": "l_02",
+    "marks": [],
+    "category": "license_plate",
+    "reason": "labeled",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     1659,
+     261,
+     1764,
+     333
+    ],
+    "mask_rle": null
+   },
+   {
+    "id": "l_03",
+    "marks": [],
+    "category": "face",
+    "reason": "labeled",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     1834,
+     171,
+     1943,
+     270
+    ],
+    "mask_rle": null
+   }
+  ],
+  "team": [],
+  "ai_assistant": []
+ }
+}

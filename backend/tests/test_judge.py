@@ -142,3 +142,20 @@ def test_judge_matches_the_call_run_py_makes():
 def test_prompt_version_is_exported_and_prompt_says_read_from_original():
     assert J.PROMPT_VERSION == "judge_v1"
     assert "Read all content from image 1" in J.load_system_prompt()
+
+
+def test_timed_out_attempt_counts_as_an_attempt_with_its_wait(monkeypatch):
+    """A timeout used to vanish from the stats, hiding its latency and the retry."""
+    class SlowThenFast(FakeClient):
+        async def chat_json(self, model, messages, schema, **kw):
+            if not self.calls:
+                self.calls.append(1)
+                await asyncio.sleep(1)
+            return await super().chat_json(model, messages, schema, **kw)
+
+    monkeypatch.setattr(J, "ATTEMPT_TIMEOUT_S", 0.05)
+    client = SlowThenFast([out().model_dump_json()])
+    res = asyncio.run(J.ajudge(IMG, IMG, cands(), "public", client=client, model="m", reasoning_effort="low"))
+    assert res.output is not None
+    assert [a.ok for a in res.attempts] == [False, True]
+    assert res.attempts[0].error == "Timeout" and res.attempts[0].latency_ms == 50

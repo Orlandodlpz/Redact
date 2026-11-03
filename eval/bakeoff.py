@@ -27,7 +27,7 @@ import hashlib
 import json
 import subprocess
 import time
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -73,19 +73,22 @@ class Run:
     unjudged: int
     dropped: dict[str, int]
     attempts: int
+    missed: list[tuple[str, list[int]]] = field(default_factory=list)  # (category, label box)
 
 
 def score(image_id, destination, repeat, result, candidates, label) -> Run:
     truth = label.destinations[destination]
     predicted = judge_findings(result, candidates, destination)
     by_cat = metrics.recall_by_category(truth, predicted)
+    masks = metrics.masked_boxes(predicted)
+    missed = [(t.category, list(t.box)) for t in truth if t.box and not metrics.is_caught(t.box, masks)]
     return Run(
         image_id, destination, repeat, result.output is not None,
         sum(a.latency_ms for a in result.attempts),
         sum(a.est_cost_usd or 0.0 for a in result.attempts),
         sum(c for c, _ in by_cat.values()), sum(t for _, t in by_cat.values()), by_cat,
         metrics.over_redaction(truth, predicted, label.width, label.height),
-        len(result.unjudged), result.dropped, len(result.attempts),
+        len(result.unjudged), result.dropped, len(result.attempts), missed,
     )
 
 

@@ -1,0 +1,25 @@
+{
+ "image_id": "s08",
+ "width": 2048,
+ "height": 1536,
+ "destinations": {
+  "public": [
+   {
+    "id": "l_01",
+    "marks": [],
+    "category": "credential",
+    "reason": "login on sticky note",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     1439,
+     995,
+     1657,
+     1026
+    ],
+    "mask_rle": null
+   }
+  ]
+ }
+}

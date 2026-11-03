@@ -4,14 +4,15 @@ Definitions here are fixed before the first full run and never changed after
 seeing results (docs/CLAUDE.md, Provisional Values). Change one only with a
 recorded team decision made before a run.
 
-Skeleton limit: coverage works on boxes. Final masks are dilated SAM or OCR masks,
-so the real run should rasterize masks from mask_rle. Box based coverage is an
-upper bound on mask coverage for loose boxes.
+Two families: box functions (baselines that only produce boxes) and pixel functions
+(`*_px`, used for Redact, scoring the same dilated union mask that compose fills).
 """
 
 import math
 from collections import defaultdict
 from collections.abc import Sequence
+
+import numpy as np
 
 from app.schemas import Finding
 
@@ -107,3 +108,39 @@ def percentile(values: Sequence[float], p: float) -> float:
     s = sorted(values)
     k = max(0, min(len(s) - 1, math.ceil(p / 100 * len(s)) - 1))
     return s[k]
+
+
+# Pixel versions. The eval scores the same mask compose fills (union of masked findings,
+# dilated), so it measures what a user downloads rather than the findings' boxes.
+
+
+def mask_coverage(item: Box, mask: "np.ndarray") -> float:
+    """Share of the item's box area that the boolean (height, width) mask covers."""
+    x1, y1, x2, y2 = item
+    h, w = mask.shape
+    x1, y1, x2, y2 = max(0, x1), max(0, y1), min(w, x2), min(h, y2)
+    if _area(item) == 0 or x2 <= x1 or y2 <= y1:
+        return 0.0
+    return float(mask[y1:y2, x1:x2].sum()) / _area(item)
+
+
+def recall_by_category_px(truth: Sequence[Finding], mask: "np.ndarray") -> dict[str, tuple[int, int]]:
+    """category -> (caught, total). Metadata findings are skipped."""
+    out: dict[str, list[int]] = defaultdict(lambda: [0, 0])
+    for t in truth:
+        if t.box is None:
+            continue
+        out[t.category][1] += 1
+        out[t.category][0] += mask_coverage(t.box, mask) >= CAUGHT_THRESHOLD
+    return {k: (v[0], v[1]) for k, v in out.items()}
+
+
+def over_redaction_px(truth: Sequence[Finding], mask: "np.ndarray") -> float:
+    """Share of image pixels masked outside every labeled item box."""
+    h, w = mask.shape
+    labeled = np.zeros_like(mask)
+    for t in truth:
+        if t.box is not None:
+            x1, y1, x2, y2 = t.box
+            labeled[max(0, y1):min(h, y2), max(0, x1):min(w, x2)] = True
+    return float((mask & ~labeled).sum()) / (w * h)

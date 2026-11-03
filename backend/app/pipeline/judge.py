@@ -201,6 +201,9 @@ async def ajudge(
                 )
             except TimeoutError:
                 log.warning("judge attempt %d timed out", attempt)
+                # No response to read, but the wait is real latency and the attempt is real.
+                result.attempts.append(
+                    CallStats(model, "chat", False, round(ATTEMPT_TIMEOUT_S * 1000), error="Timeout"))
                 continue
             result.attempts.append(res.stats)
             if res.text is None:

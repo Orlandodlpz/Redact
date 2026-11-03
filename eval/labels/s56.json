@@ -1,0 +1,93 @@
+{
+ "image_id": "s56",
+ "width": 1536,
+ "height": 2048,
+ "destinations": {
+  "public": [
+   {
+    "id": "l_01",
+    "marks": [],
+    "category": "credential",
+    "reason": "password on whiteboard behind monitor",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     780,
+     244,
+     1081,
+     319
+    ],
+    "mask_rle": null
+   },
+   {
+    "id": "l_02",
+    "marks": [],
+    "category": "internal_data",
+    "reason": "labeled",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     238,
+     640,
+     1351,
+     1246
+    ],
+    "mask_rle": null
+   }
+  ],
+  "team": [
+   {
+    "id": "l_01",
+    "marks": [],
+    "category": "credential",
+    "reason": "password on whiteboard behind monitor",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     780,
+     244,
+     1081,
+     319
+    ],
+    "mask_rle": null
+   }
+  ],
+  "ai_assistant": [
+   {
+    "id": "l_01",
+    "marks": [],
+    "category": "credential",
+    "reason": "password on whiteboard behind monitor",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     780,
+     244,
+     1081,
+     319
+    ],
+    "mask_rle": null
+   },
+   {
+    "id": "l_02",
+    "marks": [],
+    "category": "internal_data",
+    "reason": "labeled",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     238,
+     640,
+     1351,
+     1246
+    ],
+    "mask_rle": null
+   }
+  ]
+ }
+}

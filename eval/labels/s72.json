@@ -1,0 +1,157 @@
+{
+ "image_id": "s72",
+ "width": 1600,
+ "height": 1200,
+ "destinations": {
+  "public": [
+   {
+    "id": "l_01",
+    "marks": [],
+    "category": "credential",
+    "reason": "locker code and wifi password",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     1250,
+     55,
+     1595,
+     395
+    ],
+    "mask_rle": null
+   },
+   {
+    "id": "l_02",
+    "marks": [],
+    "category": "government_id",
+    "reason": "student id",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     1130,
+     395,
+     1600,
+     795
+    ],
+    "mask_rle": null
+   },
+   {
+    "id": "l_03",
+    "marks": [],
+    "category": "contact_info",
+    "reason": "phone number in chat",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     310,
+     472,
+     612,
+     533
+    ],
+    "mask_rle": null
+   }
+  ],
+  "team": [
+   {
+    "id": "l_01",
+    "marks": [],
+    "category": "credential",
+    "reason": "locker code and wifi password",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     1250,
+     55,
+     1595,
+     395
+    ],
+    "mask_rle": null
+   },
+   {
+    "id": "l_02",
+    "marks": [],
+    "category": "government_id",
+    "reason": "student id",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     1130,
+     395,
+     1600,
+     795
+    ],
+    "mask_rle": null
+   },
+   {
+    "id": "l_03",
+    "marks": [],
+    "category": "contact_info",
+    "reason": "phone number in chat",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     310,
+     472,
+     612,
+     533
+    ],
+    "mask_rle": null
+   }
+  ],
+  "ai_assistant": [
+   {
+    "id": "l_01",
+    "marks": [],
+    "category": "credential",
+    "reason": "locker code and wifi password",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     1250,
+     55,
+     1595,
+     395
+    ],
+    "mask_rle": null
+   },
+   {
+    "id": "l_02",
+    "marks": [],
+    "category": "government_id",
+    "reason": "student id",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     1130,
+     395,
+     1600,
+     795
+    ],
+    "mask_rle": null
+   },
+   {
+    "id": "l_03",
+    "marks": [],
+    "category": "contact_info",
+    "reason": "phone number in chat",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     310,
+     472,
+     612,
+     533
+    ],
+    "mask_rle": null
+   }
+  ]
+ }
+}

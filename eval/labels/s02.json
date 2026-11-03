@@ -1,0 +1,125 @@
+{
+ "image_id": "s02",
+ "width": 2048,
+ "height": 1536,
+ "destinations": {
+  "public": [
+   {
+    "id": "l_01",
+    "marks": [],
+    "category": "credential",
+    "reason": "password line on whiteboard",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     591,
+     452,
+     1119,
+     543
+    ],
+    "mask_rle": null
+   },
+   {
+    "id": "l_02",
+    "marks": [],
+    "category": "internal_data",
+    "reason": "labeled",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     1106,
+     335,
+     1637,
+     912
+    ],
+    "mask_rle": null
+   },
+   {
+    "id": "l_03",
+    "marks": [],
+    "category": "internal_data",
+    "reason": "labeled",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     382,
+     894,
+     1801,
+     1536
+    ],
+    "mask_rle": null
+   }
+  ],
+  "team": [
+   {
+    "id": "l_01",
+    "marks": [],
+    "category": "credential",
+    "reason": "password line on whiteboard",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     591,
+     452,
+     1119,
+     543
+    ],
+    "mask_rle": null
+   }
+  ],
+  "ai_assistant": [
+   {
+    "id": "l_01",
+    "marks": [],
+    "category": "credential",
+    "reason": "password line on whiteboard",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     591,
+     452,
+     1119,
+     543
+    ],
+    "mask_rle": null
+   },
+   {
+    "id": "l_02",
+    "marks": [],
+    "category": "internal_data",
+    "reason": "labeled",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     1106,
+     335,
+     1637,
+     912
+    ],
+    "mask_rle": null
+   },
+   {
+    "id": "l_03",
+    "marks": [],
+    "category": "internal_data",
+    "reason": "labeled",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     382,
+     894,
+     1801,
+     1536
+    ],
+    "mask_rle": null
+   }
+  ]
+ }
+}

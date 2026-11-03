@@ -1,0 +1,27 @@
+{
+ "image_id": "s42",
+ "width": 1155,
+ "height": 2048,
+ "destinations": {
+  "public": [
+   {
+    "id": "l_01",
+    "marks": [],
+    "category": "face",
+    "reason": "hairline to chin",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     230,
+     825,
+     763,
+     1428
+    ],
+    "mask_rle": null
+   }
+  ],
+  "team": [],
+  "ai_assistant": []
+ }
+}
