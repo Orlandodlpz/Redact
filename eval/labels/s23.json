@@ -8,15 +8,15 @@
     "id": "l_01",
     "marks": [],
     "category": "payment",
-    "reason": "bank statement notice",
+    "reason": "subject line",
     "source": "judge",
     "masked": true,
     "locked": false,
     "box": [
-     262,
-     390,
-     1590,
-     500
+     282,
+     431,
+     703,
+     473
     ],
     "mask_rle": null
    },
@@ -24,15 +24,15 @@
     "id": "l_02",
     "marks": [],
     "category": "personal_account",
-    "reason": "flight confirmation",
+    "reason": "subject line",
     "source": "judge",
     "masked": true,
     "locked": false,
     "box": [
-     262,
-     520,
-     1590,
-     630
+     282,
+     560,
+     774,
+     605
     ],
     "mask_rle": null
    },
@@ -40,15 +40,15 @@
     "id": "l_03",
     "marks": [],
     "category": "other_sensitive",
-    "reason": "doctor appointment",
+    "reason": "subject line",
     "source": "judge",
     "masked": true,
     "locked": false,
     "box": [
-     262,
-     780,
-     1590,
-     890
+     283,
+     822,
+     704,
+     864
     ],
     "mask_rle": null
    },
@@ -56,15 +56,15 @@
     "id": "l_04",
     "marks": [],
     "category": "personal_account",
-    "reason": "password reset notice",
+    "reason": "subject line",
     "source": "judge",
     "masked": true,
     "locked": false,
     "box": [
-     262,
-     1030,
-     1590,
-     1150
+     281,
+     1081,
+     684,
+     1125
     ],
     "mask_rle": null
    }

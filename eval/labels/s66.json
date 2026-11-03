@@ -24,15 +24,15 @@
     "id": "l_02",
     "marks": [],
     "category": "home_location",
-    "reason": "house number",
+    "reason": "digits only",
     "source": "judge",
     "masked": true,
     "locked": false,
     "box": [
-     985,
-     225,
-     1303,
-     333
+     992,
+     226,
+     1228,
+     340
     ],
     "mask_rle": null
    }

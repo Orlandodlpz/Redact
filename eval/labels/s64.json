@@ -24,15 +24,15 @@
     "id": "l_02",
     "marks": [],
     "category": "face",
-    "reason": "face",
+    "reason": "hairline to chin",
     "source": "judge",
     "masked": true,
     "locked": false,
     "box": [
-     753,
-     870,
+     750,
+     885,
      855,
-     993
+     995
     ],
     "mask_rle": null
    },

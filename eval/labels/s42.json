@@ -8,13 +8,13 @@
     "id": "l_01",
     "marks": [],
     "category": "face",
-    "reason": "teammate face",
+    "reason": "hairline to chin",
     "source": "judge",
     "masked": true,
     "locked": false,
     "box": [
      230,
-     655,
+     825,
      763,
      1428
     ],

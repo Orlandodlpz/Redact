@@ -8,20 +8,36 @@
     "id": "l_01",
     "marks": [],
     "category": "other_sensitive",
-    "reason": "trip dates",
+    "reason": "destination",
     "source": "judge",
     "masked": true,
     "locked": false,
     "box": [
-     26,
-     450,
-     1135,
-     497
+     24,
+     449,
+     218,
+     498
     ],
     "mask_rle": null
    },
    {
     "id": "l_02",
+    "marks": [],
+    "category": "other_sensitive",
+    "reason": "dates",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     320,
+     452,
+     471,
+     495
+    ],
+    "mask_rle": null
+   },
+   {
+    "id": "l_03",
     "marks": [],
     "category": "personal_account",
     "reason": "flight",

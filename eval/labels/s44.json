@@ -24,14 +24,14 @@
     "id": "l_02",
     "marks": [],
     "category": "face",
-    "reason": "background face",
+    "reason": "face only, not hair",
     "source": "judge",
     "masked": true,
     "locked": false,
     "box": [
-     717,
-     1116,
-     901,
+     800,
+     1150,
+     905,
      1311
     ],
     "mask_rle": null

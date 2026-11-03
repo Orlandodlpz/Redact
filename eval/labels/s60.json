@@ -8,15 +8,31 @@
     "id": "l_01",
     "marks": [],
     "category": "other_sensitive",
-    "reason": "prescription label",
+    "reason": "patient name line",
     "source": "judge",
     "masked": true,
     "locked": false,
     "box": [
-     503,
-     447,
-     1104,
-     845
+     512,
+     585,
+     815,
+     635
+    ],
+    "mask_rle": null
+   },
+   {
+    "id": "l_02",
+    "marks": [],
+    "category": "other_sensitive",
+    "reason": "medication line",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     511,
+     642,
+     994,
+     694
     ],
     "mask_rle": null
    }
