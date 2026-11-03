@@ -1,0 +1,134 @@
+{
+  "image_id": "fixture000000000",
+  "width": 800,
+  "height": 600,
+  "destination": "public",
+  "findings": [
+    {
+      "id": "f_01",
+      "marks": [
+        4
+      ],
+      "category": "credential",
+      "reason": "This line puts a value next to a password or key label, so it is masked for every destination",
+      "source": "floor",
+      "masked": true,
+      "locked": true,
+      "box": [
+        84,
+        160,
+        470,
+        190
+      ],
+      "mask_rle": null
+    },
+    {
+      "id": "f_02",
+      "marks": [
+        9
+      ],
+      "category": "credential",
+      "reason": "This line matches a known API key or token format, so it is masked for every destination",
+      "source": "floor",
+      "masked": true,
+      "locked": true,
+      "box": [
+        586,
+        180,
+        730,
+        206
+      ],
+      "mask_rle": null
+    },
+    {
+      "id": "f_03",
+      "marks": [
+        11
+      ],
+      "category": "payment",
+      "reason": "A number on this line passes the card checksum, so it is masked for every destination",
+      "source": "floor",
+      "masked": true,
+      "locked": true,
+      "box": [
+        112,
+        470,
+        390,
+        500
+      ],
+      "mask_rle": null
+    },
+    {
+      "id": "f_04",
+      "marks": [
+        10
+      ],
+      "category": "payment",
+      "reason": "A payment card is in this region, so it is masked for every destination",
+      "source": "floor",
+      "masked": true,
+      "locked": true,
+      "box": [
+        90,
+        400,
+        420,
+        540
+      ],
+      "mask_rle": null
+    },
+    {
+      "id": "f_05",
+      "marks": [
+        3
+      ],
+      "category": "internal_data",
+      "reason": "A sprint goal naming unreleased work, masked because this is going to a public post",
+      "source": "judge",
+      "masked": true,
+      "locked": false,
+      "box": [
+        84,
+        110,
+        420,
+        138
+      ],
+      "mask_rle": null
+    },
+    {
+      "id": "f_06",
+      "marks": [
+        5
+      ],
+      "category": "benign",
+      "reason": "A meeting time and a room number, kept because neither identifies a person",
+      "source": "judge",
+      "masked": false,
+      "locked": false,
+      "box": [
+        84,
+        212,
+        330,
+        240
+      ],
+      "mask_rle": null
+    }
+  ],
+  "judge_status": "ok",
+  "prompt_version": "judge_v1",
+  "model_ids": {
+    "judge": "muse-spark-1.3",
+    "sam": "sam-3.1"
+  },
+  "timings_ms": {
+    "ingest": 0,
+    "ocr": 0,
+    "sweep": 0,
+    "candidates": 0,
+    "floor": 0,
+    "marks": 0,
+    "judge": 0,
+    "merge": 0,
+    "total": 0
+  },
+  "est_cost_usd": 0.0
+}

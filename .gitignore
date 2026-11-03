@@ -9,6 +9,8 @@ threats/*
 !threats/expected.jsonl
 logs/
 out/
+# Browser automation artifacts: screenshots of whatever image was open.
+.playwright-cli/
 
 # Python
 __pycache__/
@@ -19,3 +21,6 @@ __pycache__/
 # Node
 node_modules/
 .next/
+*.tsbuildinfo
+# The frontend's env sample is a template, like .env.example at the root.
+!frontend/.env.local.example
