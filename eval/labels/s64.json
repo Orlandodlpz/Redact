@@ -35,6 +35,22 @@
      993
     ],
     "mask_rle": null
+   },
+   {
+    "id": "l_03",
+    "marks": [],
+    "category": "other_sensitive",
+    "reason": "labeled",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     290,
+     270,
+     1346,
+     757
+    ],
+    "mask_rle": null
    }
   ],
   "team": [
@@ -53,6 +69,22 @@
      1255
     ],
     "mask_rle": null
+   },
+   {
+    "id": "l_03",
+    "marks": [],
+    "category": "other_sensitive",
+    "reason": "labeled",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     290,
+     270,
+     1346,
+     757
+    ],
+    "mask_rle": null
    }
   ],
   "ai_assistant": [
@@ -69,6 +101,22 @@
      1205,
      671,
      1255
+    ],
+    "mask_rle": null
+   },
+   {
+    "id": "l_03",
+    "marks": [],
+    "category": "other_sensitive",
+    "reason": "labeled",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     290,
+     270,
+     1346,
+     757
     ],
     "mask_rle": null
    }

@@ -19,6 +19,22 @@
      319
     ],
     "mask_rle": null
+   },
+   {
+    "id": "l_02",
+    "marks": [],
+    "category": "internal_data",
+    "reason": "labeled",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     238,
+     640,
+     1351,
+     1246
+    ],
+    "mask_rle": null
    }
   ],
   "team": [
@@ -53,6 +69,22 @@
      244,
      1081,
      319
+    ],
+    "mask_rle": null
+   },
+   {
+    "id": "l_02",
+    "marks": [],
+    "category": "internal_data",
+    "reason": "labeled",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     238,
+     640,
+     1351,
+     1246
     ],
     "mask_rle": null
    }

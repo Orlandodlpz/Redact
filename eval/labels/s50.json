@@ -19,6 +19,38 @@
      1165
     ],
     "mask_rle": null
+   },
+   {
+    "id": "l_02",
+    "marks": [],
+    "category": "license_plate",
+    "reason": "labeled",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     1659,
+     261,
+     1764,
+     333
+    ],
+    "mask_rle": null
+   },
+   {
+    "id": "l_03",
+    "marks": [],
+    "category": "face",
+    "reason": "labeled",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     1834,
+     171,
+     1943,
+     270
+    ],
+    "mask_rle": null
    }
   ],
   "team": [],
