@@ -8,6 +8,8 @@ eval/data/
 threats/*
 !threats/expected.jsonl
 !threats/README.md
+# Scripts, yes. The images and reports they make, no.
+!threats/*.py
 logs/
 out/
 # Browser automation artifacts: screenshots of whatever image was open.
