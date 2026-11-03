@@ -146,6 +146,12 @@ def create_app() -> FastAPI:
         redoc_url=None,
         openapi_url=None,
     )
+    # Order matters. add_middleware inserts at the front, so the last one registered is
+    # the outermost. CORS has to be outside front_door: the gate answers a bad passcode
+    # itself, and a response built inside CORS is the only kind that carries an
+    # Access-Control-Allow-Origin header. Registered the other way round, a judge who
+    # mistypes the passcode sees a CORS error instead of "This demo needs a passcode".
+    built.middleware("http")(front_door)
     built.add_middleware(
         CORSMiddleware,
         allow_origins=get_settings().allowed_origins(),
@@ -154,7 +160,6 @@ def create_app() -> FastAPI:
         allow_methods=["GET", "POST", "OPTIONS"],
         allow_headers=["*"],
     )
-    built.middleware("http")(front_door)
     built.include_router(router)
     return built
 

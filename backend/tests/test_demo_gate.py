@@ -166,6 +166,7 @@ def client(monkeypatch):
     monkeypatch.setenv("META_API_KEY", "test-key-not-real")
     monkeypatch.setenv("DEMO_PASSCODE", PASSCODE)
     monkeypatch.setenv("RATE_LIMIT_PER_IP_PER_HOUR", "2")
+    monkeypatch.setenv("FRONTEND_ORIGIN", "http://localhost:3000")
     get_settings.cache_clear()
 
     async def fake_analyze(image_bytes, destination, *, client=None):
@@ -230,6 +231,39 @@ def test_a_refused_request_does_not_use_up_an_allowance(client):
         assert client.post("/analyze", files=upload(), headers=head).status_code == 422
     assert client.post("/analyze", files=upload(),
                        data={"destination": "public"}, headers=head).status_code == 200
+
+
+def test_a_refused_request_still_carries_cors_headers(client):
+    """The gate answers a bad passcode itself, from a middleware. Built outside CORS
+    that response has no Access-Control-Allow-Origin, so a judge who mistypes the
+    passcode sees a CORS error rather than being told to check the passcode."""
+    origin = "http://localhost:3000"
+    r = client.post("/analyze", files=upload(), data={"destination": "public"},
+                    headers={"origin": origin})
+    assert r.status_code == 401
+    assert r.headers.get("access-control-allow-origin") == origin
+    assert json.loads(r.content)["detail"] == "This demo needs a passcode."
+
+
+def test_a_rate_limited_request_still_carries_cors_headers(client):
+    origin = "http://localhost:3000"
+    head = {PASSCODE_HEADER: PASSCODE, "origin": origin}
+    for _ in range(2):
+        client.post("/analyze", files=upload(), data={"destination": "public"},
+                    headers=head)
+    r = client.post("/analyze", files=upload(), data={"destination": "public"},
+                    headers=head)
+    assert r.status_code == 429
+    assert r.headers.get("access-control-allow-origin") == origin
+
+
+def test_an_oversize_refusal_still_carries_cors_headers(client):
+    origin = "http://localhost:3000"
+    r = client.post("/analyze", content=b"", headers={
+        "origin": origin, "content-length": str(100 * 1024 * 1024),
+        "content-type": "application/octet-stream"})
+    assert r.status_code == 413
+    assert r.headers.get("access-control-allow-origin") == origin
 
 
 def test_the_passcode_is_never_asked_for_in_a_url(client):
