@@ -10,6 +10,11 @@
  *
  * A locked finding is a floor rule hit. The model cannot clear it, so the lock asks for
  * a second, explicit click before it comes off.
+ *
+ * When the judge was unavailable, merge still labels its fail closed findings as coming
+ * from the judge, because that is the pipeline step they came out of. Calling them
+ * "Model" on screen would say a model decided something it never saw, so they read
+ * "Masked by default" instead.
  */
 
 import { useState } from "react";
@@ -21,6 +26,8 @@ import {
 
 type Props = {
   findings: Finding[];
+  /** When the judge was unavailable, nothing here was decided by a model. */
+  judgeFailed: boolean;
   selectedId: string | null;
   onSelect: (id: string | null) => void;
   onToggle: (id: string, masked: boolean) => void;
@@ -29,6 +36,7 @@ type Props = {
 
 export default function FindingsList({
   findings,
+  judgeFailed,
   selectedId,
   onSelect,
   onToggle,
@@ -58,7 +66,11 @@ export default function FindingsList({
                 {f.locked ? <span aria-hidden="true">&#128274; </span> : null}
                 {CATEGORY_LABELS[f.category]}
               </span>
-              <span className="finding-source">{SOURCE_LABELS[f.source]}</span>
+              <span className="finding-source">
+                {judgeFailed && f.source === "judge"
+                  ? "Masked by default"
+                  : SOURCE_LABELS[f.source]}
+              </span>
             </div>
             <p className="finding-reason">{f.reason}</p>
             <div className="finding-actions">

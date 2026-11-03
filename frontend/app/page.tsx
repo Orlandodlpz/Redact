@@ -247,6 +247,7 @@ export default function Page() {
             ) : null}
             <FindingsList
               findings={findings}
+              judgeFailed={result.judge_status === "failed_closed"}
               selectedId={selectedId}
               onSelect={setSelectedId}
               onToggle={onToggle}
