@@ -226,6 +226,10 @@ export default function Page() {
                 Start over
               </button>
             </div>
+            <p className="note">
+              The download is {result.width} by {result.height}, the size Redact worked
+              at. A larger photo comes back smaller than you sent it.
+            </p>
           </div>
 
           <aside className="review-side">
