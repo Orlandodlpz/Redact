@@ -7,6 +7,7 @@
 eval/data/
 threats/*
 !threats/expected.jsonl
+!threats/README.md
 logs/
 out/
 # Browser automation artifacts: screenshots of whatever image was open.
