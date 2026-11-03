@@ -335,3 +335,49 @@ def _async(value):
         return value
 
     return run()
+
+
+# --- things the security review turned up -------------------------------------
+
+
+def test_a_post_with_no_content_length_is_refused(client):
+    """Without a length the size guard has nothing to check, and Starlette would spool
+    the body to a temporary file past its in memory limit, putting image bytes on disk.
+    Every browser sends a length for a FormData post."""
+    r = client.post(
+        "/analyze",
+        content=iter([b"--x\r\n", b"--x--\r\n"]),  # a generator body goes out chunked
+        headers={"content-type": "multipart/form-data; boundary=x"},
+    )
+    assert r.status_code == 411
+
+
+def test_health_does_not_need_a_content_length(client):
+    assert client.get("/health").status_code == 200
+
+
+def test_the_schema_browser_is_not_served(client):
+    """The demo is public. Nothing here is secret, but there is no reason to hand out
+    an interactive schema browser with it."""
+    for path in ("/docs", "/redoc", "/openapi.json"):
+        assert client.get(path).status_code == 404, path
+
+
+def test_an_unexpected_failure_logs_the_type_and_nothing_else(client, monkeypatch, caplog):
+    """A pydantic ValidationError puts the offending value in its message as
+    input_value, and on this pipeline that value can be a line of text read off the
+    user's image. So the log line carries the exception type and no traceback."""
+    import logging
+
+    secret = "wifi-password-guest2026"
+
+    async def boom(*a, **k):
+        raise ValueError(f"input_value='{secret}'")
+
+    monkeypatch.setattr(main, "analyze", boom)
+    with caplog.at_level(logging.DEBUG):
+        r = client.post("/analyze", files=upload(), data={"destination": "public"})
+    assert r.status_code == 500
+    assert secret not in caplog.text
+    assert secret not in r.text
+    assert "ValueError" in caplog.text

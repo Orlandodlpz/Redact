@@ -34,7 +34,7 @@ from pydantic import ValidationError
 from starlette.formparsers import MultiPartParser
 
 from app.config import VERSION, StartupError, assert_startup_safe, get_settings
-from app.demo_gate import PASSCODE_HEADER, DemoGate
+from app.demo_gate import GATED_PATHS, PASSCODE_HEADER, DemoGate
 from app.pipeline.compose import compose
 from app.pipeline.ingest import IngestError, ingest
 from app.pipeline.run import analyze
@@ -79,12 +79,18 @@ async def front_door(request: Request, call_next):
     so a request that will not be served never reaches the pipeline. Findings name what
     is sensitive in an image, so nothing downstream of here may hold a copy.
     """
-    declared = request.headers.get("content-length")
     settings = get_settings()
     limit = settings.max_upload_bytes + _FORM_OVERHEAD_BYTES
-    if declared is not None and declared.isdigit() and int(declared) > limit:
+    declared = request.headers.get("content-length")
+    if request.method == "POST" and any(request.url.path.startswith(p) for p in GATED_PATHS):
         mb = settings.max_upload_bytes // (1024 * 1024)
-        return _refusal(413, f"Image is larger than {mb} MB")
+        if declared is None or not declared.isdigit():
+            # Without a length there is nothing to check, and Starlette would spool the
+            # body to a temporary file once it passed the in memory limit, putting image
+            # bytes on disk. Every browser sends a length for a FormData post.
+            return _refusal(411, "This request needs a Content-Length.")
+        if int(declared) > limit:
+            return _refusal(413, f"Image is larger than {mb} MB")
 
     gate: DemoGate | None = getattr(request.app.state, "gate", None)
     ip = None
@@ -130,7 +136,16 @@ def create_app() -> FastAPI:
     Module level `app` is what uvicorn serves. Tests build their own so the CORS
     allowlist under test is the one they set, not whatever the defaults happen to be.
     """
-    built = FastAPI(title="Redact", version=VERSION, lifespan=lifespan)
+    built = FastAPI(
+        title="Redact",
+        version=VERSION,
+        lifespan=lifespan,
+        # The demo is public. Nothing here is secret, but there is no reason to hand
+        # out an interactive schema browser with it.
+        docs_url=None,
+        redoc_url=None,
+        openapi_url=None,
+    )
     built.add_middleware(
         CORSMiddleware,
         allow_origins=get_settings().allowed_origins(),
@@ -181,8 +196,12 @@ async def analyze_route(
         # Anything unexpected becomes a 500 here rather than escaping the route. Letting
         # it escape means the error response is built outside the CORS middleware, so
         # the browser reports a CORS failure and the real problem never reaches anyone.
-        # Only the exception type is logged: the message could carry anything.
-        logger.exception("analyze failed with %s", type(e).__name__)
+        #
+        # The type only, with no traceback and no message. A pydantic ValidationError
+        # puts the offending value in its message as `input_value=`, and on this
+        # pipeline that value can be a line of text read off the user's image, so
+        # logger.exception here would write image content to a log file.
+        logger.error("analyze failed with %s", type(e).__name__)
         raise HTTPException(
             status_code=500, detail="Something went wrong on our side. Try again."
         ) from e
@@ -213,7 +232,7 @@ async def export_route(
         logger.warning("export failed to compose: %s", type(e).__name__)
         raise HTTPException(status_code=400, detail="A mask in this request is malformed") from e
     except Exception as e:
-        logger.exception("export failed with %s", type(e).__name__)
+        logger.error("export failed with %s", type(e).__name__)  # type only, see above
         raise HTTPException(
             status_code=500, detail="Something went wrong on our side. Try again."
         ) from e

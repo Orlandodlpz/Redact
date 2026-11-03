@@ -9,7 +9,7 @@ import os
 from functools import lru_cache
 from typing import Literal
 
-from pydantic import SecretStr
+from pydantic import SecretStr, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 VERSION = "0.1.0"
@@ -92,6 +92,20 @@ class Settings(BaseSettings):
     ocr_max_edge_px: int = 4096
     mask_dilation_px: int = 4
     max_upload_bytes: int = 20 * 1024 * 1024
+
+    @field_validator("demo_passcode", mode="after")
+    @classmethod
+    def _blank_passcode_is_no_passcode(cls, value: SecretStr | None) -> SecretStr | None:
+        """`DEMO_PASSCODE=` in a .env is an empty string, not an unset value.
+
+        Left alone, that turns the gate on with a passcode of "", which refuses everyone
+        who does not send the header and admits anyone who sends an empty one. That is
+        worse than no gate, because it looks like a gate. .env.example ships the key with
+        no value, so this is the normal case rather than a strange one.
+        """
+        if value is not None and value.get_secret_value() == "":
+            return None
+        return value
 
     def model_ids(self) -> dict[str, str]:
         return {"judge": self.judge_model, "sam": self.sam_model}

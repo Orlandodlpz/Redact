@@ -29,6 +29,7 @@ forwarded header is the only real address, but anywhere else that header is what
 caller typed. It defaults to off and the deploy turns it on.
 """
 
+import secrets
 import time
 from dataclasses import dataclass, field
 
@@ -84,9 +85,10 @@ class DemoGate:
 
         expected = self.settings.demo_passcode
         if expected is not None:
-            if passcode != expected.get_secret_value():
-                # Same message either way: a different one for "missing" against "wrong"
-                # tells a guesser which half they got right.
+            # compare_digest rather than ==, so the comparison does not stop at the
+            # first wrong character. Same message either way: a different one for
+            # "missing" against "wrong" tells a guesser which half they got right.
+            if not secrets.compare_digest(passcode or "", expected.get_secret_value()):
                 return Decision(False, 401, "This demo needs a passcode.")
 
         if not any(path.startswith(p) for p in COUNTED_PATHS):

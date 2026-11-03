@@ -237,3 +237,34 @@ def test_the_passcode_is_never_asked_for_in_a_url(client):
     r = client.post(f"/analyze?passcode={PASSCODE}", files=upload(),
                     data={"destination": "public"})
     assert r.status_code == 401
+
+
+# --- the empty passcode footgun ----------------------------------------------
+
+
+def test_an_empty_passcode_setting_means_no_gate_not_an_empty_gate():
+    """`.env.example` ships `DEMO_PASSCODE=` with no value, which pydantic reads as "".
+
+    Left alone that turns the gate on with a passcode of "", which refuses everyone who
+    sends no header and admits anyone who sends an empty one. That is worse than no
+    gate, because it looks like a gate.
+    """
+    s = Settings(meta_api_key="k", demo_passcode="")
+    assert s.demo_passcode is None
+    g = DemoGate(s)
+    assert g.check("/analyze", None, "1.2.3.4").allowed
+    assert g.check("/analyze", "", "1.2.3.4").allowed
+    assert g.check("/analyze", "anything", "1.2.3.4").allowed
+
+
+def test_an_empty_header_does_not_open_a_real_gate():
+    assert not gate().check("/analyze", "", "1.2.3.4").allowed
+
+
+def test_the_passcode_comparison_does_not_stop_at_the_first_wrong_character():
+    """compare_digest, not ==. Not a realistic remote attack, but it is one line."""
+    import inspect
+
+    from app import demo_gate
+
+    assert "compare_digest" in inspect.getsource(demo_gate.DemoGate.check)
