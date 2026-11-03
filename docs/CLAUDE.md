@@ -1,7 +1,7 @@
 # CLAUDE.md: Redact
 
 Project context and conventions. Read this first in every session, then read docs/BRIEFING.md.
-**Last Updated:** 2026-10-26 (OCR engine test done: RapidOCR kept, Tesseract dropped)
+**Last Updated:** 2026-11-02 (floor rules, routes and the frontend landed; gotchas 41 to 45 added)
 
 ## Interaction Mode: Always On
 
@@ -119,9 +119,9 @@ Not validated. Each names what replaces it.
 
 ## Current Status
 
-- **Phase:** Phase 1 DONE (Oct 26). Official Rules read, code started Oct 26, credits claimed, smoke test measured both models (BRIEFING.md Phase 1 results).
+- **Phase:** Phase 1 DONE (Oct 26). Phase 2 code complete as of Nov 2, but **the Phase 2 gate has never been run**: the pipeline has not gone end to end on a labeled image, no recall or false positive number exists, and the judge has not been called live. Phases 3 and 4 are partly done and partly not started. The plan's calendar no longer matches reality, and Nov 2 was meant to be feature freeze.
 - **Done:** Local mode cut (Oct 24, no hardware). Design review (Oct 24). Twelve checks run; four parts of the application plan rewritten (pitch, pipeline, privacy, safety) and the eval strengthened. Results summarized in BRIEFING.md Phase 0. Official Rules read and recorded (Oct 26).
-- **Next:** Phase 2. Oct 27 judge bake off (Carlos) now has measured latency to compare against; OCR engine test done (RapidOCR); Orlando starts ingest, sweep, ocr.py and candidates.
+- **Next:** one live end to end run on a real photo, by whoever has a working key, before anything else. Every module exists and the unit tests pass, but no image has been through the whole pipeline with real model calls, so `judge_status` has never been `ok` outside a fake client (gotchas 40 and 41 are both this failure mode). After that: the Oct 27 bake off still has not run, no eval images are labeled, no baseline has produced a result, and the hosted demo does not exist.
 - **Known gotchas discovered so far:**
   1. SAM 3.1 on the hosted API is phrase driven. No documented segment everything mode. One phrase per request until proven otherwise.
   2. SAM will not isolate a single line of text inside a whiteboard or document. Text lines come from OCR.
@@ -163,3 +163,8 @@ Not validated. Each names what replaces it.
   17. "Simple Image Analyzers" is on the guide's anti project list, and Stage One is pass/fail. The pitch, README and video must lead with context, multi clue leaks and destination, not "detects PII in images". (Orlando, Oct 26)
   18. API calls fail until a credit card is on the account, even with credits granted. Each person claims their own credits. (Orlando, Oct 26)
   19. Baseten's docs use `meta-models/muse-spark-open`; the hackathon model ID is `meta-models/muse-spark-open-1026`. (Orlando, Oct 26)
+  41. A green test suite can sit on a pipeline that crashes on every image. `floor.find_floor_hits` raised `NotImplementedError` for six days; the only file that imports it is run.py, and the only test that reaches it is `test_run.py`, which monkeypatches it. 155 tests passed over a service that could not analyze anything. Same shape as gotcha 40, one layer up. A module is not covered because something imports it: check whether the test replaced it. (Victor, Nov 2)
+  42. Starlette rolls a multipart upload over to a `SpooledTemporaryFile` on disk once it passes 1 MB, which nearly every photo does. A plain `UploadFile` route writes user images to the filesystem, which breaks "never store user images" without a single line of our code doing it. `main.py` raises `MultiPartParser.spool_max_size` above the 20 MB cap in the lifespan, and a Content-Length guard refuses an oversized request before the body is parsed. Verify with `uv run pytest backend/tests/test_main.py -k memory`. (Victor, Nov 2)
+  43. The export comes back at the working image size, not the original. Findings carry working image coordinates, so `/export` re ingests the upload and composes on that 2048 px copy; a 12 MP photo in gets a 2048 px PNG out. Nobody decided this, it fell out of the coordinate space. It needs a team call: live with it and say so in the UI, or scale masks back up to the original in compose. (Victor, Nov 2)
+  44. Luhn passes one in ten random digit strings, so a Luhn only card rule fires on serials and tracking numbers. Worse, sliding a window over a long digit run makes a bad 16 digit number pass on its first 13 digits. `floor.py` requires a real brand prefix at a length that brand issues, and holds each window to the printed grouping. The cost is a card whose groups OCR ran together with the expiry; the SAM `credit card` class and the judge cover that. (Victor, Nov 2)
+  45. Node's `--experimental-strip-types` cannot parse `.tsx`, so any constant a node test asserts on has to live in a `.ts` file. The privacy copy moved to `frontend/lib/copy.ts` for that reason. (Victor, Nov 2)
