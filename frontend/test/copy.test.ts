@@ -74,6 +74,26 @@ test("no image or finding ever goes into a URL", () => {
   assert.equal((api.match(/method: "POST"/g) ?? []).length, 2);
 });
 
+test("nothing is written to browser storage", () => {
+  // An image, a finding list and the demo passcode all live in memory for the life of
+  // the tab. A shared machine should not keep any of them after it closes.
+  for (const file of sources()) {
+    const code = withoutComments(readFileSync(file, "utf8"));
+    for (const api of ["localStorage", "sessionStorage", "document.cookie", "indexedDB"]) {
+      assert.ok(
+        !code.includes(api),
+        `${path.relative(ROOT, file)} uses ${api}; this app keeps nothing after the tab closes`,
+      );
+    }
+  }
+});
+
+test("the demo passcode travels as a header", () => {
+  const api = withoutComments(readFileSync(path.join(ROOT, "lib", "api.ts"), "utf8"));
+  assert.ok(api.includes("X-Redact-Passcode"), "the passcode is sent as a header");
+  assert.ok(!api.includes("passcode="), "a query string would put it in every access log");
+});
+
 test("no em dashes in anything this app shows", () => {
   for (const file of sources()) {
     const body = readFileSync(file, "utf8");

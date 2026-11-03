@@ -34,6 +34,7 @@ from pydantic import ValidationError
 from starlette.formparsers import MultiPartParser
 
 from app.config import VERSION, StartupError, assert_startup_safe, get_settings
+from app.demo_gate import PASSCODE_HEADER, DemoGate
 from app.pipeline.compose import compose
 from app.pipeline.ingest import IngestError, ingest
 from app.pipeline.run import analyze
@@ -63,6 +64,7 @@ async def lifespan(app: FastAPI):
     # 1 MB, which would write user images to the filesystem. Keep every accepted
     # upload in memory; the Content-Length guard below bounds how much that can be.
     MultiPartParser.spool_max_size = settings.max_upload_bytes + _FORM_OVERHEAD_BYTES
+    app.state.gate = DemoGate(settings)
     app.state.client = MetaClient(settings)
     try:
         yield
@@ -70,25 +72,53 @@ async def lifespan(app: FastAPI):
         await app.state.client.close()
 
 
-async def no_store(request: Request, call_next):
-    """Refuse an oversized body before reading it, and let nothing be cached.
+async def front_door(request: Request, call_next):
+    """Size guard, demo gate, and no caching, in that order.
 
-    Findings name what is sensitive in an image, so neither a proxy nor the browser
-    should hold on to a response.
+    Size first because it is free and refuses a body before it is read. The gate next,
+    so a request that will not be served never reaches the pipeline. Findings name what
+    is sensitive in an image, so nothing downstream of here may hold a copy.
     """
     declared = request.headers.get("content-length")
-    limit = get_settings().max_upload_bytes + _FORM_OVERHEAD_BYTES
+    settings = get_settings()
+    limit = settings.max_upload_bytes + _FORM_OVERHEAD_BYTES
     if declared is not None and declared.isdigit() and int(declared) > limit:
-        mb = get_settings().max_upload_bytes // (1024 * 1024)
-        return Response(
-            content=json.dumps({"detail": f"Image is larger than {mb} MB"}),
-            status_code=413,
-            media_type="application/json",
-            headers={"Cache-Control": "no-store"},
+        mb = settings.max_upload_bytes // (1024 * 1024)
+        return _refusal(413, f"Image is larger than {mb} MB")
+
+    gate: DemoGate | None = getattr(request.app.state, "gate", None)
+    ip = None
+    if gate is not None and request.method != "OPTIONS":
+        ip = gate.client_ip(
+            request.headers.get("x-forwarded-for"),
+            request.client.host if request.client else None,
         )
+        decision = gate.check(request.url.path, request.headers.get(PASSCODE_HEADER), ip)
+        if not decision.allowed:
+            headers = {}
+            if decision.retry_after_s is not None:
+                headers["Retry-After"] = str(max(1, decision.retry_after_s))
+            return _refusal(decision.status, decision.detail, headers)
+
     response = await call_next(request)
+    # Counted after the fact, and only when the call was served. A 422 for a missing
+    # field costs nothing, so it should not cost the visitor one of their twelve.
+    # Requests in flight at the same moment all pass the check before any of them is
+    # counted, so the limit can be overshot by roughly the number of concurrent calls.
+    # One instance serving a demo makes that a handful, which is inside the day cap.
+    if gate is not None and ip is not None and response.status_code < 400:
+        gate.record(request.url.path, ip)
     response.headers["Cache-Control"] = "no-store"
     return response
+
+
+def _refusal(status: int, detail: str, headers: dict[str, str] | None = None) -> Response:
+    return Response(
+        content=json.dumps({"detail": detail}),
+        status_code=status,
+        media_type="application/json",
+        headers={"Cache-Control": "no-store", **(headers or {})},
+    )
 
 
 router = APIRouter()
@@ -109,7 +139,7 @@ def create_app() -> FastAPI:
         allow_methods=["GET", "POST", "OPTIONS"],
         allow_headers=["*"],
     )
-    built.middleware("http")(no_store)
+    built.middleware("http")(front_door)
     built.include_router(router)
     return built
 

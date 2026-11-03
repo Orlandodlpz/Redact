@@ -313,3 +313,33 @@ button.danger {
 .empty {
   color: var(--muted);
 }
+
+.passcode {
+  display: grid;
+  gap: 8px;
+  padding: 14px 16px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 11px;
+}
+
+.passcode label {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.passcode input {
+  font: inherit;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  padding: 9px 12px;
+  min-width: 240px;
+  flex: 1 1 240px;
+}
+
+.passcode input:focus {
+  outline: none;
+  border-color: var(--accent);
+}

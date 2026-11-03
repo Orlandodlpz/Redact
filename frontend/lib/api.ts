@@ -17,6 +17,26 @@ const API_BASE = (process.env.NEXT_PUBLIC_API_BASE ?? "http://localhost:8000").r
   "",
 );
 
+/**
+ * The hosted demo asks for a passcode. It goes in a header, never a query string,
+ * because query strings land in access logs at every hop. It is held in memory for the
+ * life of the tab and never written to localStorage: a shared machine should not keep
+ * the key to someone else's demo.
+ */
+let passcode = "";
+
+export function setPasscode(value: string): void {
+  passcode = value;
+}
+
+export function hasPasscode(): boolean {
+  return passcode.length > 0;
+}
+
+function headers(): HeadersInit {
+  return passcode ? { "X-Redact-Passcode": passcode } : {};
+}
+
 export class ApiError extends Error {
   readonly status: number;
 
@@ -35,7 +55,12 @@ export async function analyze(
   const body = new FormData();
   body.append("image", image);
   body.append("destination", destination);
-  const response = await fetch(`${API_BASE}/analyze`, { method: "POST", body, signal });
+  const response = await fetch(`${API_BASE}/analyze`, {
+    method: "POST",
+    body,
+    signal,
+    headers: headers(),
+  });
   if (!response.ok) {
     throw new ApiError(response.status, await errorMessage(response));
   }
@@ -48,7 +73,11 @@ export async function exportImage(image: File, findings: Finding[]): Promise<Blo
   const body = new FormData();
   body.append("image", image);
   body.append("findings", JSON.stringify(findings));
-  const response = await fetch(`${API_BASE}/export`, { method: "POST", body });
+  const response = await fetch(`${API_BASE}/export`, {
+    method: "POST",
+    body,
+    headers: headers(),
+  });
   if (!response.ok) {
     throw new ApiError(response.status, await errorMessage(response));
   }
@@ -61,9 +90,13 @@ export async function exportImage(image: File, findings: Finding[]): Promise<Blo
  */
 async function errorMessage(response: Response): Promise<string> {
   const fallback =
-    response.status >= 500
-      ? "The service had a problem. Try again in a moment."
-      : "That request was refused.";
+    response.status === 401
+      ? "This demo needs a passcode."
+      : response.status === 429
+        ? "That is a lot of images in one hour. Try again later."
+        : response.status >= 500
+          ? "The service had a problem. Try again in a moment."
+          : "That request was refused.";
   try {
     const body = (await response.json()) as { detail?: unknown };
     return typeof body.detail === "string" && body.detail ? body.detail : fallback;

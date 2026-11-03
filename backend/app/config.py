@@ -76,6 +76,16 @@ class Settings(BaseSettings):
     # takes uploads and must not be callable from any page on the web.
     frontend_origin: str = "http://localhost:3000"
 
+    # The hosted demo's front door (app/demo_gate.py). Unset passcode means no gate,
+    # which is what local development wants. The caps bound what abuse can spend: at
+    # the Phase 1 estimate of about $0.06 per image, 200 a day is roughly $12 a day.
+    demo_passcode: SecretStr | None = None
+    rate_limit_per_ip_per_hour: int = 12
+    daily_analyze_cap: int = 200
+    # Behind a proxy, X-Forwarded-For is the only real client address. Anywhere else it
+    # is whatever the caller typed, so trusting it would hand out free rate limit resets.
+    trust_proxy_header: bool = False
+
     # Provisional, see docs/CLAUDE.md Provisional Values.
     max_image_edge_px: int = 2048
     # OCR is local, so it reads a larger copy than the API ever sees (gotcha 33).

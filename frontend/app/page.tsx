@@ -14,9 +14,10 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import DestinationPicker from "../components/DestinationPicker.tsx";
 import FindingsList from "../components/FindingsList.tsx";
 import MaskCanvas from "../components/MaskCanvas.tsx";
+import PasscodeGate, { REQUIRED as PASSCODE_REQUIRED } from "../components/PasscodeGate.tsx";
 import PrivacyNote from "../components/PrivacyNote.tsx";
 import Upload from "../components/Upload.tsx";
-import { ApiError, analyze, exportImage } from "../lib/api.ts";
+import { ApiError, analyze, exportImage, hasPasscode } from "../lib/api.ts";
 import type { AnalyzeResponse, Box, Destination, Finding } from "../lib/types.ts";
 import { DESTINATION_LABELS, parseAnalyzeResponse } from "../lib/types.ts";
 import fixture from "../fixtures/analyze.sample.json" with { type: "json" };
@@ -34,6 +35,7 @@ export default function Page() {
   const [drawing, setDrawing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [exporting, setExporting] = useState(false);
+  const [gateReady, setGateReady] = useState(!PASSCODE_REQUIRED);
   const manualCount = useRef(0);
 
   // An object URL is a live handle on the file. Revoke it so a dropped image is not
@@ -124,6 +126,10 @@ export default function Page() {
       setError("The sample is for looking at. Upload an image to export one.");
       return;
     }
+    if (PASSCODE_REQUIRED && !hasPasscode()) {
+      setError("Enter the demo passcode first.");
+      return;
+    }
     setExporting(true);
     setError(null);
     try {
@@ -153,6 +159,7 @@ export default function Page() {
 
       {stage !== "review" ? (
         <section className="panel">
+          <PasscodeGate onReady={() => setGateReady(true)} />
           <Upload
             file={file}
             onPick={onPick}
@@ -168,7 +175,7 @@ export default function Page() {
             <button
               type="button"
               className="primary"
-              disabled={!file || stage === "working"}
+              disabled={!file || stage === "working" || !gateReady}
               onClick={run}
             >
               {stage === "working" ? "Looking at it..." : "Check this image"}
