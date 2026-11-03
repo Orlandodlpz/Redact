@@ -1,0 +1,27 @@
+{
+ "image_id": "s50",
+ "width": 2048,
+ "height": 1536,
+ "destinations": {
+  "public": [
+   {
+    "id": "l_01",
+    "marks": [],
+    "category": "license_plate",
+    "reason": "plate",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     258,
+     981,
+     449,
+     1165
+    ],
+    "mask_rle": null
+   }
+  ],
+  "team": [],
+  "ai_assistant": []
+ }
+}

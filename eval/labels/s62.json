@@ -1,0 +1,41 @@
+{
+ "image_id": "s62",
+ "width": 1600,
+ "height": 1200,
+ "destinations": {
+  "public": [
+   {
+    "id": "l_01",
+    "marks": [],
+    "category": "other_sensitive",
+    "reason": "trip dates",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     26,
+     450,
+     1135,
+     497
+    ],
+    "mask_rle": null
+   },
+   {
+    "id": "l_02",
+    "marks": [],
+    "category": "personal_account",
+    "reason": "flight",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     1146,
+     830,
+     1358,
+     877
+    ],
+    "mask_rle": null
+   }
+  ]
+ }
+}

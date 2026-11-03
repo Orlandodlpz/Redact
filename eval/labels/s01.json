@@ -1,0 +1,25 @@
+{
+ "image_id": "s01",
+ "width": 1600,
+ "height": 1200,
+ "destinations": {
+  "public": [
+   {
+    "id": "l_01",
+    "marks": [],
+    "category": "credential",
+    "reason": "wifi password on sticky note",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     643,
+     703,
+     903,
+     854
+    ],
+    "mask_rle": null
+   }
+  ]
+ }
+}

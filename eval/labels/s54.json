@@ -1,0 +1,44 @@
+{
+ "image_id": "s54",
+ "width": 1600,
+ "height": 1200,
+ "destinations": {
+  "public": [
+   {
+    "id": "l_01",
+    "marks": [],
+    "category": "internal_data",
+    "reason": "revenue dashboard",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     95,
+     72,
+     1497,
+     968
+    ],
+    "mask_rle": null
+   }
+  ],
+  "team": [],
+  "ai_assistant": [
+   {
+    "id": "l_01",
+    "marks": [],
+    "category": "internal_data",
+    "reason": "revenue dashboard",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     95,
+     72,
+     1497,
+     968
+    ],
+    "mask_rle": null
+   }
+  ]
+ }
+}

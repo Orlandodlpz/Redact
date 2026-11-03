@@ -1,0 +1,43 @@
+{
+ "image_id": "s44",
+ "width": 1152,
+ "height": 2048,
+ "destinations": {
+  "public": [
+   {
+    "id": "l_01",
+    "marks": [],
+    "category": "face",
+    "reason": "foreground face",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     0,
+     860,
+     451,
+     1321
+    ],
+    "mask_rle": null
+   },
+   {
+    "id": "l_02",
+    "marks": [],
+    "category": "face",
+    "reason": "background face",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     717,
+     1116,
+     901,
+     1311
+    ],
+    "mask_rle": null
+   }
+  ],
+  "team": [],
+  "ai_assistant": []
+ }
+}

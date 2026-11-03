@@ -1,0 +1,25 @@
+{
+ "image_id": "s36",
+ "width": 1600,
+ "height": 1200,
+ "destinations": {
+  "public": [
+   {
+    "id": "l_01",
+    "marks": [],
+    "category": "home_location",
+    "reason": "recipient address on envelope",
+    "source": "judge",
+    "masked": true,
+    "locked": false,
+    "box": [
+     623,
+     806,
+     1162,
+     1045
+    ],
+    "mask_rle": null
+   }
+  ]
+ }
+}
