@@ -175,6 +175,17 @@ async def analyze_route(
         raise HTTPException(
             status_code=503, detail="Couldn't fully scan this image. Try again."
         ) from e
+    except HTTPException:
+        raise
+    except Exception as e:
+        # Anything unexpected becomes a 500 here rather than escaping the route. Letting
+        # it escape means the error response is built outside the CORS middleware, so
+        # the browser reports a CORS failure and the real problem never reaches anyone.
+        # Only the exception type is logged: the message could carry anything.
+        logger.exception("analyze failed with %s", type(e).__name__)
+        raise HTTPException(
+            status_code=500, detail="Something went wrong on our side. Try again."
+        ) from e
 
 
 @router.post("/export", response_class=Response)
@@ -201,6 +212,11 @@ async def export_route(
         # A mask that doesn't decode is a bad request, not a server fault.
         logger.warning("export failed to compose: %s", type(e).__name__)
         raise HTTPException(status_code=400, detail="A mask in this request is malformed") from e
+    except Exception as e:
+        logger.exception("export failed with %s", type(e).__name__)
+        raise HTTPException(
+            status_code=500, detail="Something went wrong on our side. Try again."
+        ) from e
     return Response(
         content=png,
         media_type="image/png",

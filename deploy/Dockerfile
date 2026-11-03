@@ -26,8 +26,14 @@ RUN uv sync --frozen --no-dev
 
 ENV PATH="/app/.venv/bin:$PATH"
 
-# Never root. The service writes nothing to disk, so it needs nothing writable.
-RUN useradd --create-home --uid 10001 redact
+# Never root. The service writes no user data to disk, but it does append one line of
+# metadata per API call to logs/cost.jsonl, so that one directory has to exist and be
+# writable by this user. Without it every API call raises PermissionError and the
+# request dies as a 500, which in a browser shows up as a confusing CORS error rather
+# than the real problem. Found by running this container, not by reading it.
+RUN useradd --create-home --uid 10001 redact \
+ && mkdir -p /app/logs \
+ && chown -R redact:redact /app/logs
 USER redact
 
 EXPOSE 8000

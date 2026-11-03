@@ -110,6 +110,30 @@ Render's free tier spins a service down when idle and the wake up is slower than
 The blueprint asks for `starter`, which does not spin down. If the plan changes, open
 the demo once before recording or presenting.
 
+## The one that already bit us
+
+The service writes one line of metadata per API call to `logs/cost.jsonl`. In the
+container that directory did not exist and the non root user could not create it, so
+every API call raised `PermissionError` and the request died as a 500. In a browser that
+shows up as a CORS error, because an exception escaping the route builds its response
+outside the CORS middleware, so the real problem never reaches anyone. The Dockerfile
+creates and chowns `/app/logs` now, and the routes turn an unexpected exception into a
+clean 500 instead of letting it escape.
+
+Worth checking after any deploy, because a platform that mounts a read only filesystem
+brings it straight back:
+
+```bash
+docker exec <container> sh -c 'touch /app/logs/probe && rm /app/logs/probe && echo ok'
+```
+
+And confirm the log holds metadata only, never image bytes:
+
+```bash
+docker exec <container> sh -c 'head -1 /app/logs/cost.jsonl'
+# model, kind, ok, latency, tokens, cost, error, step, phrase. Nothing else.
+```
+
 ## Building and running the image locally
 
 ```bash

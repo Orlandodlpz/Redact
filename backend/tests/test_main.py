@@ -152,6 +152,39 @@ def test_incomplete_scan_maps_to_503_and_never_partial_findings(client, monkeypa
     assert "face" not in r.json()["detail"]
 
 
+def test_an_unexpected_failure_becomes_a_500_instead_of_escaping(client, monkeypatch):
+    """An exception that escapes the route builds its response outside the CORS
+    middleware, so the browser reports a CORS failure and the real problem never
+    reaches anyone. Found by running the container: an unwritable cost log directory
+    raised PermissionError and showed up in the browser as a CORS error."""
+
+    async def boom(*a, **k):
+        raise PermissionError("logs")
+
+    monkeypatch.setattr(main, "analyze", boom)
+    r = client.post("/analyze", files=upload(), data={"destination": "public"})
+    assert r.status_code == 500
+    # The message says nothing about what broke.
+    assert "logs" not in r.json()["detail"] and "Permission" not in r.json()["detail"]
+
+
+def test_an_unexpected_export_failure_becomes_a_500(client, monkeypatch):
+    def boom(*a, **k):
+        raise PermissionError("logs")
+
+    monkeypatch.setattr(main, "compose", boom)
+    r = client.post("/export", files=upload(), data={"findings": "[]"})
+    assert r.status_code == 500
+
+
+def test_a_refusal_still_carries_cors_headers(client):
+    """A browser needs the header on the real response, not just the preflight."""
+    r = client.post("/analyze", files=upload(), data={"destination": "nope"},
+                    headers={"origin": ORIGIN})
+    assert r.status_code == 422
+    assert r.headers.get("access-control-allow-origin") == ORIGIN
+
+
 def test_oversize_upload_is_refused_without_reading_the_body(client):
     limit = get_settings().max_upload_bytes + main._FORM_OVERHEAD_BYTES
     r = client.post(
