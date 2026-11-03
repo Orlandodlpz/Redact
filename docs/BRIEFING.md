@@ -1,6 +1,6 @@
 # BRIEFING.md: Redact Execution Plan
 
-**Last Updated:** 2026-11-02 (floor rules, routes, frontend and the injection set in Phases 2 and 3)
+**Last Updated:** 2026-11-02 (floor rules, routes, frontend, injection set, demo gate, deploy config and the demo script)
 **Purpose:** The operational plan. What we're building, how the pieces fit, and the phased sequence to get there with minimal rework.
 
 > Relationship to other docs: CLAUDE.md tracks decisions, constraints and state. This document is the **execution plan**. If the two disagree, stop and fix the docs before writing code.
@@ -261,6 +261,8 @@ Each phase ends with a gate. The gate must pass before the next phase begins. Co
   - Orlando: pre-mask path behind `PREMASK=on`. OCR runs first, text floor rules fire, those pixels get solid filled, and only the filled image goes to SAM 3.1 and Muse Spark. The judge receives those findings as already masked marks so it keeps the context.
   - Carlos: dry run of every config on all 150 images; error analysis of the 10 worst misses.
   - Victor: demo script draft and the hosted demo tested from a cold browser.
+    - **Demo script draft DONE (Nov 2).** `docs/DEMO_SCRIPT.md`, seven shots over three minutes, leading with context, two clue leaks and destination so Stage One cannot read it as a simple image analyzer (gotcha 17). It states no numbers: shot 5 is written so the results table can be cut without leaving a hole, because a table with invented figures is worse than no table. It lists what it needs that does not exist, in the order that blocks shooting.
+    - **Not done (Victor, Nov 2):** the cold browser test on a phone and a laptop, which needs the deploy.
 - **Gate (go or no-go, end of Nov 1):** the dry run completes for every config. Pre-masking ships only if the unit test proves floor text pixels are filled in every image sent to a provider, and recall on the 30 image subset drops by no more than 2 points (provisional threshold). Otherwise `PREMASK=off` and the README says so. Local mode stays cut (no hardware, decided Oct 24).
 
 ### Phase 5: Full evaluation and freeze (Mon Nov 2)
