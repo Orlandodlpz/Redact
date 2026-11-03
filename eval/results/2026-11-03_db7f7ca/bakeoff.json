@@ -1,0 +1,6978 @@
+{
+  "commit": "db7f7ca",
+  "prompt_version": "judge_v1",
+  "prompt_sha256": "bf68e8d5fb85",
+  "config_hash": "c578fa06929d",
+  "config": {
+    "models": [
+      "muse-spark-1.3",
+      "muse-spark-1.2"
+    ],
+    "efforts": [
+      "minimal",
+      "low"
+    ],
+    "repeats": 2,
+    "tie_items": 2,
+    "ids": [
+      "s01",
+      "s02",
+      "s08",
+      "s11",
+      "s17",
+      "s23",
+      "s29",
+      "s34",
+      "s36",
+      "s42",
+      "s44",
+      "s50",
+      "s54",
+      "s56",
+      "s60",
+      "s62",
+      "s64",
+      "s66",
+      "s70",
+      "s72"
+    ]
+  },
+  "summaries": {
+    "muse-spark-1.3 @ minimal": {
+      "runs": 80,
+      "failed_runs": 0,
+      "caught": 54,
+      "total": 126,
+      "recall": 0.4286,
+      "recall_by_category": {
+        "contact_info": "5/8",
+        "credential": "22/22",
+        "face": "2/10",
+        "government_id": "8/14",
+        "home_location": "9/22",
+        "internal_data": "0/16",
+        "license_plate": "4/6",
+        "other_sensitive": "0/12",
+        "payment": "0/4",
+        "personal_account": "4/12"
+      },
+      "mean_over_redaction": 0.0397,
+      "p50_ms": 9646,
+      "p90_ms": 21480,
+      "cost_usd": 1.2687,
+      "unjudged_marks": 0,
+      "retries_used": 0
+    },
+    "muse-spark-1.3 @ low": {
+      "runs": 80,
+      "failed_runs": 0,
+      "caught": 61,
+      "total": 126,
+      "recall": 0.4841,
+      "recall_by_category": {
+        "contact_info": "3/8",
+        "credential": "22/22",
+        "face": "2/10",
+        "government_id": "8/14",
+        "home_location": "15/22",
+        "internal_data": "0/16",
+        "license_plate": "4/6",
+        "other_sensitive": "0/12",
+        "payment": "2/4",
+        "personal_account": "5/12"
+      },
+      "mean_over_redaction": 0.04352,
+      "p50_ms": 15697,
+      "p90_ms": 34613,
+      "cost_usd": 1.4801,
+      "unjudged_marks": 0,
+      "retries_used": 0
+    },
+    "muse-spark-1.2 @ minimal": {
+      "runs": 80,
+      "failed_runs": 0,
+      "caught": 66,
+      "total": 126,
+      "recall": 0.5238,
+      "recall_by_category": {
+        "contact_info": "2/8",
+        "credential": "20/22",
+        "face": "2/10",
+        "government_id": "8/14",
+        "home_location": "18/22",
+        "internal_data": "2/16",
+        "license_plate": "4/6",
+        "other_sensitive": "0/12",
+        "payment": "2/4",
+        "personal_account": "8/12"
+      },
+      "mean_over_redaction": 0.03744,
+      "p50_ms": 3654,
+      "p90_ms": 7057,
+      "cost_usd": 1.1979,
+      "unjudged_marks": 0,
+      "retries_used": 0
+    },
+    "muse-spark-1.2 @ low": {
+      "runs": 80,
+      "failed_runs": 0,
+      "caught": 57,
+      "total": 126,
+      "recall": 0.4524,
+      "recall_by_category": {
+        "contact_info": "1/8",
+        "credential": "20/22",
+        "face": "2/10",
+        "government_id": "7/14",
+        "home_location": "17/22",
+        "internal_data": "0/16",
+        "license_plate": "4/6",
+        "other_sensitive": "0/12",
+        "payment": "0/4",
+        "personal_account": "6/12"
+      },
+      "mean_over_redaction": 0.0331,
+      "p50_ms": 6664,
+      "p90_ms": 13189,
+      "cost_usd": 1.4459,
+      "unjudged_marks": 0,
+      "retries_used": 0
+    }
+  },
+  "winner": "muse-spark-1.2 @ minimal",
+  "wall_s": 906.8,
+  "runs": {
+    "muse-spark-1.3 @ minimal": [
+      {
+        "image_id": "s01",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 7864,
+        "cost_usd": 0.01053125,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.050913020833333336,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s01",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 7191,
+        "cost_usd": 0.01088825,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.050913020833333336,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s02",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 17584,
+        "cost_usd": 0.023182,
+        "caught": 1,
+        "total": 3,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "internal_data": [
+            0,
+            2
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s02",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 20175,
+        "cost_usd": 0.024304,
+        "caught": 1,
+        "total": 3,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "internal_data": [
+            0,
+            2
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s02",
+        "destination": "team",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 22955,
+        "cost_usd": 0.025035,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s02",
+        "destination": "team",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 23940,
+        "cost_usd": 0.024898999999999998,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s02",
+        "destination": "ai_assistant",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 21480,
+        "cost_usd": 0.02446375,
+        "caught": 1,
+        "total": 3,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "internal_data": [
+            0,
+            2
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s02",
+        "destination": "ai_assistant",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 19979,
+        "cost_usd": 0.023975,
+        "caught": 1,
+        "total": 3,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "internal_data": [
+            0,
+            2
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s08",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 12858,
+        "cost_usd": 0.01738075,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.018651326497395832,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s08",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 9748,
+        "cost_usd": 0.016598750000000002,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.018651326497395832,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s11",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 6558,
+        "cost_usd": 0.010884749999999999,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "payment": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s11",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 5650,
+        "cost_usd": 0.010952749999999999,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "payment": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s17",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 9646,
+        "cost_usd": 0.01199325,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "government_id": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s17",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 13579,
+        "cost_usd": 0.0137145,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "government_id": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s23",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 17297,
+        "cost_usd": 0.0185515,
+        "caught": 0,
+        "total": 4,
+        "by_category": {
+          "payment": [
+            0,
+            1
+          ],
+          "personal_account": [
+            0,
+            2
+          ],
+          "other_sensitive": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.023071875,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s23",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 15069,
+        "cost_usd": 0.0175825,
+        "caught": 0,
+        "total": 4,
+        "by_category": {
+          "payment": [
+            0,
+            1
+          ],
+          "personal_account": [
+            0,
+            2
+          ],
+          "other_sensitive": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s29",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 4116,
+        "cost_usd": 0.00938675,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "contact_info": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s29",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 3061,
+        "cost_usd": 0.009008500000000001,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "contact_info": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s34",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 11275,
+        "cost_usd": 0.012038749999999999,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "home_location": [
+            1,
+            2
+          ]
+        },
+        "over_redaction": 0.003575,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s34",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 8218,
+        "cost_usd": 0.01091675,
+        "caught": 0,
+        "total": 2,
+        "by_category": {
+          "home_location": [
+            0,
+            2
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s34",
+        "destination": "team",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 15491,
+        "cost_usd": 0.013245749999999999,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "home_location": [
+            1,
+            2
+          ]
+        },
+        "over_redaction": 0.003575,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s34",
+        "destination": "team",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 4397,
+        "cost_usd": 0.009675749999999999,
+        "caught": 0,
+        "total": 2,
+        "by_category": {
+          "home_location": [
+            0,
+            2
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s34",
+        "destination": "ai_assistant",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 9005,
+        "cost_usd": 0.01096175,
+        "caught": 2,
+        "total": 2,
+        "by_category": {
+          "home_location": [
+            2,
+            2
+          ]
+        },
+        "over_redaction": 0.0041078125,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s34",
+        "destination": "ai_assistant",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 10607,
+        "cost_usd": 0.0119775,
+        "caught": 2,
+        "total": 2,
+        "by_category": {
+          "home_location": [
+            2,
+            2
+          ]
+        },
+        "over_redaction": 0.0041078125,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s36",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 10373,
+        "cost_usd": 0.01229775,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "home_location": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s36",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 12051,
+        "cost_usd": 0.0121745,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "home_location": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s42",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 4739,
+        "cost_usd": 0.01259475,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "face": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.004974127435064935,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s42",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 3719,
+        "cost_usd": 0.01235675,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "face": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.004974127435064935,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s42",
+        "destination": "team",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 5046,
+        "cost_usd": 0.012752,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s42",
+        "destination": "team",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 4844,
+        "cost_usd": 0.01276475,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s42",
+        "destination": "ai_assistant",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 4377,
+        "cost_usd": 0.01260575,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s42",
+        "destination": "ai_assistant",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 4860,
+        "cost_usd": 0.012508,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s44",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 5144,
+        "cost_usd": 0.012628,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "face": [
+            1,
+            2
+          ]
+        },
+        "over_redaction": 0.02007505628797743,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s44",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 3838,
+        "cost_usd": 0.012152000000000001,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "face": [
+            1,
+            2
+          ]
+        },
+        "over_redaction": 0.02007505628797743,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s44",
+        "destination": "team",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 3445,
+        "cost_usd": 0.01205425,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s44",
+        "destination": "team",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 4514,
+        "cost_usd": 0.01224975,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s44",
+        "destination": "ai_assistant",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 3504,
+        "cost_usd": 0.012146,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s44",
+        "destination": "ai_assistant",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 5261,
+        "cost_usd": 0.012469,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s50",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 7575,
+        "cost_usd": 0.01511725,
+        "caught": 1,
+        "total": 3,
+        "by_category": {
+          "license_plate": [
+            1,
+            2
+          ],
+          "face": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0018930435180664062,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s50",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 8819,
+        "cost_usd": 0.015317,
+        "caught": 1,
+        "total": 3,
+        "by_category": {
+          "license_plate": [
+            1,
+            2
+          ],
+          "face": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0018930435180664062,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s50",
+        "destination": "team",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 7778,
+        "cost_usd": 0.0151895,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s50",
+        "destination": "team",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 8286,
+        "cost_usd": 0.015401999999999999,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s50",
+        "destination": "ai_assistant",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 8197,
+        "cost_usd": 0.0153875,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s50",
+        "destination": "ai_assistant",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 8625,
+        "cost_usd": 0.014996500000000001,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s54",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 10865,
+        "cost_usd": 0.01409275,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "internal_data": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s54",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 8441,
+        "cost_usd": 0.01320875,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "internal_data": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s54",
+        "destination": "team",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 10713,
+        "cost_usd": 0.013795249999999998,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s54",
+        "destination": "team",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 9120,
+        "cost_usd": 0.013638,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s54",
+        "destination": "ai_assistant",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 8293,
+        "cost_usd": 0.01313475,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "internal_data": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s54",
+        "destination": "ai_assistant",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 7623,
+        "cost_usd": 0.01310925,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "internal_data": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s56",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 28648,
+        "cost_usd": 0.03402075,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "internal_data": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.30948829650878906,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s56",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 26788,
+        "cost_usd": 0.033030500000000004,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "internal_data": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.30948829650878906,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s56",
+        "destination": "team",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 30150,
+        "cost_usd": 0.0339995,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.40395641326904297,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s56",
+        "destination": "team",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 30964,
+        "cost_usd": 0.034484,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.40395641326904297,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s56",
+        "destination": "ai_assistant",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 31647,
+        "cost_usd": 0.0337895,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "internal_data": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.30948829650878906,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s56",
+        "destination": "ai_assistant",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 27483,
+        "cost_usd": 0.03328375,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "internal_data": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.30948829650878906,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s60",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 15337,
+        "cost_usd": 0.01307875,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "other_sensitive": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s60",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 9724,
+        "cost_usd": 0.0117655,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "other_sensitive": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s62",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 14116,
+        "cost_usd": 0.01832325,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "other_sensitive": [
+            0,
+            1
+          ],
+          "personal_account": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0061921875,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s62",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 15366,
+        "cost_usd": 0.01881625,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "other_sensitive": [
+            0,
+            1
+          ],
+          "personal_account": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0061921875,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s64",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 8943,
+        "cost_usd": 0.0148425,
+        "caught": 0,
+        "total": 3,
+        "by_category": {
+          "government_id": [
+            0,
+            1
+          ],
+          "face": [
+            0,
+            1
+          ],
+          "other_sensitive": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.001667022705078125,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s64",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 8214,
+        "cost_usd": 0.01471925,
+        "caught": 0,
+        "total": 3,
+        "by_category": {
+          "government_id": [
+            0,
+            1
+          ],
+          "face": [
+            0,
+            1
+          ],
+          "other_sensitive": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0012267430623372395,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s64",
+        "destination": "team",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 7919,
+        "cost_usd": 0.0144345,
+        "caught": 0,
+        "total": 2,
+        "by_category": {
+          "government_id": [
+            0,
+            1
+          ],
+          "other_sensitive": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0013113021850585938,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s64",
+        "destination": "team",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 8108,
+        "cost_usd": 0.01450675,
+        "caught": 0,
+        "total": 2,
+        "by_category": {
+          "government_id": [
+            0,
+            1
+          ],
+          "other_sensitive": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0010728836059570312,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s64",
+        "destination": "ai_assistant",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 6480,
+        "cost_usd": 0.014177750000000001,
+        "caught": 0,
+        "total": 2,
+        "by_category": {
+          "government_id": [
+            0,
+            1
+          ],
+          "other_sensitive": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0012715657552083333,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s64",
+        "destination": "ai_assistant",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 9555,
+        "cost_usd": 0.015236000000000001,
+        "caught": 0,
+        "total": 2,
+        "by_category": {
+          "government_id": [
+            0,
+            1
+          ],
+          "other_sensitive": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0010728836059570312,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s66",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 5329,
+        "cost_usd": 0.00998775,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "license_plate": [
+            1,
+            1
+          ],
+          "home_location": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0040963541666666665,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s66",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 5598,
+        "cost_usd": 0.010093999999999999,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "license_plate": [
+            1,
+            1
+          ],
+          "home_location": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0032359375,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s70",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 12360,
+        "cost_usd": 0.013666500000000002,
+        "caught": 0,
+        "total": 2,
+        "by_category": {
+          "personal_account": [
+            0,
+            1
+          ],
+          "home_location": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s70",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 13168,
+        "cost_usd": 0.014066,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "personal_account": [
+            0,
+            1
+          ],
+          "home_location": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0180640625,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s70",
+        "destination": "team",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 10178,
+        "cost_usd": 0.012833500000000001,
+        "caught": 0,
+        "total": 2,
+        "by_category": {
+          "personal_account": [
+            0,
+            1
+          ],
+          "home_location": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s70",
+        "destination": "team",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 15556,
+        "cost_usd": 0.01461425,
+        "caught": 2,
+        "total": 2,
+        "by_category": {
+          "personal_account": [
+            1,
+            1
+          ],
+          "home_location": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0180640625,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s70",
+        "destination": "ai_assistant",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 12528,
+        "cost_usd": 0.01333325,
+        "caught": 2,
+        "total": 2,
+        "by_category": {
+          "personal_account": [
+            1,
+            1
+          ],
+          "home_location": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0180640625,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s70",
+        "destination": "ai_assistant",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 13475,
+        "cost_usd": 0.01416625,
+        "caught": 0,
+        "total": 2,
+        "by_category": {
+          "personal_account": [
+            0,
+            1
+          ],
+          "home_location": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s72",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 14955,
+        "cost_usd": 0.014613999999999999,
+        "caught": 2,
+        "total": 3,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "government_id": [
+            1,
+            1
+          ],
+          "contact_info": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0008697916666666667,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s72",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 21480,
+        "cost_usd": 0.016841000000000002,
+        "caught": 3,
+        "total": 3,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "government_id": [
+            1,
+            1
+          ],
+          "contact_info": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.2715270833333333,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s72",
+        "destination": "team",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 18015,
+        "cost_usd": 0.01568075,
+        "caught": 2,
+        "total": 3,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "government_id": [
+            1,
+            1
+          ],
+          "contact_info": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0008697916666666667,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s72",
+        "destination": "team",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 18352,
+        "cost_usd": 0.015740249999999997,
+        "caught": 3,
+        "total": 3,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "government_id": [
+            1,
+            1
+          ],
+          "contact_info": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.2715270833333333,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s72",
+        "destination": "ai_assistant",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 18983,
+        "cost_usd": 0.0161635,
+        "caught": 2,
+        "total": 3,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "government_id": [
+            1,
+            1
+          ],
+          "contact_info": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0008697916666666667,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s72",
+        "destination": "ai_assistant",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 18740,
+        "cost_usd": 0.01613375,
+        "caught": 3,
+        "total": 3,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "government_id": [
+            1,
+            1
+          ],
+          "contact_info": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.2715270833333333,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      }
+    ],
+    "muse-spark-1.3 @ low": [
+      {
+        "image_id": "s01",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 9243,
+        "cost_usd": 0.0118445,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.050913020833333336,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s01",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 15256,
+        "cost_usd": 0.01383775,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.050913020833333336,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s02",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 27684,
+        "cost_usd": 0.026501249999999997,
+        "caught": 1,
+        "total": 3,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "internal_data": [
+            0,
+            2
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s02",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 23091,
+        "cost_usd": 0.024882,
+        "caught": 1,
+        "total": 3,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "internal_data": [
+            0,
+            2
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s02",
+        "destination": "team",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 24997,
+        "cost_usd": 0.0260805,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s02",
+        "destination": "team",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 24185,
+        "cost_usd": 0.0258765,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s02",
+        "destination": "ai_assistant",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 24576,
+        "cost_usd": 0.02573025,
+        "caught": 1,
+        "total": 3,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "internal_data": [
+            0,
+            2
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s02",
+        "destination": "ai_assistant",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 24714,
+        "cost_usd": 0.0256495,
+        "caught": 1,
+        "total": 3,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "internal_data": [
+            0,
+            2
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s08",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 15211,
+        "cost_usd": 0.0186515,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.018651326497395832,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s08",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 17640,
+        "cost_usd": 0.01959925,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.018651326497395832,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s11",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 12316,
+        "cost_usd": 0.012844,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "payment": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s11",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 12496,
+        "cost_usd": 0.013281749999999998,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "payment": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s17",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 27535,
+        "cost_usd": 0.018755,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "government_id": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s17",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 11515,
+        "cost_usd": 0.013077,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "government_id": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s23",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 19110,
+        "cost_usd": 0.019189,
+        "caught": 0,
+        "total": 4,
+        "by_category": {
+          "payment": [
+            0,
+            1
+          ],
+          "personal_account": [
+            0,
+            2
+          ],
+          "other_sensitive": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s23",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 25996,
+        "cost_usd": 0.021348,
+        "caught": 0,
+        "total": 4,
+        "by_category": {
+          "payment": [
+            0,
+            1
+          ],
+          "personal_account": [
+            0,
+            2
+          ],
+          "other_sensitive": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s29",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 6269,
+        "cost_usd": 0.00997325,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "contact_info": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s29",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 9189,
+        "cost_usd": 0.01128225,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "contact_info": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s34",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 21555,
+        "cost_usd": 0.0157745,
+        "caught": 2,
+        "total": 2,
+        "by_category": {
+          "home_location": [
+            2,
+            2
+          ]
+        },
+        "over_redaction": 0.0041078125,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s34",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 33215,
+        "cost_usd": 0.01956125,
+        "caught": 2,
+        "total": 2,
+        "by_category": {
+          "home_location": [
+            2,
+            2
+          ]
+        },
+        "over_redaction": 0.0041078125,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s34",
+        "destination": "team",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 14128,
+        "cost_usd": 0.012557249999999999,
+        "caught": 2,
+        "total": 2,
+        "by_category": {
+          "home_location": [
+            2,
+            2
+          ]
+        },
+        "over_redaction": 0.0041078125,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s34",
+        "destination": "team",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 32729,
+        "cost_usd": 0.01917875,
+        "caught": 2,
+        "total": 2,
+        "by_category": {
+          "home_location": [
+            2,
+            2
+          ]
+        },
+        "over_redaction": 0.0041078125,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s34",
+        "destination": "ai_assistant",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 12070,
+        "cost_usd": 0.01193075,
+        "caught": 0,
+        "total": 2,
+        "by_category": {
+          "home_location": [
+            0,
+            2
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s34",
+        "destination": "ai_assistant",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 30957,
+        "cost_usd": 0.018361000000000002,
+        "caught": 2,
+        "total": 2,
+        "by_category": {
+          "home_location": [
+            2,
+            2
+          ]
+        },
+        "over_redaction": 0.0041078125,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s36",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 23860,
+        "cost_usd": 0.01661575,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "home_location": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.3064661458333333,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s36",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 22754,
+        "cost_usd": 0.0165605,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "home_location": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s42",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 9519,
+        "cost_usd": 0.01422675,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "face": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.004974127435064935,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s42",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 8148,
+        "cost_usd": 0.013772,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "face": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.004974127435064935,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s42",
+        "destination": "team",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 6275,
+        "cost_usd": 0.013032499999999999,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s42",
+        "destination": "team",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 9178,
+        "cost_usd": 0.01430325,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s42",
+        "destination": "ai_assistant",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 7560,
+        "cost_usd": 0.01382975,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s42",
+        "destination": "ai_assistant",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 8078,
+        "cost_usd": 0.01431425,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s44",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 6262,
+        "cost_usd": 0.013376,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "face": [
+            1,
+            2
+          ]
+        },
+        "over_redaction": 0.02007505628797743,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s44",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 7603,
+        "cost_usd": 0.013537500000000001,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "face": [
+            1,
+            2
+          ]
+        },
+        "over_redaction": 0.02007505628797743,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s44",
+        "destination": "team",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 7710,
+        "cost_usd": 0.01377975,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s44",
+        "destination": "team",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 6974,
+        "cost_usd": 0.013206,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s44",
+        "destination": "ai_assistant",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 6751,
+        "cost_usd": 0.01335725,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s44",
+        "destination": "ai_assistant",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 10805,
+        "cost_usd": 0.0134465,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s50",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 20688,
+        "cost_usd": 0.01961375,
+        "caught": 1,
+        "total": 3,
+        "by_category": {
+          "license_plate": [
+            1,
+            2
+          ],
+          "face": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0018930435180664062,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s50",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 24767,
+        "cost_usd": 0.02128825,
+        "caught": 1,
+        "total": 3,
+        "by_category": {
+          "license_plate": [
+            1,
+            2
+          ],
+          "face": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0018930435180664062,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s50",
+        "destination": "team",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 11328,
+        "cost_usd": 0.01625625,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s50",
+        "destination": "team",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 15697,
+        "cost_usd": 0.0176205,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s50",
+        "destination": "ai_assistant",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 14873,
+        "cost_usd": 0.016909,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s50",
+        "destination": "ai_assistant",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 12417,
+        "cost_usd": 0.01677725,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s54",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 10017,
+        "cost_usd": 0.01407575,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "internal_data": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s54",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 11799,
+        "cost_usd": 0.01440725,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "internal_data": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s54",
+        "destination": "team",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 11160,
+        "cost_usd": 0.014589999999999999,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s54",
+        "destination": "team",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 13831,
+        "cost_usd": 0.014335,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s54",
+        "destination": "ai_assistant",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 11125,
+        "cost_usd": 0.014065500000000002,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "internal_data": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s54",
+        "destination": "ai_assistant",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 15817,
+        "cost_usd": 0.0152215,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "internal_data": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s56",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 41076,
+        "cost_usd": 0.0373145,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "internal_data": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.30948829650878906,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s56",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 43193,
+        "cost_usd": 0.0365155,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "internal_data": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.30948829650878906,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s56",
+        "destination": "team",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 38336,
+        "cost_usd": 0.0370085,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.40395641326904297,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s56",
+        "destination": "team",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 38648,
+        "cost_usd": 0.036298750000000005,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.40395641326904297,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s56",
+        "destination": "ai_assistant",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 44463,
+        "cost_usd": 0.038456000000000004,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "internal_data": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.30948829650878906,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s56",
+        "destination": "ai_assistant",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 48719,
+        "cost_usd": 0.040190000000000003,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "internal_data": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.30948829650878906,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s60",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 16844,
+        "cost_usd": 0.0138735,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "other_sensitive": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s60",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 15310,
+        "cost_usd": 0.0140435,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "other_sensitive": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s62",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 22766,
+        "cost_usd": 0.0212515,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "other_sensitive": [
+            0,
+            1
+          ],
+          "personal_account": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0061921875,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s62",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 23966,
+        "cost_usd": 0.0218295,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "other_sensitive": [
+            0,
+            1
+          ],
+          "personal_account": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0061921875,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s64",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 14030,
+        "cost_usd": 0.01641075,
+        "caught": 0,
+        "total": 3,
+        "by_category": {
+          "government_id": [
+            0,
+            1
+          ],
+          "face": [
+            0,
+            1
+          ],
+          "other_sensitive": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0008246103922526041,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s64",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 12271,
+        "cost_usd": 0.016007,
+        "caught": 0,
+        "total": 3,
+        "by_category": {
+          "government_id": [
+            0,
+            1
+          ],
+          "face": [
+            0,
+            1
+          ],
+          "other_sensitive": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0020008087158203125,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s64",
+        "destination": "team",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 11553,
+        "cost_usd": 0.01596025,
+        "caught": 0,
+        "total": 2,
+        "by_category": {
+          "government_id": [
+            0,
+            1
+          ],
+          "other_sensitive": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.00098419189453125,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s64",
+        "destination": "team",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 10748,
+        "cost_usd": 0.015093249999999999,
+        "caught": 0,
+        "total": 2,
+        "by_category": {
+          "government_id": [
+            0,
+            1
+          ],
+          "other_sensitive": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0010967254638671875,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s64",
+        "destination": "ai_assistant",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 11822,
+        "cost_usd": 0.01608175,
+        "caught": 0,
+        "total": 2,
+        "by_category": {
+          "government_id": [
+            0,
+            1
+          ],
+          "other_sensitive": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0013987223307291667,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s64",
+        "destination": "ai_assistant",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 12948,
+        "cost_usd": 0.01705075,
+        "caught": 0,
+        "total": 2,
+        "by_category": {
+          "government_id": [
+            0,
+            1
+          ],
+          "other_sensitive": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0009854634602864583,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s66",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 8696,
+        "cost_usd": 0.01130525,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "license_plate": [
+            1,
+            1
+          ],
+          "home_location": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0032359375,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s66",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 10668,
+        "cost_usd": 0.011577249999999999,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "license_plate": [
+            1,
+            1
+          ],
+          "home_location": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0032359375,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s70",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 32142,
+        "cost_usd": 0.020262500000000003,
+        "caught": 0,
+        "total": 2,
+        "by_category": {
+          "personal_account": [
+            0,
+            1
+          ],
+          "home_location": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s70",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 25340,
+        "cost_usd": 0.01823525,
+        "caught": 0,
+        "total": 2,
+        "by_category": {
+          "personal_account": [
+            0,
+            1
+          ],
+          "home_location": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s70",
+        "destination": "team",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 23108,
+        "cost_usd": 0.017695500000000003,
+        "caught": 2,
+        "total": 2,
+        "by_category": {
+          "personal_account": [
+            1,
+            1
+          ],
+          "home_location": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0180640625,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s70",
+        "destination": "team",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 33315,
+        "cost_usd": 0.020271,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "personal_account": [
+            0,
+            1
+          ],
+          "home_location": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0180640625,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s70",
+        "destination": "ai_assistant",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 22320,
+        "cost_usd": 0.0171795,
+        "caught": 2,
+        "total": 2,
+        "by_category": {
+          "personal_account": [
+            1,
+            1
+          ],
+          "home_location": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0180640625,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s70",
+        "destination": "ai_assistant",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 24434,
+        "cost_usd": 0.0176725,
+        "caught": 2,
+        "total": 2,
+        "by_category": {
+          "personal_account": [
+            1,
+            1
+          ],
+          "home_location": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0180640625,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s72",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 32418,
+        "cost_usd": 0.02010925,
+        "caught": 3,
+        "total": 3,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "government_id": [
+            1,
+            1
+          ],
+          "contact_info": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.2715270833333333,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s72",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 27766,
+        "cost_usd": 0.01947175,
+        "caught": 2,
+        "total": 3,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "government_id": [
+            1,
+            1
+          ],
+          "contact_info": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0008697916666666667,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s72",
+        "destination": "team",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 34613,
+        "cost_usd": 0.021227,
+        "caught": 3,
+        "total": 3,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "government_id": [
+            1,
+            1
+          ],
+          "contact_info": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.2715270833333333,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s72",
+        "destination": "team",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 35646,
+        "cost_usd": 0.02173275,
+        "caught": 2,
+        "total": 3,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "government_id": [
+            1,
+            1
+          ],
+          "contact_info": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0008697916666666667,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s72",
+        "destination": "ai_assistant",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 35664,
+        "cost_usd": 0.022224,
+        "caught": 3,
+        "total": 3,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "government_id": [
+            1,
+            1
+          ],
+          "contact_info": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.2715270833333333,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s72",
+        "destination": "ai_assistant",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 29622,
+        "cost_usd": 0.01942325,
+        "caught": 2,
+        "total": 3,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "government_id": [
+            1,
+            1
+          ],
+          "contact_info": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0008697916666666667,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      }
+    ],
+    "muse-spark-1.2 @ minimal": [
+      {
+        "image_id": "s01",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 6186,
+        "cost_usd": 0.012494499999999999,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "credential": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s01",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 3673,
+        "cost_usd": 0.01072225,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "credential": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s02",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 7688,
+        "cost_usd": 0.024359,
+        "caught": 1,
+        "total": 3,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "internal_data": [
+            0,
+            2
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s02",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 8001,
+        "cost_usd": 0.025039,
+        "caught": 1,
+        "total": 3,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "internal_data": [
+            0,
+            2
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s02",
+        "destination": "team",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 4904,
+        "cost_usd": 0.02035125,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s02",
+        "destination": "team",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 4990,
+        "cost_usd": 0.02245075,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s02",
+        "destination": "ai_assistant",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 7057,
+        "cost_usd": 0.022648750000000002,
+        "caught": 3,
+        "total": 3,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "internal_data": [
+            2,
+            2
+          ]
+        },
+        "over_redaction": 0.4279670715332031,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s02",
+        "destination": "ai_assistant",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 7553,
+        "cost_usd": 0.022415,
+        "caught": 1,
+        "total": 3,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "internal_data": [
+            0,
+            2
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s08",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 3654,
+        "cost_usd": 0.0153065,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.018651326497395832,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s08",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 3651,
+        "cost_usd": 0.015638,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.018651326497395832,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s11",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 3521,
+        "cost_usd": 0.01126275,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "payment": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s11",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 3002,
+        "cost_usd": 0.01093125,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "payment": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s17",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 4347,
+        "cost_usd": 0.012282000000000001,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "government_id": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s17",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 3461,
+        "cost_usd": 0.012078,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "government_id": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s23",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 4511,
+        "cost_usd": 0.016609,
+        "caught": 0,
+        "total": 4,
+        "by_category": {
+          "payment": [
+            0,
+            1
+          ],
+          "personal_account": [
+            0,
+            2
+          ],
+          "other_sensitive": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s23",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 4600,
+        "cost_usd": 0.0164475,
+        "caught": 0,
+        "total": 4,
+        "by_category": {
+          "payment": [
+            0,
+            1
+          ],
+          "personal_account": [
+            0,
+            2
+          ],
+          "other_sensitive": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s29",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 2946,
+        "cost_usd": 0.00957775,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "contact_info": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s29",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 1597,
+        "cost_usd": 0.008629999999999999,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "contact_info": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s34",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 5793,
+        "cost_usd": 0.01241675,
+        "caught": 2,
+        "total": 2,
+        "by_category": {
+          "home_location": [
+            2,
+            2
+          ]
+        },
+        "over_redaction": 0.0041078125,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s34",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 4140,
+        "cost_usd": 0.01143075,
+        "caught": 2,
+        "total": 2,
+        "by_category": {
+          "home_location": [
+            2,
+            2
+          ]
+        },
+        "over_redaction": 0.0041078125,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s34",
+        "destination": "team",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 3846,
+        "cost_usd": 0.0101855,
+        "caught": 2,
+        "total": 2,
+        "by_category": {
+          "home_location": [
+            2,
+            2
+          ]
+        },
+        "over_redaction": 0.0041078125,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s34",
+        "destination": "team",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 4552,
+        "cost_usd": 0.01112475,
+        "caught": 2,
+        "total": 2,
+        "by_category": {
+          "home_location": [
+            2,
+            2
+          ]
+        },
+        "over_redaction": 0.0041078125,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s34",
+        "destination": "ai_assistant",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 3650,
+        "cost_usd": 0.01028575,
+        "caught": 2,
+        "total": 2,
+        "by_category": {
+          "home_location": [
+            2,
+            2
+          ]
+        },
+        "over_redaction": 0.0041078125,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s34",
+        "destination": "ai_assistant",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 3621,
+        "cost_usd": 0.01027725,
+        "caught": 2,
+        "total": 2,
+        "by_category": {
+          "home_location": [
+            2,
+            2
+          ]
+        },
+        "over_redaction": 0.0041078125,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s36",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 4629,
+        "cost_usd": 0.011609000000000001,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "home_location": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s36",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 4563,
+        "cost_usd": 0.01173225,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "home_location": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s42",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 1639,
+        "cost_usd": 0.01213975,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "face": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.004974127435064935,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s42",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 2950,
+        "cost_usd": 0.01213975,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "face": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.004974127435064935,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s42",
+        "destination": "team",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 1826,
+        "cost_usd": 0.012042,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s42",
+        "destination": "team",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 2544,
+        "cost_usd": 0.0118125,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s42",
+        "destination": "ai_assistant",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 2287,
+        "cost_usd": 0.01232925,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s42",
+        "destination": "ai_assistant",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 2380,
+        "cost_usd": 0.012325000000000001,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s44",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 1957,
+        "cost_usd": 0.01177775,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "face": [
+            1,
+            2
+          ]
+        },
+        "over_redaction": 0.02007505628797743,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s44",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 2122,
+        "cost_usd": 0.012130499999999999,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "face": [
+            1,
+            2
+          ]
+        },
+        "over_redaction": 0.02007505628797743,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s44",
+        "destination": "team",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 2644,
+        "cost_usd": 0.012070999999999998,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s44",
+        "destination": "team",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 2035,
+        "cost_usd": 0.011713999999999999,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s44",
+        "destination": "ai_assistant",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 2005,
+        "cost_usd": 0.01171225,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s44",
+        "destination": "ai_assistant",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 2062,
+        "cost_usd": 0.011861,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s50",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 3864,
+        "cost_usd": 0.01422875,
+        "caught": 1,
+        "total": 3,
+        "by_category": {
+          "license_plate": [
+            1,
+            2
+          ],
+          "face": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0018930435180664062,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s50",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 3531,
+        "cost_usd": 0.0143265,
+        "caught": 1,
+        "total": 3,
+        "by_category": {
+          "license_plate": [
+            1,
+            2
+          ],
+          "face": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0018930435180664062,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s50",
+        "destination": "team",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 3566,
+        "cost_usd": 0.014352,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s50",
+        "destination": "team",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 3917,
+        "cost_usd": 0.014522,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s50",
+        "destination": "ai_assistant",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 3284,
+        "cost_usd": 0.01511525,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s50",
+        "destination": "ai_assistant",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 3618,
+        "cost_usd": 0.01418875,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s54",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 4143,
+        "cost_usd": 0.0134295,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "internal_data": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s54",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 3527,
+        "cost_usd": 0.013455,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "internal_data": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s54",
+        "destination": "team",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 2990,
+        "cost_usd": 0.01351025,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s54",
+        "destination": "team",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 3613,
+        "cost_usd": 0.0136335,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s54",
+        "destination": "ai_assistant",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 3077,
+        "cost_usd": 0.01307925,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "internal_data": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s54",
+        "destination": "ai_assistant",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 3359,
+        "cost_usd": 0.0128115,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "internal_data": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s56",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 5863,
+        "cost_usd": 0.028410499999999998,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "internal_data": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.30948829650878906,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s56",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 6267,
+        "cost_usd": 0.029286,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "internal_data": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.30948829650878906,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s56",
+        "destination": "team",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 7380,
+        "cost_usd": 0.03276675,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.40395641326904297,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s56",
+        "destination": "team",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 8857,
+        "cost_usd": 0.033417,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.40395641326904297,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s56",
+        "destination": "ai_assistant",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 6260,
+        "cost_usd": 0.02851075,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "internal_data": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.30948829650878906,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s56",
+        "destination": "ai_assistant",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 7283,
+        "cost_usd": 0.02906325,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "internal_data": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.30948829650878906,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s60",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 3043,
+        "cost_usd": 0.009942,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "other_sensitive": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s60",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 2895,
+        "cost_usd": 0.01028625,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "other_sensitive": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s62",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 4100,
+        "cost_usd": 0.0178215,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "other_sensitive": [
+            0,
+            1
+          ],
+          "personal_account": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0061921875,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s62",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 3932,
+        "cost_usd": 0.01769825,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "other_sensitive": [
+            0,
+            1
+          ],
+          "personal_account": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0061921875,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s64",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 3188,
+        "cost_usd": 0.013529,
+        "caught": 0,
+        "total": 3,
+        "by_category": {
+          "government_id": [
+            0,
+            1
+          ],
+          "face": [
+            0,
+            1
+          ],
+          "other_sensitive": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0004749298095703125,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s64",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 3291,
+        "cost_usd": 0.0139285,
+        "caught": 0,
+        "total": 3,
+        "by_category": {
+          "government_id": [
+            0,
+            1
+          ],
+          "face": [
+            0,
+            1
+          ],
+          "other_sensitive": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0004749298095703125,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s64",
+        "destination": "team",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 2904,
+        "cost_usd": 0.0132655,
+        "caught": 0,
+        "total": 2,
+        "by_category": {
+          "government_id": [
+            0,
+            1
+          ],
+          "other_sensitive": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s64",
+        "destination": "team",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 3025,
+        "cost_usd": 0.01394975,
+        "caught": 0,
+        "total": 2,
+        "by_category": {
+          "government_id": [
+            0,
+            1
+          ],
+          "other_sensitive": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s64",
+        "destination": "ai_assistant",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 2800,
+        "cost_usd": 0.013497499999999999,
+        "caught": 0,
+        "total": 2,
+        "by_category": {
+          "government_id": [
+            0,
+            1
+          ],
+          "other_sensitive": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s64",
+        "destination": "ai_assistant",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 3336,
+        "cost_usd": 0.01361225,
+        "caught": 0,
+        "total": 2,
+        "by_category": {
+          "government_id": [
+            0,
+            1
+          ],
+          "other_sensitive": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s66",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 4190,
+        "cost_usd": 0.01113075,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "license_plate": [
+            1,
+            1
+          ],
+          "home_location": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0040963541666666665,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s66",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 2718,
+        "cost_usd": 0.009877,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "license_plate": [
+            1,
+            1
+          ],
+          "home_location": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0040963541666666665,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s70",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 4579,
+        "cost_usd": 0.013509,
+        "caught": 2,
+        "total": 2,
+        "by_category": {
+          "personal_account": [
+            1,
+            1
+          ],
+          "home_location": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0180640625,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s70",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 4829,
+        "cost_usd": 0.013543,
+        "caught": 2,
+        "total": 2,
+        "by_category": {
+          "personal_account": [
+            1,
+            1
+          ],
+          "home_location": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0180640625,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s70",
+        "destination": "team",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 4634,
+        "cost_usd": 0.01367475,
+        "caught": 2,
+        "total": 2,
+        "by_category": {
+          "personal_account": [
+            1,
+            1
+          ],
+          "home_location": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0180640625,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s70",
+        "destination": "team",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 6083,
+        "cost_usd": 0.014371749999999999,
+        "caught": 2,
+        "total": 2,
+        "by_category": {
+          "personal_account": [
+            1,
+            1
+          ],
+          "home_location": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0180640625,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s70",
+        "destination": "ai_assistant",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 3636,
+        "cost_usd": 0.012623249999999999,
+        "caught": 2,
+        "total": 2,
+        "by_category": {
+          "personal_account": [
+            1,
+            1
+          ],
+          "home_location": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0180640625,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s70",
+        "destination": "ai_assistant",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 4316,
+        "cost_usd": 0.013358499999999999,
+        "caught": 2,
+        "total": 2,
+        "by_category": {
+          "personal_account": [
+            1,
+            1
+          ],
+          "home_location": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0180640625,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s72",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 3964,
+        "cost_usd": 0.01271825,
+        "caught": 3,
+        "total": 3,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "government_id": [
+            1,
+            1
+          ],
+          "contact_info": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.2715270833333333,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s72",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 4635,
+        "cost_usd": 0.013164499999999999,
+        "caught": 2,
+        "total": 3,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "government_id": [
+            1,
+            1
+          ],
+          "contact_info": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0008697916666666667,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s72",
+        "destination": "team",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 8837,
+        "cost_usd": 0.015825,
+        "caught": 2,
+        "total": 3,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "government_id": [
+            1,
+            1
+          ],
+          "contact_info": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0008697916666666667,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s72",
+        "destination": "team",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 6604,
+        "cost_usd": 0.014787999999999999,
+        "caught": 2,
+        "total": 3,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "government_id": [
+            1,
+            1
+          ],
+          "contact_info": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0008697916666666667,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s72",
+        "destination": "ai_assistant",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 6300,
+        "cost_usd": 0.014242250000000001,
+        "caught": 2,
+        "total": 3,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "government_id": [
+            1,
+            1
+          ],
+          "contact_info": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0008697916666666667,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s72",
+        "destination": "ai_assistant",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 9230,
+        "cost_usd": 0.01708125,
+        "caught": 2,
+        "total": 3,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "government_id": [
+            1,
+            1
+          ],
+          "contact_info": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0008697916666666667,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      }
+    ],
+    "muse-spark-1.2 @ low": [
+      {
+        "image_id": "s01",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 5742,
+        "cost_usd": 0.0127835,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.050913020833333336,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s01",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 6013,
+        "cost_usd": 0.013017250000000001,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.050913020833333336,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s02",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 9824,
+        "cost_usd": 0.026806999999999997,
+        "caught": 1,
+        "total": 3,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "internal_data": [
+            0,
+            2
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s02",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 10639,
+        "cost_usd": 0.027172500000000002,
+        "caught": 1,
+        "total": 3,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "internal_data": [
+            0,
+            2
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s02",
+        "destination": "team",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 8198,
+        "cost_usd": 0.024818,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s02",
+        "destination": "team",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 8212,
+        "cost_usd": 0.024847750000000002,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s02",
+        "destination": "ai_assistant",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 12210,
+        "cost_usd": 0.02754475,
+        "caught": 1,
+        "total": 3,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "internal_data": [
+            0,
+            2
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s02",
+        "destination": "ai_assistant",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 10050,
+        "cost_usd": 0.02648225,
+        "caught": 1,
+        "total": 3,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "internal_data": [
+            0,
+            2
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s08",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 5188,
+        "cost_usd": 0.01780125,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.018651326497395832,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s08",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 6102,
+        "cost_usd": 0.01778,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.018651326497395832,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s11",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 5723,
+        "cost_usd": 0.013774499999999999,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "payment": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s11",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 8487,
+        "cost_usd": 0.014548,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "payment": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s17",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 6869,
+        "cost_usd": 0.015214499999999999,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "government_id": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s17",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 7578,
+        "cost_usd": 0.0155035,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "government_id": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s23",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 8357,
+        "cost_usd": 0.021046000000000002,
+        "caught": 0,
+        "total": 4,
+        "by_category": {
+          "payment": [
+            0,
+            1
+          ],
+          "personal_account": [
+            0,
+            2
+          ],
+          "other_sensitive": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s23",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 7670,
+        "cost_usd": 0.0200855,
+        "caught": 0,
+        "total": 4,
+        "by_category": {
+          "payment": [
+            0,
+            1
+          ],
+          "personal_account": [
+            0,
+            2
+          ],
+          "other_sensitive": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s29",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 3152,
+        "cost_usd": 0.00998575,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "contact_info": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s29",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 2328,
+        "cost_usd": 0.009649999999999999,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "contact_info": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s34",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 10663,
+        "cost_usd": 0.01687075,
+        "caught": 2,
+        "total": 2,
+        "by_category": {
+          "home_location": [
+            2,
+            2
+          ]
+        },
+        "over_redaction": 0.0041078125,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s34",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 14088,
+        "cost_usd": 0.018672750000000002,
+        "caught": 2,
+        "total": 2,
+        "by_category": {
+          "home_location": [
+            2,
+            2
+          ]
+        },
+        "over_redaction": 0.0041078125,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s34",
+        "destination": "team",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 13059,
+        "cost_usd": 0.019327249999999997,
+        "caught": 2,
+        "total": 2,
+        "by_category": {
+          "home_location": [
+            2,
+            2
+          ]
+        },
+        "over_redaction": 0.0041078125,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s34",
+        "destination": "team",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 9909,
+        "cost_usd": 0.0163735,
+        "caught": 2,
+        "total": 2,
+        "by_category": {
+          "home_location": [
+            2,
+            2
+          ]
+        },
+        "over_redaction": 0.0041078125,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s34",
+        "destination": "ai_assistant",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 7525,
+        "cost_usd": 0.01396625,
+        "caught": 2,
+        "total": 2,
+        "by_category": {
+          "home_location": [
+            2,
+            2
+          ]
+        },
+        "over_redaction": 0.0041078125,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s34",
+        "destination": "ai_assistant",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 19218,
+        "cost_usd": 0.02432775,
+        "caught": 2,
+        "total": 2,
+        "by_category": {
+          "home_location": [
+            2,
+            2
+          ]
+        },
+        "over_redaction": 0.0041078125,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s36",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 10815,
+        "cost_usd": 0.0170745,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "home_location": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s36",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 10382,
+        "cost_usd": 0.016432750000000003,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "home_location": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s42",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 5269,
+        "cost_usd": 0.014371,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "face": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.004974127435064935,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s42",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 3381,
+        "cost_usd": 0.0133935,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "face": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.004974127435064935,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s42",
+        "destination": "team",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 3002,
+        "cost_usd": 0.01319375,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s42",
+        "destination": "team",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 3094,
+        "cost_usd": 0.01323625,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s42",
+        "destination": "ai_assistant",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 3887,
+        "cost_usd": 0.0130645,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s42",
+        "destination": "ai_assistant",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 3745,
+        "cost_usd": 0.013553250000000001,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s44",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 5273,
+        "cost_usd": 0.014825,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "face": [
+            1,
+            2
+          ]
+        },
+        "over_redaction": 0.02007505628797743,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s44",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 4457,
+        "cost_usd": 0.013120749999999999,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "face": [
+            1,
+            2
+          ]
+        },
+        "over_redaction": 0.02007505628797743,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s44",
+        "destination": "team",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 4697,
+        "cost_usd": 0.01403025,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s44",
+        "destination": "team",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 2736,
+        "cost_usd": 0.012780749999999999,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s44",
+        "destination": "ai_assistant",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 2656,
+        "cost_usd": 0.0128385,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s44",
+        "destination": "ai_assistant",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 3100,
+        "cost_usd": 0.01302975,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s50",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 4297,
+        "cost_usd": 0.0153635,
+        "caught": 1,
+        "total": 3,
+        "by_category": {
+          "license_plate": [
+            1,
+            2
+          ],
+          "face": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0018930435180664062,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s50",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 4555,
+        "cost_usd": 0.015593000000000001,
+        "caught": 1,
+        "total": 3,
+        "by_category": {
+          "license_plate": [
+            1,
+            2
+          ],
+          "face": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0018930435180664062,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s50",
+        "destination": "team",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 4932,
+        "cost_usd": 0.0166045,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s50",
+        "destination": "team",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 5432,
+        "cost_usd": 0.017004,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s50",
+        "destination": "ai_assistant",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 5285,
+        "cost_usd": 0.0169725,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s50",
+        "destination": "ai_assistant",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 6046,
+        "cost_usd": 0.01737625,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s54",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 5176,
+        "cost_usd": 0.01418175,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "internal_data": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s54",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 4973,
+        "cost_usd": 0.0143985,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "internal_data": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s54",
+        "destination": "team",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 5457,
+        "cost_usd": 0.01533775,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s54",
+        "destination": "team",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 6664,
+        "cost_usd": 0.015626750000000002,
+        "caught": 0,
+        "total": 0,
+        "by_category": {},
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s54",
+        "destination": "ai_assistant",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 5159,
+        "cost_usd": 0.014282,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "internal_data": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s54",
+        "destination": "ai_assistant",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 5793,
+        "cost_usd": 0.014838750000000001,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "internal_data": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s56",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 11164,
+        "cost_usd": 0.03213775,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "internal_data": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.30948829650878906,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s56",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 9452,
+        "cost_usd": 0.03138975,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "internal_data": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.30948829650878906,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s56",
+        "destination": "team",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 11741,
+        "cost_usd": 0.033553,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.40395641326904297,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s56",
+        "destination": "team",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 13189,
+        "cost_usd": 0.0362305,
+        "caught": 1,
+        "total": 1,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.40395641326904297,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s56",
+        "destination": "ai_assistant",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 11927,
+        "cost_usd": 0.032085,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "internal_data": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.30948829650878906,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s56",
+        "destination": "ai_assistant",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 11742,
+        "cost_usd": 0.03441825,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "internal_data": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.30948829650878906,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s60",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 8795,
+        "cost_usd": 0.014727500000000001,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "other_sensitive": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s60",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 7915,
+        "cost_usd": 0.014379,
+        "caught": 0,
+        "total": 1,
+        "by_category": {
+          "other_sensitive": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s62",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 6915,
+        "cost_usd": 0.0193345,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "other_sensitive": [
+            0,
+            1
+          ],
+          "personal_account": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0061921875,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s62",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 6349,
+        "cost_usd": 0.01859075,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "other_sensitive": [
+            0,
+            1
+          ],
+          "personal_account": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0061921875,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s64",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 4274,
+        "cost_usd": 0.01523325,
+        "caught": 0,
+        "total": 3,
+        "by_category": {
+          "government_id": [
+            0,
+            1
+          ],
+          "face": [
+            0,
+            1
+          ],
+          "other_sensitive": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0004749298095703125,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s64",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 3892,
+        "cost_usd": 0.014583,
+        "caught": 0,
+        "total": 3,
+        "by_category": {
+          "government_id": [
+            0,
+            1
+          ],
+          "face": [
+            0,
+            1
+          ],
+          "other_sensitive": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0004749298095703125,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s64",
+        "destination": "team",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 3414,
+        "cost_usd": 0.01443,
+        "caught": 0,
+        "total": 2,
+        "by_category": {
+          "government_id": [
+            0,
+            1
+          ],
+          "other_sensitive": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s64",
+        "destination": "team",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 6545,
+        "cost_usd": 0.01630425,
+        "caught": 0,
+        "total": 2,
+        "by_category": {
+          "government_id": [
+            0,
+            1
+          ],
+          "other_sensitive": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0004450480143229167,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s64",
+        "destination": "ai_assistant",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 5328,
+        "cost_usd": 0.01504025,
+        "caught": 0,
+        "total": 2,
+        "by_category": {
+          "government_id": [
+            0,
+            1
+          ],
+          "other_sensitive": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s64",
+        "destination": "ai_assistant",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 4554,
+        "cost_usd": 0.01512525,
+        "caught": 0,
+        "total": 2,
+        "by_category": {
+          "government_id": [
+            0,
+            1
+          ],
+          "other_sensitive": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s66",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 4699,
+        "cost_usd": 0.011360249999999999,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "license_plate": [
+            1,
+            1
+          ],
+          "home_location": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0032359375,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s66",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 3514,
+        "cost_usd": 0.01071425,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "license_plate": [
+            1,
+            1
+          ],
+          "home_location": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0032359375,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s70",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 8518,
+        "cost_usd": 0.01610575,
+        "caught": 2,
+        "total": 2,
+        "by_category": {
+          "personal_account": [
+            1,
+            1
+          ],
+          "home_location": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0180640625,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s70",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 14866,
+        "cost_usd": 0.02080625,
+        "caught": 1,
+        "total": 2,
+        "by_category": {
+          "personal_account": [
+            0,
+            1
+          ],
+          "home_location": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0180640625,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s70",
+        "destination": "team",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 8385,
+        "cost_usd": 0.0160335,
+        "caught": 2,
+        "total": 2,
+        "by_category": {
+          "personal_account": [
+            1,
+            1
+          ],
+          "home_location": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0180640625,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s70",
+        "destination": "team",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 11079,
+        "cost_usd": 0.01833275,
+        "caught": 2,
+        "total": 2,
+        "by_category": {
+          "personal_account": [
+            1,
+            1
+          ],
+          "home_location": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0180640625,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s70",
+        "destination": "ai_assistant",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 14264,
+        "cost_usd": 0.02017125,
+        "caught": 2,
+        "total": 2,
+        "by_category": {
+          "personal_account": [
+            1,
+            1
+          ],
+          "home_location": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.0180640625,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s70",
+        "destination": "ai_assistant",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 12334,
+        "cost_usd": 0.01874325,
+        "caught": 0,
+        "total": 2,
+        "by_category": {
+          "personal_account": [
+            0,
+            1
+          ],
+          "home_location": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s72",
+        "destination": "public",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 8401,
+        "cost_usd": 0.016198999999999998,
+        "caught": 2,
+        "total": 3,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "government_id": [
+            1,
+            1
+          ],
+          "contact_info": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0008697916666666667,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s72",
+        "destination": "public",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 18473,
+        "cost_usd": 0.024809499999999998,
+        "caught": 1,
+        "total": 3,
+        "by_category": {
+          "credential": [
+            0,
+            1
+          ],
+          "government_id": [
+            1,
+            1
+          ],
+          "contact_info": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s72",
+        "destination": "team",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 14815,
+        "cost_usd": 0.022149000000000002,
+        "caught": 2,
+        "total": 3,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "government_id": [
+            1,
+            1
+          ],
+          "contact_info": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0008697916666666667,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s72",
+        "destination": "team",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 16887,
+        "cost_usd": 0.02266325,
+        "caught": 3,
+        "total": 3,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "government_id": [
+            1,
+            1
+          ],
+          "contact_info": [
+            1,
+            1
+          ]
+        },
+        "over_redaction": 0.2715270833333333,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s72",
+        "destination": "ai_assistant",
+        "repeat": 0,
+        "ok": true,
+        "latency_ms": 9440,
+        "cost_usd": 0.01704725,
+        "caught": 0,
+        "total": 3,
+        "by_category": {
+          "credential": [
+            0,
+            1
+          ],
+          "government_id": [
+            0,
+            1
+          ],
+          "contact_info": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      },
+      {
+        "image_id": "s72",
+        "destination": "ai_assistant",
+        "repeat": 1,
+        "ok": true,
+        "latency_ms": 13820,
+        "cost_usd": 0.0222705,
+        "caught": 2,
+        "total": 3,
+        "by_category": {
+          "credential": [
+            1,
+            1
+          ],
+          "government_id": [
+            1,
+            1
+          ],
+          "contact_info": [
+            0,
+            1
+          ]
+        },
+        "over_redaction": 0.0008697916666666667,
+        "unjudged": 0,
+        "dropped": {},
+        "attempts": 1
+      }
+    ]
+  }
+}

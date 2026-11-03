@@ -52,6 +52,7 @@ def test_score_and_summary():
     run = bakeoff.score("s01", "public", 0, result(verdicts=[v(1, True)]), cands(), label)
     s = bakeoff.summarize([run])
     assert (run.caught, run.total, run.cost_usd, run.latency_ms) == (1, 1, 0.01, 100)
+    assert run.missed == []
     assert s["recall"] == 1.0 and s["recall_by_category"] == {"credential": "1/1"}
 
 
@@ -59,3 +60,11 @@ def test_pick_uses_recall_then_latency_within_tie_window():
     s = lambda caught, p50: {"caught": caught, "p50_ms": p50}  # noqa: E731
     assert bakeoff.pick({"a": s(30, 9000), "b": s(29, 3000), "c": s(26, 1000)}) == "b"  # b ties a, faster
     assert bakeoff.pick({"a": s(30, 9000), "b": s(20, 3000)}) == "a"  # b is outside the window
+
+
+def test_missed_items_are_recorded_with_category_and_box():
+    # mark 2 is a street sign: not high risk, so with no verdict nothing masks it
+    label = Label(image_id="s01", width=100, height=100,
+                  destinations={"public": [truth([20, 0, 30, 10], "home_location")]})
+    run = bakeoff.score("s01", "public", 0, result(), cands(), label)
+    assert run.caught == 0 and run.missed == [("home_location", [20, 0, 30, 10])]
