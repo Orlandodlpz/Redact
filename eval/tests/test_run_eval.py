@@ -26,7 +26,7 @@ def resp(findings, w=100, h=100, status="ok", total=1000, cost=0.06):
 
 def row(image_id="s01", source="staged", dests=("public",)):
     return ManifestRow(image_id=image_id, source=source, license="team staged, fake data", split="dev",
-                       categories=[], destinations_labeled=list(dests))
+                       provenance="photo", categories=[], destinations_labeled=list(dests))
 
 
 def label(image_id="s01", items=(), dests=("public",), w=100, h=100):

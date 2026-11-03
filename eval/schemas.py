@@ -16,6 +16,9 @@ Source = Literal["webpii", "staged", "hard_negative"]
 # dev is for prompt and threshold tuning. test is frozen before any tuning and only
 # scored in the final runs. Headline numbers come from test.
 Split = Literal["dev", "test"]
+# photo: taken with a camera. synthetic: drawn or generated. Report them separately and
+# never pool them in one headline recall number; a synthetic image says nothing about photos.
+Provenance = Literal["photo", "synthetic"]
 
 
 class ManifestRow(BaseModel):
@@ -26,6 +29,7 @@ class ManifestRow(BaseModel):
     license: str  # "CC BY 4.0" for WebPII, "team staged, fake data" for staged
     attribution: str | None = None  # required for WebPII, credited in the README
     split: Split
+    provenance: Provenance
     categories: list[str]  # categories present in the image, for slicing
     destinations_labeled: list[Destination]
 
@@ -33,6 +37,8 @@ class ManifestRow(BaseModel):
     def _checks(self) -> "ManifestRow":
         if self.source == "webpii" and not self.attribution:
             raise ValueError("webpii rows need attribution (CC BY 4.0)")
+        if self.source == "webpii" and self.provenance != "photo":
+            raise ValueError("webpii screenshots are real captures, not synthetic")
         if not self.destinations_labeled:
             raise ValueError("label at least one destination")
         return self

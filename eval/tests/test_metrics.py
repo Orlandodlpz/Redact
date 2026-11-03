@@ -48,7 +48,7 @@ def test_percentile():
 
 def test_manifest_requires_webpii_attribution():
     base = dict(image_id="a", source="webpii", license="CC BY 4.0", split="dev",
-                categories=[], destinations_labeled=["public"])
+                provenance="photo", categories=[], destinations_labeled=["public"])
     with pytest.raises(ValueError):
         ManifestRow(**base)
     ManifestRow(**base, attribution="WebPII, CC BY 4.0")
@@ -56,3 +56,13 @@ def test_manifest_requires_webpii_attribution():
 
 def test_label_empty_is_valid_for_hard_negative():
     Label(image_id="hn_01", width=10, height=10, destinations={"public": []})
+
+
+def test_manifest_provenance_is_required_and_webpii_cannot_be_synthetic():
+    base = dict(image_id="a", source="staged", license="x", split="dev", categories=[],
+                destinations_labeled=["public"])
+    with pytest.raises(ValueError):
+        ManifestRow(**base)  # provenance missing
+    ManifestRow(**base, provenance="synthetic")
+    with pytest.raises(ValueError):
+        ManifestRow(**{**base, "source": "webpii", "attribution": "WebPII"}, provenance="synthetic")
