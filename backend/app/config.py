@@ -71,6 +71,11 @@ class Settings(BaseSettings):
     premask: bool = False
     log_request_bodies: bool = False
 
+    # Browser origins allowed to call the API, comma separated. The hosted deploy sets
+    # this to the frontend's origin only; "*" is refused at startup because the demo
+    # takes uploads and must not be callable from any page on the web.
+    frontend_origin: str = "http://localhost:3000"
+
     # Provisional, see docs/CLAUDE.md Provisional Values.
     max_image_edge_px: int = 2048
     # OCR is local, so it reads a larger copy than the API ever sees (gotcha 33).
@@ -80,6 +85,9 @@ class Settings(BaseSettings):
 
     def model_ids(self) -> dict[str, str]:
         return {"judge": self.judge_model, "sam": self.sam_model}
+
+    def allowed_origins(self) -> list[str]:
+        return [o.strip() for o in self.frontend_origin.split(",") if o.strip()]
 
 
 class StartupError(RuntimeError):
@@ -96,6 +104,8 @@ def startup_problems(settings: Settings) -> list[str]:
             )
     if settings.log_request_bodies:
         problems.append("LOG_REQUEST_BODIES is on; request bodies carry user images")
+    if "*" in settings.allowed_origins():
+        problems.append("FRONTEND_ORIGIN is '*'; any page on the web could post images here")
     if os.environ.get("OPENAI_LOG", "").lower() == "debug":
         problems.append("OPENAI_LOG=debug makes the openai SDK log request bodies")
     for name in _BODY_LOGGING_LOGGERS:

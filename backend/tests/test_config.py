@@ -76,6 +76,8 @@ def fresh_settings(monkeypatch):
 
 
 def test_health(fresh_settings):
+    # The app builds its Meta client at startup, so the key has to be there to boot.
+    fresh_settings.setenv("META_API_KEY", "test-key-not-real")
     fresh_settings.setenv("JUDGE_MODEL", "muse-spark-1.3")
     fresh_settings.setenv("SAM_MODEL", "sam-3.1")
     fresh_settings.setenv("PREMASK", "off")
