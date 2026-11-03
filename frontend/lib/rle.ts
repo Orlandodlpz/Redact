@@ -41,9 +41,25 @@ export function decodeCounts(counts: string): number[] {
 /**
  * Returns one byte per pixel, row major, 1 inside the mask. Row major because that is
  * what canvas ImageData wants; the runs themselves are column major.
+ *
+ * Use this for one mask. For a whole finding list use `orRleInto`, which writes into a
+ * buffer you already have: a text dense photo can carry a hundred masks (gotcha 38),
+ * and a hundred separate arrays at 2048 by 1536 is over 300 MB, which is a crashed tab
+ * on a phone. One shared buffer is 3 MB.
  */
 export function decodeRle(counts: string, width: number, height: number): Uint8Array {
   const mask = new Uint8Array(width * height);
+  orRleInto(mask, counts, width, height);
+  return mask;
+}
+
+/** Sets every pixel of this mask to 1 in `target`, leaving the rest alone. */
+export function orRleInto(
+  target: Uint8Array,
+  counts: string,
+  width: number,
+  height: number,
+): void {
   const runs = decodeCounts(counts);
   const total = width * height;
   let at = 0;
@@ -55,12 +71,11 @@ export function decodeRle(counts: string, width: number, height: number): Uint8A
         // i walks down a column, so turn it back into a row major offset.
         const x = (i / height) | 0;
         const y = i % height;
-        mask[y * width + x] = 1;
+        target[y * width + x] = 1;
       }
     }
     at += run;
     value = value === 1 ? 0 : 1;
     if (at >= total) break;
   }
-  return mask;
 }

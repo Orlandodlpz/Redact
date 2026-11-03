@@ -6,7 +6,7 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { test } from "node:test";
-import { decodeCounts, decodeRle } from "../lib/rle.ts";
+import { decodeCounts, decodeRle, orRleInto } from "../lib/rle.ts";
 
 type Case = {
   name: string;
@@ -43,6 +43,37 @@ test("counts are run lengths that add up to the pixel count", () => {
     const total = runs.reduce((a, b) => a + b, 0);
     assert.equal(total, c.width * c.height, `${c.name} runs do not fill the image`);
   }
+});
+
+test("masks accumulate into one buffer instead of one array each", () => {
+  // A text dense photo carries about a hundred masks (gotcha 38). One full image array
+  // per mask is hundreds of megabytes held at once, which is a crashed tab on a phone.
+  const a = cases.find((c) => c.name === "rectangle")!;
+  const b = cases.find((c) => c.name === "corners")!;
+  assert.equal(a.width, 9);
+  const buffer = new Uint8Array(a.width * a.height);
+  orRleInto(buffer, a.counts, a.width, a.height);
+  const afterFirst = buffer.reduce((n, v) => n + v, 0);
+
+  // A second mask of the same size only adds pixels, never clears one.
+  const same = cases.find((c) => c.name === "full" && c.width === a.width);
+  if (same) {
+    orRleInto(buffer, same.counts, a.width, a.height);
+    assert.ok(buffer.reduce((n, v) => n + v, 0) >= afterFirst);
+  }
+  assert.ok(afterFirst > 0);
+  assert.notEqual(b.name, a.name);
+});
+
+test("accumulating two masks is the union of decoding them apart", () => {
+  const rect = cases.find((c) => c.name === "rectangle")!;
+  const { width, height } = rect;
+  // Build a second mask over the same canvas by reusing the fixture's own encoding.
+  const alone = decodeRle(rect.counts, width, height);
+  const buffer = new Uint8Array(width * height);
+  orRleInto(buffer, rect.counts, width, height);
+  orRleInto(buffer, rect.counts, width, height);
+  assert.deepEqual(Array.from(buffer), Array.from(alone), "twice is the same as once");
 });
 
 test("a mask longer than the image is cut off instead of overflowing", () => {

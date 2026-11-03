@@ -13,7 +13,7 @@
  */
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { decodeRle } from "../lib/rle.ts";
+import { orRleInto } from "../lib/rle.ts";
 import type { Box, Finding } from "../lib/types.ts";
 
 type Props = {
@@ -56,21 +56,35 @@ export default function MaskCanvas({
     };
   }, [imageUrl]);
 
-  // Decoding a full image RLE is the expensive part, so each one is decoded once and
-  // kept until its finding changes. Toggling a mask then costs a repaint, not a decode.
-  const decoded = useMemo(() => {
-    const out = new Map<string, Uint8Array>();
-    for (const f of findings) {
-      if (f.mask_rle) {
-        try {
-          out.set(f.id, decodeRle(f.mask_rle, width, height));
-        } catch {
-          // A mask that will not decode falls back to its box below.
-        }
+  // One buffer for every pixel mask, not one per finding. A text dense photo can carry
+  // a hundred masks (gotcha 38) and a hundred full image arrays at 2048 by 1536 is over
+  // 300 MB, which is a crashed tab on a phone. This is 3 MB and is rebuilt only when
+  // the masked set changes, so hovering a finding costs a repaint, not a decode.
+  const maskedKey = findings
+    .filter((f) => f.masked && f.mask_rle)
+    .map((f) => f.id)
+    .join(",");
+  const pixels = useMemo(() => {
+    const masked = findings.filter((f) => f.masked && f.mask_rle);
+    if (masked.length === 0) return null;
+    const buffer = new Uint8Array(width * height);
+    for (const f of masked) {
+      try {
+        orRleInto(buffer, f.mask_rle!, width, height);
+      } catch {
+        // A mask that will not decode falls back to its box below.
       }
     }
-    return out;
-  }, [findings, width, height]);
+    return buffer;
+    // findings is intentionally not a dependency: only which masks are on matters here.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [maskedKey, width, height]);
+
+  /** A box is filled directly when its finding has no pixel mask to decode. */
+  const boxOnly = useMemo(
+    () => findings.filter((f) => f.masked && f.box && !f.mask_rle),
+    [findings],
+  );
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -82,29 +96,23 @@ export default function MaskCanvas({
     ctx.clearRect(0, 0, width, height);
     ctx.drawImage(img, 0, 0, width, height);
 
-    const masked = findings.filter((f) => f.masked && f.box);
-    const pixelMasks = masked.filter((f) => decoded.has(f.id));
-    if (pixelMasks.length > 0) {
+    if (pixels) {
       const frame = ctx.getImageData(0, 0, width, height);
-      for (const f of pixelMasks) {
-        const mask = decoded.get(f.id)!;
-        for (let i = 0; i < mask.length; i += 1) {
-          if (mask[i] === 1) {
-            const p = i * 4;
-            frame.data[p] = 0;
-            frame.data[p + 1] = 0;
-            frame.data[p + 2] = 0;
-          }
+      const data = frame.data;
+      for (let i = 0; i < pixels.length; i += 1) {
+        if (pixels[i] === 1) {
+          const p = i * 4;
+          data[p] = 0;
+          data[p + 1] = 0;
+          data[p + 2] = 0;
         }
       }
       ctx.putImageData(frame, 0, 0);
     }
-    for (const f of masked) {
-      if (!decoded.has(f.id)) {
-        const [x1, y1, x2, y2] = f.box!;
-        ctx.fillStyle = "#000";
-        ctx.fillRect(x1, y1, x2 - x1, y2 - y1);
-      }
+    for (const f of boxOnly) {
+      const [x1, y1, x2, y2] = f.box!;
+      ctx.fillStyle = "#000";
+      ctx.fillRect(x1, y1, x2 - x1, y2 - y1);
     }
 
     // Outlines last, so a region is findable whether or not it is filled.
@@ -128,7 +136,7 @@ export default function MaskCanvas({
       ctx.strokeRect(x1, y1, x2 - x1, y2 - y1);
       ctx.setLineDash([]);
     }
-  }, [ready, findings, decoded, width, height, selectedId, preview]);
+  }, [ready, findings, pixels, boxOnly, width, height, selectedId, preview]);
 
   const toImage = useCallback(
     (event: React.PointerEvent<HTMLCanvasElement>): { x: number; y: number } => {
