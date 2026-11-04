@@ -63,8 +63,8 @@ class Settings(BaseSettings):
     meta_base_url: str = "https://api.meta.ai/v1"
 
     # Provisional until the Oct 27 judge bake off.
-    judge_model: str = "muse-spark-1.3"
-    judge_reasoning_effort: Literal["minimal", "low", "medium", "high", "xhigh"] = "low"
+    judge_model: str = "muse-spark-1.2"
+    judge_reasoning_effort: Literal["minimal", "low", "medium", "high", "xhigh"] = "minimal"
     # Unverified ID string until the Phase 1 smoke test.
     sam_model: str = "sam-3.1"
 

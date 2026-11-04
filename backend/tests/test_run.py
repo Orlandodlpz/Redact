@@ -79,7 +79,7 @@ def test_full_run_wires_every_step(steps):
     assert steps["floor"] == ["floor"] and steps["marked_size"] == (64, 48)
     assert res.est_cost_usd == pytest.approx(0.0155)
     assert set(res.timings_ms) == {"ingest", "ocr", "sweep", "candidates", "floor", "marks", "judge", "merge", "total"}
-    assert res.model_ids == {"judge": "muse-spark-1.3", "sam": "sam-3.1"}
+    assert res.model_ids == {"judge": "muse-spark-1.2", "sam": "sam-3.1"}
     assert not client.closed  # the caller's client stays open
 
 
