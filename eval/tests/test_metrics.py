@@ -1,3 +1,4 @@
+import numpy as np
 import pytest
 
 import metrics
@@ -66,3 +67,18 @@ def test_manifest_provenance_is_required_and_webpii_cannot_be_synthetic():
     ManifestRow(**base, provenance="synthetic")
     with pytest.raises(ValueError):
         ManifestRow(**{**base, "source": "webpii", "attribution": "WebPII"}, provenance="synthetic")
+
+
+def test_destination_decisions_compare_each_destination_to_its_label():
+    face, card = f([0, 0, 10, 10], "face"), f([20, 20, 30, 30], "payment")
+    dests = {"public": [face, card], "team": [card], "ai_assistant": [card]}
+    mask = np.zeros((50, 50), dtype=bool)
+    mask[0:10, 0:10] = True  # only the face is masked
+    rows = {tuple(r["box"]): r for r in metrics.destination_decisions_px(dests, "team", mask)}
+    assert rows[(0, 0, 10, 10)] == {"box": [0, 0, 10, 10], "should_mask": False, "masked": True}
+    assert rows[(20, 20, 30, 30)]["should_mask"] is True and rows[(20, 20, 30, 30)]["masked"] is False
+
+
+def test_destination_decisions_need_two_destinations():
+    assert metrics.destination_decisions_px({"public": [f([0, 0, 5, 5])]}, "public",
+                                            np.zeros((10, 10), dtype=bool)) == []

@@ -132,3 +132,41 @@ def test_pixel_metrics_match_box_metrics_on_clean_masks():
     assert metrics.recall_by_category_px(t, mask) == {"credential": (1, 1)}
     assert metrics.over_redaction_px(t, mask) == 0.0
     assert metrics.mask_coverage([0, 0, 10, 20], mask) == 0.5
+
+
+def test_destination_accuracy_separates_keep_cells_from_mask_cells():
+    face, card = truth([0, 0, 10, 10], "face"), truth([20, 20, 30, 30], "payment")
+    lab = Label(image_id="s01", width=100, height=100,
+                destinations={"public": [face, card], "team": [card], "ai_assistant": [card]})
+    # A system that masks both items everywhere is right on every mask cell, wrong on the two keep cells.
+    everywhere = resp([finding([0, 0, 10, 10]), finding([20, 20, 30, 30])])
+    recs = [run_eval.score(row(dests=("public", "team", "ai_assistant")), lab, d, everywhere, 0)
+            for d in ("public", "team", "ai_assistant")]
+    acc = run_eval.destination_accuracy(recs)
+    assert acc["keep_cells"] == {"right": 0, "total": 2, "accuracy": 0.0}
+    assert acc["mask_cells"] == {"right": 4, "total": 4, "accuracy": 1.0}
+    assert acc["by_destination"]["public"]["accuracy"] == 1.0
+    assert acc["by_destination"]["team"]["accuracy"] == 0.5
+    assert acc["images"] == 1
+
+
+def test_destination_accuracy_is_none_for_single_destination_labels():
+    rec = run_eval.score(row(), label(items=[truth([0, 0, 10, 10])]), "public", resp([]), 0)
+    assert run_eval.destination_accuracy([rec]) is None
+
+
+def test_box_union_counts_a_card_whose_mask_fills_only_part_of_its_box():
+    from app.pipeline.sweep import encode_rle
+
+    m = np.zeros((100, 100), dtype=np.uint8)
+    m[10:90, 10:90] = 1
+    m[10:30, 10:30] = 0  # a rounded corner: the mask fills 95 percent of its own box
+    m[10:30, 70:90] = 0
+    m[70:90, 10:30] = 0
+    m[70:90, 70:90] = 0  # now about 75 percent
+    f = finding([10, 10, 90, 90]).model_copy(update={"mask_rle": encode_rle(m)})
+    lab = label(items=[truth([10, 10, 90, 90])])
+    rec = run_eval.score(row(), lab, "public", resp([f]), 0)
+    assert (rec.caught, rec.total) == (0, 1)  # pixel rule, primary
+    assert rec.by_category_box == {"credential": (1, 1)}  # box union, secondary
+    assert run_eval.summarize([rec])["overall_box_union"]["recall"] == 1.0

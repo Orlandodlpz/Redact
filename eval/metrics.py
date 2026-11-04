@@ -144,3 +144,25 @@ def over_redaction_px(truth: Sequence[Finding], mask: "np.ndarray") -> float:
             x1, y1, x2, y2 = t.box
             labeled[max(0, y1):min(h, y2), max(0, x1):min(w, x2)] = True
     return float((mask & ~labeled).sum()) / (w * h)
+
+
+def destination_decisions_px(
+    destinations: dict[str, Sequence[Finding]], destination: str, mask: "np.ndarray"
+) -> list[dict]:
+    """Destination accuracy rows for one run. Proposed definition, team to confirm before
+    the first full run.
+
+    The items are every distinct labeled box on the image, across all destinations. For
+    this destination, `should_mask` is whether the label masks it here and `masked` is
+    whether the output covers it at CAUGHT_THRESHOLD. A decision is right when they agree,
+    so keeping a face at team counts for the system and against a mask-everything baseline.
+    Needs a label with at least two destinations; otherwise there is nothing to compare.
+    """
+    if len(destinations) < 2:
+        return []
+    here = {tuple(t.box) for t in destinations[destination] if t.box}
+    boxes = {tuple(t.box) for items in destinations.values() for t in items if t.box}
+    return [
+        {"box": list(b), "should_mask": b in here, "masked": mask_coverage(b, mask) >= CAUGHT_THRESHOLD}
+        for b in sorted(boxes)
+    ]

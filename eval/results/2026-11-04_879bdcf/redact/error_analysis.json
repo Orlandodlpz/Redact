@@ -1,0 +1,362 @@
+{
+ "misses": [
+  {
+   "image_id": "s02",
+   "destination": "public",
+   "category": "internal_data",
+   "box": [
+    1106,
+    335,
+    1637,
+    912
+   ],
+   "cause": "not_flagged",
+   "box_coverage": 0.0
+  },
+  {
+   "image_id": "s02",
+   "destination": "public",
+   "category": "internal_data",
+   "box": [
+    382,
+    894,
+    1801,
+    1536
+   ],
+   "cause": "not_flagged",
+   "box_coverage": 0.0
+  },
+  {
+   "image_id": "s02",
+   "destination": "ai_assistant",
+   "category": "internal_data",
+   "box": [
+    1106,
+    335,
+    1637,
+    912
+   ],
+   "cause": "not_flagged",
+   "box_coverage": 0.0
+  },
+  {
+   "image_id": "s02",
+   "destination": "ai_assistant",
+   "category": "internal_data",
+   "box": [
+    382,
+    894,
+    1801,
+    1536
+   ],
+   "cause": "not_flagged",
+   "box_coverage": 0.0
+  },
+  {
+   "image_id": "s23",
+   "destination": "public",
+   "category": "payment",
+   "box": [
+    282,
+    431,
+    703,
+    473
+   ],
+   "cause": "not_flagged",
+   "box_coverage": 0.0
+  },
+  {
+   "image_id": "s23",
+   "destination": "public",
+   "category": "personal_account",
+   "box": [
+    282,
+    560,
+    774,
+    605
+   ],
+   "cause": "not_flagged",
+   "box_coverage": 0.06
+  },
+  {
+   "image_id": "s23",
+   "destination": "public",
+   "category": "other_sensitive",
+   "box": [
+    283,
+    822,
+    704,
+    864
+   ],
+   "cause": "not_flagged",
+   "box_coverage": 0.0
+  },
+  {
+   "image_id": "s23",
+   "destination": "public",
+   "category": "personal_account",
+   "box": [
+    281,
+    1081,
+    684,
+    1125
+   ],
+   "cause": "not_flagged",
+   "box_coverage": 0.09
+  },
+  {
+   "image_id": "s29",
+   "destination": "public",
+   "category": "contact_info",
+   "box": [
+    436,
+    649,
+    861,
+    777
+   ],
+   "cause": "not_flagged",
+   "box_coverage": 0.0
+  },
+  {
+   "image_id": "s36",
+   "destination": "public",
+   "category": "home_location",
+   "box": [
+    623,
+    806,
+    1162,
+    1045
+   ],
+   "cause": "partial",
+   "box_coverage": 0.88
+  },
+  {
+   "image_id": "s44",
+   "destination": "public",
+   "category": "face",
+   "box": [
+    800,
+    1150,
+    905,
+    1311
+   ],
+   "cause": "candidate_gap",
+   "box_coverage": 0.88
+  },
+  {
+   "image_id": "s50",
+   "destination": "public",
+   "category": "license_plate",
+   "box": [
+    1659,
+    261,
+    1764,
+    333
+   ],
+   "cause": "candidate_gap",
+   "box_coverage": 0.08
+  },
+  {
+   "image_id": "s50",
+   "destination": "public",
+   "category": "face",
+   "box": [
+    1834,
+    171,
+    1943,
+    270
+   ],
+   "cause": "candidate_gap",
+   "box_coverage": 0.16
+  },
+  {
+   "image_id": "s54",
+   "destination": "public",
+   "category": "internal_data",
+   "box": [
+    95,
+    72,
+    1497,
+    968
+   ],
+   "cause": "candidate_gap",
+   "box_coverage": 0.0
+  },
+  {
+   "image_id": "s54",
+   "destination": "ai_assistant",
+   "category": "internal_data",
+   "box": [
+    95,
+    72,
+    1497,
+    968
+   ],
+   "cause": "candidate_gap",
+   "box_coverage": 0.0
+  },
+  {
+   "image_id": "s56",
+   "destination": "public",
+   "category": "internal_data",
+   "box": [
+    238,
+    640,
+    1351,
+    1246
+   ],
+   "cause": "not_flagged",
+   "box_coverage": 0.44
+  },
+  {
+   "image_id": "s56",
+   "destination": "ai_assistant",
+   "category": "internal_data",
+   "box": [
+    238,
+    640,
+    1351,
+    1246
+   ],
+   "cause": "not_flagged",
+   "box_coverage": 0.44
+  },
+  {
+   "image_id": "s60",
+   "destination": "public",
+   "category": "other_sensitive",
+   "box": [
+    512,
+    585,
+    815,
+    635
+   ],
+   "cause": "not_flagged",
+   "box_coverage": 0.0
+  },
+  {
+   "image_id": "s60",
+   "destination": "public",
+   "category": "other_sensitive",
+   "box": [
+    511,
+    642,
+    994,
+    694
+   ],
+   "cause": "not_flagged",
+   "box_coverage": 0.0
+  },
+  {
+   "image_id": "s64",
+   "destination": "public",
+   "category": "government_id",
+   "box": [
+    611,
+    1205,
+    671,
+    1255
+   ],
+   "cause": "candidate_gap",
+   "box_coverage": 0.0
+  },
+  {
+   "image_id": "s64",
+   "destination": "public",
+   "category": "other_sensitive",
+   "box": [
+    290,
+    270,
+    1346,
+    757
+   ],
+   "cause": "candidate_gap",
+   "box_coverage": 0.0
+  },
+  {
+   "image_id": "s64",
+   "destination": "team",
+   "category": "government_id",
+   "box": [
+    611,
+    1205,
+    671,
+    1255
+   ],
+   "cause": "candidate_gap",
+   "box_coverage": 0.0
+  },
+  {
+   "image_id": "s64",
+   "destination": "team",
+   "category": "other_sensitive",
+   "box": [
+    290,
+    270,
+    1346,
+    757
+   ],
+   "cause": "candidate_gap",
+   "box_coverage": 0.0
+  },
+  {
+   "image_id": "s64",
+   "destination": "ai_assistant",
+   "category": "government_id",
+   "box": [
+    611,
+    1205,
+    671,
+    1255
+   ],
+   "cause": "candidate_gap",
+   "box_coverage": 0.0
+  },
+  {
+   "image_id": "s64",
+   "destination": "ai_assistant",
+   "category": "other_sensitive",
+   "box": [
+    290,
+    270,
+    1346,
+    757
+   ],
+   "cause": "candidate_gap",
+   "box_coverage": 0.0
+  },
+  {
+   "image_id": "s72",
+   "destination": "team",
+   "category": "contact_info",
+   "box": [
+    310,
+    472,
+    612,
+    533
+   ],
+   "cause": "not_flagged",
+   "box_coverage": 0.41
+  },
+  {
+   "image_id": "s72",
+   "destination": "ai_assistant",
+   "category": "contact_info",
+   "box": [
+    310,
+    472,
+    612,
+    533
+   ],
+   "cause": "not_flagged",
+   "box_coverage": 0.41
+  }
+ ],
+ "pixel_rule_only_by_category": {
+  "payment": 1,
+  "government_id": 4,
+  "face": 3,
+  "personal_account": 3,
+  "credential": 3
+ }
+}

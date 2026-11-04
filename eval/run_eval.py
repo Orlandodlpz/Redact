@@ -50,7 +50,20 @@ async def run_redact(client: MetaClient, image_bytes: bytes, destination: Destin
     return await analyze(image_bytes, destination, client=client)
 
 
-CONFIGS: dict[str, System] = {"redact": run_redact}  # baselines register here in Phase 3
+def _baseline(name: str) -> System:
+    """Baselines import lazily so a missing optional dependency (B2) only fails B2."""
+
+    async def run(client, image_bytes, destination):
+        import importlib
+
+        return await importlib.import_module(f"baselines.{name}").run(client, image_bytes, destination)
+
+    return run
+
+
+CONFIGS: dict[str, System] = {
+    "redact": run_redact, "b1": _baseline("b1_sam"), "b2": _baseline("b2_presidio"), "b3": _baseline("b3_muse"),
+}
 
 
 @dataclass
@@ -67,7 +80,9 @@ class Record:
     total: int = 0
     by_category: dict[str, tuple[int, int]] = field(default_factory=dict)
     over_redaction: float | None = None
+    by_category_box: dict[str, tuple[int, int]] = field(default_factory=dict)
     hard_negative_fp: bool | None = None
+    decisions: list[dict] = field(default_factory=list)
     findings: list[dict] = field(default_factory=list)
 
 
@@ -85,6 +100,8 @@ def score(row: ManifestRow, label: Label, destination: Destination, resp: Analyz
     rec.caught = sum(c for c, _ in rec.by_category.values())
     rec.total = sum(t for _, t in rec.by_category.values())
     rec.over_redaction = metrics.over_redaction_px(truth, mask)
+    rec.by_category_box = metrics.recall_by_category(truth, resp.findings)  # secondary, see summarize
+    rec.decisions = metrics.destination_decisions_px(label.destinations, destination, mask)
     if row.source == "hard_negative":
         rec.hard_negative_fp = metrics.hard_negative_false_positive(resp.findings)
     rec.findings = [{"source": f.source, "category": f.category, "masked": f.masked, "locked": f.locked,
@@ -95,6 +112,26 @@ def score(row: ManifestRow, label: Label, destination: Destination, resp: Analyz
 def _rate(records: list[Record]) -> dict:
     caught, total = sum(r.caught for r in records), sum(r.total for r in records)
     return {"caught": caught, "total": total, "recall": round(caught / total, 4) if total else None}
+
+
+def _accuracy(decisions: list[dict]) -> dict:
+    right = sum(d["should_mask"] == d["masked"] for d in decisions)
+    return {"right": right, "total": len(decisions), "accuracy": round(right / len(decisions), 4) if decisions else None}
+
+
+def destination_accuracy(scored: list[Record]) -> dict | None:
+    """None when no labeled image has two or more destinations."""
+    rows = [(r.destination, d) for r in scored for d in r.decisions]
+    if not rows:
+        return None
+    return {
+        "overall": _accuracy([d for _, d in rows]),
+        "keep_cells": _accuracy([d for _, d in rows if not d["should_mask"]]),
+        "mask_cells": _accuracy([d for _, d in rows if d["should_mask"]]),
+        "by_destination": {dest: _accuracy([d for k, d in rows if k == dest])
+                           for dest in sorted({k for k, _ in rows})},
+        "images": len({r.image_id for r in scored if r.decisions}),
+    }
 
 
 def summarize(records: list[Record]) -> dict:
@@ -118,14 +155,30 @@ def summarize(records: list[Record]) -> dict:
             cats[k][1] += t
     lat = [r.latency_ms for r in scored if r.latency_ms is not None]
     hn = [r for r in scored if r.hard_negative_fp is not None]
+    box_cats: dict[str, list[int]] = {}
+    for r in scored:
+        for k, (c, t) in r.by_category_box.items():
+            box_cats.setdefault(k, [0, 0])
+            box_cats[k][0] += c
+            box_cats[k][1] += t
+    box_caught = sum(c for c, _ in box_cats.values())
+    box_total = sum(t for _, t in box_cats.values())
     out.update({
         "overall": _rate(scored),
+        # Secondary. Same rule (90 percent of the labeled box) but on the union of the masked
+        # findings' boxes, no dilation. SAM masks fill about 80 percent of their own box, so a
+        # fully covered card fails the pixel rule against a rectangular label. The pixel number
+        # stays primary because it was fixed first; the gap between the two is reported, not hidden.
+        "overall_box_union": {"caught": box_caught, "total": box_total,
+                              "recall": round(box_caught / box_total, 4) if box_total else None},
+        "recall_by_category_box_union": {k: {"caught": c, "total": t} for k, (c, t) in sorted(box_cats.items())},
         "recall_by_category": {k: {"caught": c, "total": t, "recall": round(c / t, 4)}
                                for k, (c, t) in sorted(cats.items())},
         "recall_by_source": {s: _rate([r for r in scored if r.source == s])
                              for s in sorted({r.source for r in scored})},
         "recall_by_destination": {d: _rate([r for r in scored if r.destination == d])
                                   for d in sorted({r.destination for r in scored})},
+        "destination_accuracy": destination_accuracy(scored),
         "mean_over_redaction": round(sum(r.over_redaction for r in scored) / len(scored), 5),
         "hard_negative_false_positives": {"images": len(hn), "with_masks": sum(bool(r.hard_negative_fp) for r in hn)},
         "failed_closed_runs": sum(r.judge_status == "failed_closed" for r in scored),
@@ -212,6 +265,23 @@ def git_state() -> tuple[str, bool]:
         return "unknown", True
 
 
+def baseline_notes(config: str) -> dict | None:
+    """Settings fixed before the first run, recorded with the results."""
+    if config == "b2":
+        from baselines import b2_presidio
+
+        return {"score_threshold": b2_presidio.SCORE_THRESHOLD}
+    if config == "b3":
+        from baselines import b3_muse
+
+        return {"prompt_sha256": b3_muse.PROMPT_SHA}
+    if config == "b1":
+        from baselines import b1_sam
+
+        return {"phrases": list(b1_sam.PHRASES)}
+    return None
+
+
 def config_hash(settings: Settings, no_floor: bool) -> str:
     cfg = {
         "judge_model": settings.judge_model, "effort": settings.judge_reasoning_effort,
@@ -253,7 +323,8 @@ async def main(args) -> None:
     summary = summarize(records)
     meta = {
         "config": args.config, "split": args.split, "commit": commit, "dirty_tree": dirty,
-        "floor": "off" if args.no_floor else "on", "prompt_version": judge_step.PROMPT_VERSION,
+        "floor": "n/a" if args.config != "redact" else "off" if args.no_floor else "on",
+        "baseline": baseline_notes(args.config), "prompt_version": judge_step.PROMPT_VERSION,
         "model_ids": settings.model_ids(), "judge_effort": settings.judge_reasoning_effort,
         "config_hash": config_hash(settings, args.no_floor),
         "caught_threshold": metrics.CAUGHT_THRESHOLD, "skipped": skipped,
