@@ -1,0 +1,202 @@
+{
+  "meta": {
+    "config": "redact",
+    "split": "dev",
+    "commit": "879bdcf",
+    "dirty_tree": false,
+    "floor": "on",
+    "baseline": null,
+    "prompt_version": "judge_v1",
+    "model_ids": {
+      "judge": "muse-spark-1.2",
+      "sam": "sam-3.1"
+    },
+    "judge_effort": "minimal",
+    "config_hash": "ee34a34c1d54",
+    "caught_threshold": 0.9,
+    "skipped": [],
+    "wall_s": 145.0
+  },
+  "summary": {
+    "image_runs": 40,
+    "errors": {},
+    "scored_runs": 40,
+    "overall": {
+      "caught": 24,
+      "total": 65,
+      "recall": 0.3692
+    },
+    "overall_box_union": {
+      "caught": 38,
+      "total": 65,
+      "recall": 0.5846
+    },
+    "recall_by_category_box_union": {
+      "contact_info": {
+        "caught": 1,
+        "total": 4
+      },
+      "credential": {
+        "caught": 11,
+        "total": 11
+      },
+      "face": {
+        "caught": 3,
+        "total": 5
+      },
+      "government_id": {
+        "caught": 4,
+        "total": 7
+      },
+      "home_location": {
+        "caught": 10,
+        "total": 11
+      },
+      "internal_data": {
+        "caught": 0,
+        "total": 8
+      },
+      "license_plate": {
+        "caught": 2,
+        "total": 3
+      },
+      "other_sensitive": {
+        "caught": 2,
+        "total": 8
+      },
+      "payment": {
+        "caught": 1,
+        "total": 2
+      },
+      "personal_account": {
+        "caught": 4,
+        "total": 6
+      }
+    },
+    "recall_by_category": {
+      "contact_info": {
+        "caught": 1,
+        "total": 4,
+        "recall": 0.25
+      },
+      "credential": {
+        "caught": 8,
+        "total": 11,
+        "recall": 0.7273
+      },
+      "face": {
+        "caught": 0,
+        "total": 5,
+        "recall": 0.0
+      },
+      "government_id": {
+        "caught": 0,
+        "total": 7,
+        "recall": 0.0
+      },
+      "home_location": {
+        "caught": 10,
+        "total": 11,
+        "recall": 0.9091
+      },
+      "internal_data": {
+        "caught": 0,
+        "total": 8,
+        "recall": 0.0
+      },
+      "license_plate": {
+        "caught": 2,
+        "total": 3,
+        "recall": 0.6667
+      },
+      "other_sensitive": {
+        "caught": 2,
+        "total": 8,
+        "recall": 0.25
+      },
+      "payment": {
+        "caught": 0,
+        "total": 2,
+        "recall": 0.0
+      },
+      "personal_account": {
+        "caught": 1,
+        "total": 6,
+        "recall": 0.1667
+      }
+    },
+    "recall_by_source": {
+      "staged": {
+        "caught": 24,
+        "total": 65,
+        "recall": 0.3692
+      }
+    },
+    "recall_by_destination": {
+      "ai_assistant": {
+        "caught": 5,
+        "total": 15,
+        "recall": 0.3333
+      },
+      "public": {
+        "caught": 14,
+        "total": 39,
+        "recall": 0.359
+      },
+      "team": {
+        "caught": 5,
+        "total": 11,
+        "recall": 0.4545
+      }
+    },
+    "destination_accuracy": {
+      "overall": {
+        "right": 35,
+        "total": 66,
+        "accuracy": 0.5303
+      },
+      "keep_cells": {
+        "right": 18,
+        "total": 18,
+        "accuracy": 1.0
+      },
+      "mask_cells": {
+        "right": 17,
+        "total": 48,
+        "accuracy": 0.3542
+      },
+      "by_destination": {
+        "ai_assistant": {
+          "right": 12,
+          "total": 22,
+          "accuracy": 0.5455
+        },
+        "public": {
+          "right": 7,
+          "total": 22,
+          "accuracy": 0.3182
+        },
+        "team": {
+          "right": 16,
+          "total": 22,
+          "accuracy": 0.7273
+        }
+      },
+      "images": 10
+    },
+    "mean_over_redaction": 0.02008,
+    "hard_negative_false_positives": {
+      "images": 0,
+      "with_masks": 0
+    },
+    "failed_closed_runs": 0,
+    "latency_ms": {
+      "p50": 7951,
+      "p90": 16668
+    },
+    "cost_usd": {
+      "total": 2.1841,
+      "per_image_run": 0.0546
+    }
+  }
+}

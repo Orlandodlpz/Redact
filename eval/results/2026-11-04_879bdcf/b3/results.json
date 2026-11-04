@@ -1,0 +1,204 @@
+{
+  "meta": {
+    "config": "b3",
+    "split": "dev",
+    "commit": "879bdcf",
+    "dirty_tree": false,
+    "floor": "n/a",
+    "baseline": {
+      "prompt_sha256": "ff33d9840edd"
+    },
+    "prompt_version": "judge_v1",
+    "model_ids": {
+      "judge": "muse-spark-1.2",
+      "sam": "sam-3.1"
+    },
+    "judge_effort": "minimal",
+    "config_hash": "ee34a34c1d54",
+    "caught_threshold": 0.9,
+    "skipped": [],
+    "wall_s": 34.8
+  },
+  "summary": {
+    "image_runs": 40,
+    "errors": {},
+    "scored_runs": 40,
+    "overall": {
+      "caught": 8,
+      "total": 65,
+      "recall": 0.1231
+    },
+    "overall_box_union": {
+      "caught": 7,
+      "total": 65,
+      "recall": 0.1077
+    },
+    "recall_by_category_box_union": {
+      "contact_info": {
+        "caught": 0,
+        "total": 4
+      },
+      "credential": {
+        "caught": 0,
+        "total": 11
+      },
+      "face": {
+        "caught": 0,
+        "total": 5
+      },
+      "government_id": {
+        "caught": 0,
+        "total": 7
+      },
+      "home_location": {
+        "caught": 6,
+        "total": 11
+      },
+      "internal_data": {
+        "caught": 0,
+        "total": 8
+      },
+      "license_plate": {
+        "caught": 1,
+        "total": 3
+      },
+      "other_sensitive": {
+        "caught": 0,
+        "total": 8
+      },
+      "payment": {
+        "caught": 0,
+        "total": 2
+      },
+      "personal_account": {
+        "caught": 0,
+        "total": 6
+      }
+    },
+    "recall_by_category": {
+      "contact_info": {
+        "caught": 0,
+        "total": 4,
+        "recall": 0.0
+      },
+      "credential": {
+        "caught": 1,
+        "total": 11,
+        "recall": 0.0909
+      },
+      "face": {
+        "caught": 0,
+        "total": 5,
+        "recall": 0.0
+      },
+      "government_id": {
+        "caught": 0,
+        "total": 7,
+        "recall": 0.0
+      },
+      "home_location": {
+        "caught": 6,
+        "total": 11,
+        "recall": 0.5455
+      },
+      "internal_data": {
+        "caught": 0,
+        "total": 8,
+        "recall": 0.0
+      },
+      "license_plate": {
+        "caught": 1,
+        "total": 3,
+        "recall": 0.3333
+      },
+      "other_sensitive": {
+        "caught": 0,
+        "total": 8,
+        "recall": 0.0
+      },
+      "payment": {
+        "caught": 0,
+        "total": 2,
+        "recall": 0.0
+      },
+      "personal_account": {
+        "caught": 0,
+        "total": 6,
+        "recall": 0.0
+      }
+    },
+    "recall_by_source": {
+      "staged": {
+        "caught": 8,
+        "total": 65,
+        "recall": 0.1231
+      }
+    },
+    "recall_by_destination": {
+      "ai_assistant": {
+        "caught": 2,
+        "total": 15,
+        "recall": 0.1333
+      },
+      "public": {
+        "caught": 4,
+        "total": 39,
+        "recall": 0.1026
+      },
+      "team": {
+        "caught": 2,
+        "total": 11,
+        "recall": 0.1818
+      }
+    },
+    "destination_accuracy": {
+      "overall": {
+        "right": 24,
+        "total": 66,
+        "accuracy": 0.3636
+      },
+      "keep_cells": {
+        "right": 17,
+        "total": 18,
+        "accuracy": 0.9444
+      },
+      "mask_cells": {
+        "right": 7,
+        "total": 48,
+        "accuracy": 0.1458
+      },
+      "by_destination": {
+        "ai_assistant": {
+          "right": 9,
+          "total": 22,
+          "accuracy": 0.4091
+        },
+        "public": {
+          "right": 3,
+          "total": 22,
+          "accuracy": 0.1364
+        },
+        "team": {
+          "right": 12,
+          "total": 22,
+          "accuracy": 0.5455
+        }
+      },
+      "images": 10
+    },
+    "mean_over_redaction": 0.01516,
+    "hard_negative_false_positives": {
+      "images": 0,
+      "with_masks": 0
+    },
+    "failed_closed_runs": 0,
+    "latency_ms": {
+      "p50": 2147,
+      "p90": 3445
+    },
+    "cost_usd": {
+      "total": 0.2308,
+      "per_image_run": 0.00577
+    }
+  }
+}
