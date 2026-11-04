@@ -153,3 +153,20 @@ def test_destination_accuracy_separates_keep_cells_from_mask_cells():
 def test_destination_accuracy_is_none_for_single_destination_labels():
     rec = run_eval.score(row(), label(items=[truth([0, 0, 10, 10])]), "public", resp([]), 0)
     assert run_eval.destination_accuracy([rec]) is None
+
+
+def test_box_union_counts_a_card_whose_mask_fills_only_part_of_its_box():
+    from app.pipeline.sweep import encode_rle
+
+    m = np.zeros((100, 100), dtype=np.uint8)
+    m[10:90, 10:90] = 1
+    m[10:30, 10:30] = 0  # a rounded corner: the mask fills 95 percent of its own box
+    m[10:30, 70:90] = 0
+    m[70:90, 10:30] = 0
+    m[70:90, 70:90] = 0  # now about 75 percent
+    f = finding([10, 10, 90, 90]).model_copy(update={"mask_rle": encode_rle(m)})
+    lab = label(items=[truth([10, 10, 90, 90])])
+    rec = run_eval.score(row(), lab, "public", resp([f]), 0)
+    assert (rec.caught, rec.total) == (0, 1)  # pixel rule, primary
+    assert rec.by_category_box == {"credential": (1, 1)}  # box union, secondary
+    assert run_eval.summarize([rec])["overall_box_union"]["recall"] == 1.0

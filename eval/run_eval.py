@@ -80,6 +80,7 @@ class Record:
     total: int = 0
     by_category: dict[str, tuple[int, int]] = field(default_factory=dict)
     over_redaction: float | None = None
+    by_category_box: dict[str, tuple[int, int]] = field(default_factory=dict)
     hard_negative_fp: bool | None = None
     decisions: list[dict] = field(default_factory=list)
     findings: list[dict] = field(default_factory=list)
@@ -99,6 +100,7 @@ def score(row: ManifestRow, label: Label, destination: Destination, resp: Analyz
     rec.caught = sum(c for c, _ in rec.by_category.values())
     rec.total = sum(t for _, t in rec.by_category.values())
     rec.over_redaction = metrics.over_redaction_px(truth, mask)
+    rec.by_category_box = metrics.recall_by_category(truth, resp.findings)  # secondary, see summarize
     rec.decisions = metrics.destination_decisions_px(label.destinations, destination, mask)
     if row.source == "hard_negative":
         rec.hard_negative_fp = metrics.hard_negative_false_positive(resp.findings)
@@ -153,8 +155,23 @@ def summarize(records: list[Record]) -> dict:
             cats[k][1] += t
     lat = [r.latency_ms for r in scored if r.latency_ms is not None]
     hn = [r for r in scored if r.hard_negative_fp is not None]
+    box_cats: dict[str, list[int]] = {}
+    for r in scored:
+        for k, (c, t) in r.by_category_box.items():
+            box_cats.setdefault(k, [0, 0])
+            box_cats[k][0] += c
+            box_cats[k][1] += t
+    box_caught = sum(c for c, _ in box_cats.values())
+    box_total = sum(t for _, t in box_cats.values())
     out.update({
         "overall": _rate(scored),
+        # Secondary. Same rule (90 percent of the labeled box) but on the union of the masked
+        # findings' boxes, no dilation. SAM masks fill about 80 percent of their own box, so a
+        # fully covered card fails the pixel rule against a rectangular label. The pixel number
+        # stays primary because it was fixed first; the gap between the two is reported, not hidden.
+        "overall_box_union": {"caught": box_caught, "total": box_total,
+                              "recall": round(box_caught / box_total, 4) if box_total else None},
+        "recall_by_category_box_union": {k: {"caught": c, "total": t} for k, (c, t) in sorted(box_cats.items())},
         "recall_by_category": {k: {"caught": c, "total": t, "recall": round(c / t, 4)}
                                for k, (c, t) in sorted(cats.items())},
         "recall_by_source": {s: _rate([r for r in scored if r.source == s])
