@@ -7,8 +7,13 @@
 eval/data/
 threats/*
 !threats/expected.jsonl
+!threats/README.md
+# Scripts, yes. The images and reports they make, no.
+!threats/*.py
 logs/
 out/
+# Browser automation artifacts: screenshots of whatever image was open.
+.playwright-cli/
 
 # Python
 __pycache__/
@@ -19,3 +24,6 @@ __pycache__/
 # Node
 node_modules/
 .next/
+*.tsbuildinfo
+# The frontend's env sample is a template, like .env.example at the root.
+!frontend/.env.local.example

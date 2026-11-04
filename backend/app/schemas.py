@@ -129,7 +129,11 @@ class Finding(BaseModel):
     marks: list[int]
     category: Category
     reason: str
-    source: Literal["floor", "judge", "combined", "extra", "metadata"]
+    # "manual" is a mask the user drew in the review editor. It only ever arrives on
+    # the way in, at POST /export; nothing in the pipeline produces one. It is its own
+    # value rather than reusing "extra" so the UI and the eval never credit a model
+    # with a mask a person drew.
+    source: Literal["floor", "judge", "combined", "extra", "metadata", "manual"]
     masked: bool
     locked: bool
     box: Box | None = None

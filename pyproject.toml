@@ -7,6 +7,8 @@ requires-python = ">=3.12,<3.13"
 dependencies = [
     "fastapi>=0.115",
     "uvicorn>=0.32",
+    # FastAPI needs this to parse the multipart uploads /analyze and /export take.
+    "python-multipart>=0.0.20",
     "pydantic>=2.9",
     "pydantic-settings>=2.6",
     "pillow>=11.0",

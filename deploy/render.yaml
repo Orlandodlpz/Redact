@@ -1,0 +1,42 @@
+# Render blueprint for the backend. Create the service from this file, then set the
+# three secrets by hand in the dashboard: they are marked sync:false so they never
+# live in git.
+#
+# After it deploys, set FRONTEND_ORIGIN to the Vercel URL and redeploy, and set
+# NEXT_PUBLIC_API_BASE on Vercel to this service's URL. They have to name each other.
+services:
+  - type: web
+    name: redact-api
+    runtime: docker
+    dockerfilePath: ./deploy/Dockerfile
+    dockerContext: .
+    plan: starter
+    region: oregon
+    healthCheckPath: /health
+    # One instance. The rate limit and day cap are in process counters, so scaling out
+    # would multiply the limits by the instance count (app/demo_gate.py).
+    numInstances: 1
+    envVars:
+      - key: META_API_KEY
+        sync: false
+      - key: DEMO_PASSCODE
+        sync: false
+      - key: FRONTEND_ORIGIN
+        sync: false
+      - key: JUDGE_MODEL
+        value: muse-spark-1.3
+      - key: SAM_MODEL
+        value: sam-3.1
+      - key: PREMASK
+        value: "off"
+      # Must stay off. The server refuses to start if it is on.
+      - key: LOG_REQUEST_BODIES
+        value: "off"
+      # Render terminates TLS in front of the app, so the socket address is the
+      # proxy's and X-Forwarded-For is the only real client address.
+      - key: TRUST_PROXY_HEADER
+        value: "on"
+      - key: RATE_LIMIT_PER_IP_PER_HOUR
+        value: "12"
+      - key: DAILY_ANALYZE_CAP
+        value: "200"
