@@ -132,3 +132,24 @@ def test_pixel_metrics_match_box_metrics_on_clean_masks():
     assert metrics.recall_by_category_px(t, mask) == {"credential": (1, 1)}
     assert metrics.over_redaction_px(t, mask) == 0.0
     assert metrics.mask_coverage([0, 0, 10, 20], mask) == 0.5
+
+
+def test_destination_accuracy_separates_keep_cells_from_mask_cells():
+    face, card = truth([0, 0, 10, 10], "face"), truth([20, 20, 30, 30], "payment")
+    lab = Label(image_id="s01", width=100, height=100,
+                destinations={"public": [face, card], "team": [card], "ai_assistant": [card]})
+    # A system that masks both items everywhere is right on every mask cell, wrong on the two keep cells.
+    everywhere = resp([finding([0, 0, 10, 10]), finding([20, 20, 30, 30])])
+    recs = [run_eval.score(row(dests=("public", "team", "ai_assistant")), lab, d, everywhere, 0)
+            for d in ("public", "team", "ai_assistant")]
+    acc = run_eval.destination_accuracy(recs)
+    assert acc["keep_cells"] == {"right": 0, "total": 2, "accuracy": 0.0}
+    assert acc["mask_cells"] == {"right": 4, "total": 4, "accuracy": 1.0}
+    assert acc["by_destination"]["public"]["accuracy"] == 1.0
+    assert acc["by_destination"]["team"]["accuracy"] == 0.5
+    assert acc["images"] == 1
+
+
+def test_destination_accuracy_is_none_for_single_destination_labels():
+    rec = run_eval.score(row(), label(items=[truth([0, 0, 10, 10])]), "public", resp([]), 0)
+    assert run_eval.destination_accuracy([rec]) is None
